@@ -1,0 +1,7 @@
+.ContactUsHeader-img{
+    transform: scaleX(-1);
+}
+.contactUsHeader-cont{
+    background: linear-gradient(to bottom, #f5f5f5 80%, transparent 35%);
+
+}
