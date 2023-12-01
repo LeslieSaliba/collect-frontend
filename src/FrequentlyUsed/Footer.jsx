@@ -28,16 +28,16 @@ function Footer() {
       </div>
       <div className="w-3/12">
         <div className="Footer-Socials flex content-center ">
-          <img src="../Images/location 1.png" clasName="content-center" alt="" /> <p>Betchay, Baabda, Lebanon</p>
+          <img src="../Images/location 1.png" className="content-center" alt="" /> <p>Betchay, Baabda, Lebanon</p>
         </div>
         <div className="Footer-Socials flex content-center">
-          <img src="../Images/mail 1.png"  clasName="content-center" alt="" /> <p>collect.leb@gmail.com</p>
+          <img src="../Images/mail 1.png"  className="content-center" alt="" /> <p>collect.leb@gmail.com</p>
         </div>
         <div className="Footer-Socials flex content-center">
-          <img src="../Images/insta 1.png" clasName="content-center" alt="" /> <p>@collect.leb</p>
+          <img src="../Images/insta 1.png" className="content-center" alt="" /> <p>@collect.leb</p>
         </div>
         <div className="Footer-Socials flex content-center">
-          <img src="../Images/facebook 1.png"clasName="content-center" alt="" /> <p>@collect.leb</p>
+          <img src="../Images/facebook 1.png"className="content-center" alt="" /> <p>@collect.leb</p>
         </div>
       </div>
     </div>

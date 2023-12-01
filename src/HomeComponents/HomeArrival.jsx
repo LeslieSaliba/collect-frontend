@@ -1,5 +1,5 @@
 import "../css/HomeArrival.css"
-import ArrivalItem from './ArrivalItem';
+import ProductItem from './ProductItem';
 
 function HomeArrival() {
   return (
@@ -12,10 +12,10 @@ function HomeArrival() {
         <a href=""className="text-3xl homeCategeries-link">See all arrivals <span className="ml-2 text-3xl">&#8594;</span></a>
         </div>
             <div className="flex flex-wrap items-center justify-between "> 
-        <ArrivalItem />
-        <ArrivalItem />
-        <ArrivalItem />
-        <ArrivalItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
         </div>
         
     </div>
