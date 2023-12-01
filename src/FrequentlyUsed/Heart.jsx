@@ -22,7 +22,6 @@ function Heart() {
     </svg>
   </div>
 </div>
-
     </div>
   );
 }
