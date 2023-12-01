@@ -1,6 +1,7 @@
 import './App.css';
 import Wishlist from "./Pages/Wishlist"
 import HomePage from './Pages/HomePage';
+import ContactUs from './Pages/ContactUs';
 import Cart from "./Pages/Cart";
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
     <div className="App">
        {/* <Wishlist/> */}
       {/* <HomePage/> */}
-      <Cart />
+       <ContactUs />
+      {/* <Cart /> */}
     </div>
   );
 }
