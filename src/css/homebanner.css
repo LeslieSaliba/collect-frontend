@@ -1,0 +1,11 @@
+
+.HomeBanner-container{
+    font-family:"Playfair Display" ;
+}
+.HomeBanner-img{
+    height: 20rem;
+}
+.HomeBanner-container-mini{
+    width:75vw;
+    background: linear-gradient(to top, #f5f5f5 90%, transparent 10%);
+}

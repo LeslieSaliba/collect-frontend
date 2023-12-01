@@ -1,0 +1,11 @@
+
+.ArrivalItem-cont{
+    font-family: "Playfair Display";
+}
+.ArrivalItem-img{
+    width: 16rem;
+}
+.ArrivalItem-cart{
+    width: 25px;
+    margin-bottom: 2px;
+}
