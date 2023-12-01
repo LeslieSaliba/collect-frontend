@@ -1,0 +1,26 @@
+.HomeCategories-cont{
+    background-color: transparent;
+    z-index: 5;
+    position: relative;
+    top: -4rem;
+    font-family: "Playfair Display";
+
+
+
+}
+.homeCategories-mini{
+    background-color:white;
+  
+    
+
+}
+.homeCategories-items-handler{
+background-color: white;
+}
+
+.homeCategeries-link-container{
+    text-align: right;
+}
+.homeCategeries-link:hover{
+    color: #B6322C;
+}
