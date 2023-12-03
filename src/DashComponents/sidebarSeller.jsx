@@ -24,31 +24,12 @@ function SidebarAdmin() {
       imageSrcHover: '../Images/dashboardIcons/products-red.png',
     },
     {
-      name: 'Banner',
-      imageSrc: '../Images/dashboardIcons/banner.png',
-      imageSrcHover: '../Images/dashboardIcons/banner-red.png',
-    },
-    {
       name: 'Customers',
       imageSrc: '../Images/dashboardIcons/users.png',
       imageSrcHover: '../Images/dashboardIcons/users-red.png',
     },
-    {
-      name: 'Team',
-      imageSrc: '../Images/dashboardIcons/team.png',
-      imageSrcHover: '../Images/dashboardIcons/team-red.png',
-    },
-    {
-      name: 'Analytics',
-      imageSrc: '../Images/dashboardIcons/analytics.png',
-      imageSrcHover: '../Images/dashboardIcons/analytics-red.png',
-    },
   ];
 
-  // const handleSectionClick = (section) => {
-  //   setSelectedSection(section);
-  //   setHoveredSection(section);
-  // };
   const handleSectionClick = (section) => {
     setSelectedSection(section);
     navigate(`/admin/${section.toLowerCase()}`);

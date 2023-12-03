@@ -5,7 +5,7 @@ import ContactUs from './Pages/ContactUs';
 import AboutUs from './Pages/AboutUs';
 import Cart from "./Pages/Cart";
 import AdminDashboard from './Pages/AdminDashboard';
-import SidebarAdmin from './DashComponents/sidebarAdmin';
+import SellerDashboard from './Pages/SellerDashboard';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       {/* <Cart /> */}
       {/* <AboutUs /> */}
       {/* <AdminDashboard /> */}
-      <SidebarAdmin />
+      <SellerDashboard />
     </div>
   );
 }
