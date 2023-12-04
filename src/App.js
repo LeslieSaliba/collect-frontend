@@ -19,12 +19,12 @@ function App() {
       {/* <ContactUs /> */}
       {/* <Cart /> */}
       {/* <AboutUs /> */}
-      {/* <AdminDashboard /> */}
+      <AdminDashboard />
       {/* <SellerDashboard /> */}
       {/* <ColumnChart/> */}
       {/* <ApexChart/> */}
       {/* <PieChart/> */}
-      <AuthForm />
+      {/* <AuthForm /> */}
     </div>
   );
 }

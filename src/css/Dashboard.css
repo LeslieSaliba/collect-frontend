@@ -16,3 +16,7 @@
     padding: 20px;
     margin-top: 45px;
 }
+
+.scrollable-table {
+    overflow-x: auto;
+}
