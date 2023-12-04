@@ -8,7 +8,8 @@ import AdminDashboard from './Pages/AdminDashboard';
 import SellerDashboard from './Pages/SellerDashboard';
 import ColumnChart from './Charts/ColumnChart';
 import ApexChart from './Charts/GraphChart';
-import PieChart from './Charts/PieChart'
+import PieChart from './Charts/PieChart';
+import AuthForm from './Pages/AuthForm';
 
 function App() {
   return (
@@ -18,11 +19,12 @@ function App() {
       {/* <ContactUs /> */}
       {/* <Cart /> */}
       {/* <AboutUs /> */}
-      <AdminDashboard />
+      {/* <AdminDashboard /> */}
       {/* <SellerDashboard /> */}
       {/* <ColumnChart/> */}
       {/* <ApexChart/> */}
       {/* <PieChart/> */}
+      <AuthForm />
     </div>
   );
 }
