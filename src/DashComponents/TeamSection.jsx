@@ -1,7 +1,9 @@
+import "../css/Dashboard.css";
+
 function TeamSection() {
 
     return (
-        <div>
+        <div className="section">
             <h1>Team</h1>
         </div>
     );

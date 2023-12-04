@@ -1,7 +1,9 @@
+import "../css/Dashboard.css";
+
 function OrdersSection() {
 
     return (
-        <div className="bg-red-500">
+        <div>
             <h1>Orders</h1>
         </div>
     );

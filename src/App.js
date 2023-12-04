@@ -15,8 +15,8 @@ function App() {
       {/* <ContactUs /> */}
       {/* <Cart /> */}
       {/* <AboutUs /> */}
-      {/* <AdminDashboard /> */}
-      <SellerDashboard />
+      <AdminDashboard />
+      {/* <SellerDashboard /> */}
     </div>
   );
 }

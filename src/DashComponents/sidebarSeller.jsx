@@ -32,7 +32,7 @@ function SidebarAdmin() {
 
   const handleSectionClick = (section) => {
     setSelectedSection(section);
-    navigate(`/admin/${section.toLowerCase()}`);
+    navigate(`/seller/${section.toLowerCase()}`);
   };
 
   return (
