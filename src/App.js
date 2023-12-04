@@ -4,6 +4,8 @@ import ContactUs from './Pages/ContactUs';
 import AboutUs from './Pages/AboutUs';
 import Wishlist from "./Pages/Wishlist"
 import Cart from "./Pages/Cart";
+import AdminDashboard from './Pages/AdminDashboard';
+import SellerDashboard from './Pages/SellerDashboard';
 import ColumnChart from './Charts/ColumnChart';
 import ApexChart from './Charts/GraphChart';
 import PieChart from './Charts/PieChart'
@@ -11,11 +13,13 @@ import PieChart from './Charts/PieChart'
 function App() {
   return (
     <div className="App">
-      <HomePage />
+      {/* <HomePage/> */}
       {/* <Wishlist/> */}
-      {/* <Cart /> */}
-      {/* <AboutUs/> */}
       {/* <ContactUs /> */}
+      {/* <Cart /> */}
+      {/* <AboutUs /> */}
+      <AdminDashboard />
+      {/* <SellerDashboard /> */}
       {/* <ColumnChart/> */}
       {/* <ApexChart/> */}
       {/* <PieChart/> */}
