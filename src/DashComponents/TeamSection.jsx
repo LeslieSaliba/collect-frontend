@@ -48,7 +48,10 @@ function TeamSection() {
                                     <td class="px-4 py-2 capitalize">{`${teamMember.fullName.firstName} ${teamMember.fullName.lastName}`}</td>
                                     <td class="px-4 py-2">{teamMember.email}</td>
                                     <td class="px-4 py-2">{teamMember.role}</td>
-                                    <td class="px-4 py-2">edit + delete icons</td>
+                                    <td class="px-4 py-2 flex">
+                                        <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" />
+                                        <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete" />
+                                    </td>
                                 </tr>
                             ))}
                     </tbody>

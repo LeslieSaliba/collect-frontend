@@ -44,10 +44,12 @@ function OrdersSection() {
                     <tbody>
                         {orders.map((order) => (
                             <tr key={order._id}>
-                                <td class="px-4 py-2">{order.userId}</td>
+                                <td class="px-4 py-2">xxx</td>
                                 <td class="px-4 py-2">{new Date(order.createdAt).toLocaleDateString('en-GB')}</td>
-                                <td class="px-4 py-2">{order.productIds.length} products</td>
-                                <td class="px-4 py-2">{order.totalPrice}</td>
+                                <td class="px-4 py-2">
+                                    {order.productIds.length === 1 ? '1 product' : `${order.productIds.length} products`}
+                                </td>
+                                <td class="px-4 py-2">{order.totalPrice} $</td>
                                 <td class="px-4 py-2">{order.status}</td>
                                 <td class="px-4 py-2 italic text-red-700">view details</td>
                             </tr>

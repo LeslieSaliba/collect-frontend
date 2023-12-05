@@ -33,10 +33,10 @@ function CategoriesSection() {
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 text-left">Category &#8597;</th>
+                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("name")}>Category &#8597;</th>
                             <th class="px-4 py-2 text-left">Thumbnail</th>
-                            <th class="px-4 py-2 text-left">Qty &#8597;</th>
-                            <th class="px-4 py-2 text-left">Discounted &#8597;</th>
+                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("category")}>Qty &#8597;</th>
+                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("discountPercentage")}>Discounted &#8597;</th>
                             <th class="px-4 py-2 text-left">Highlighted &#8597;</th>
                             <th class="px-4 py-2 text-left"></th>
                         </tr>
@@ -45,11 +45,14 @@ function CategoriesSection() {
                         {categories.map((category) => (
                             <tr key={category._id}>
                                 <td className="px-4 py-2">{category.name}</td>
-                                <td className="px-4 py-2"><img src={category.image} alt="thumbnail"classname=""/></td>
+                                <td className="px-4 py-2"><img src={category.image} alt="thumbnail" classname="" /></td>
                                 <td className="px-4 py-2">Qty - getproductsbycategoryname</td>
                                 <td class="px-4 py-2">Discounted - getproductsbycategoryname</td>
-                                <td class="px-4 py-2">checkbox</td>
-                                <td class="px-4 py-2">edit + delete icons</td>
+                                <td class="px-4 py-2"><input type="checkbox" /></td>
+                                <td class="px-4 py-2 flex">
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" />
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete" />
+                                </td>
                             </tr>
                         ))}
                     </tbody>

@@ -44,13 +44,16 @@ function ProductsSection() {
                     <tbody>
                         {products.map((product) => (
                             <tr key={product._id}>
-                                <td class="px-4 py-2">{product.categoryID}</td>
-                                <td class="px-4 py-2">{product.name}</td>
-                                <td class="px-4 py-2"><img src={product.images[0]} alt=""/></td>
-                                <td class="px-4 py-2">{product.price}</td>
-                                <td class="px-4 py-2">{product.discountPercentage}%</td>
-                                <td class="px-4 py-2">{product.status}</td>
-                                <td class="px-4 py-2">edit + delete icons</td>
+                                <td class="px-4 py-2 align-middle">xxx</td>
+                                <td class="px-4 py-2 align-middle">{product.name}</td>
+                                <td class="px-4 py-2 align-middle"><img src={product.images[0]} alt="" /></td>
+                                <td class="px-4 py-2 align-middle">{product.price}</td>
+                                <td class="px-4 py-2 align-middle">{product.discountPercentage}%</td>
+                                <td class="px-4 py-2 align-middle">{product.status}</td>
+                                <td class="px-4 py-2 flex">
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" />
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete" />
+                                </td>
                             </tr>
                         ))}
                     </tbody>
