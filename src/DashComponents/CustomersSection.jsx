@@ -3,10 +3,46 @@ import axios from 'axios';
 import "../css/Dashboard.css";
 
 function CustomersSection() {
+    const [customers, setCustomers] = useState([]);
+
+      useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/user/getAll`)
+          .then((response) => {
+            setCustomers(response.data.data);
+          })
+          .catch((error) => {
+            console.error(`Error fetching customers' data: `, error);
+          });
+      }, []);
 
     return (
-        <div className="section">
-            <h1>Customers</h1>
+        <div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 text-left">Name &#8597;</th>
+                            <th class="px-4 py-2 text-left">Email &#8597;</th>
+                            <th class="px-4 py-2 text-left">Number of orders &#8597;</th>
+                            <th class="px-4 py-2 text-left"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {customers
+                            .filter((customer) => customer.role === 'client')
+                            .map((customer) => (
+                                <tr key={customer._id}>
+                                    <td class="px-4 py-2 capitalize">{`${customer.fullName.firstName} ${customer.fullName.lastName}`}</td>
+                                    <td class="px-4 py-2">{customer.email}</td>
+                                    <td class="px-4 py-2">order</td>
+                                    <td class="px-4 py-2 italic text-red-700">view details</td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     );
 }

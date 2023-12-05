@@ -17,6 +17,8 @@
     margin-top: 45px;
 }
 
-.scrollable-table {
-    overflow-x: auto;
+table img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }

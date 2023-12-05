@@ -5,43 +5,53 @@ import "../css/Dashboard.css";
 function CategoriesSection() {
     const [categories, setCategories] = useState([]);
 
-    //   useEffect(() => {
-    //     axios.get(`${process.env.REACT_APP_API_URL}/categories/getAll`)
-    //       .then((response) => {
-    //         // setCategories(response.data.data);
-    //       })
-    //       .catch((error) => {
-    //         console.error('Error fetching orders data:', error);
-    //       });
-    //   }, []);
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/category/getAll`)
+            .then((response) => {
+                setCategories(response.data.data);
+            })
+            .catch((error) => {
+                console.error(`Error fetching categories' data: `, error);
+            });
+    }, []);
+
+    const [sortOrder, setSortOrder] = useState(true);
+    const toggleSort = (field) => {
+        const sortedData = [...categories].sort((a, b) => {
+            if (a[field] < b[field]) return sortOrder ? -1 : 1;
+            if (a[field] > b[field]) return sortOrder ? 1 : -1;
+            return 0;
+        });
+        setCategories(sortedData);
+        setSortOrder(!sortOrder);
+    };
 
     return (
-        <div className="section">
+        <div>
 
-            <div className="scrollable-table">
-                <table className="container table">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">x</th>
+                            <th class="px-4 py-2 text-left">Category &#8597;</th>
+                            <th class="px-4 py-2 text-left">Thumbnail</th>
+                            <th class="px-4 py-2 text-left">Qty &#8597;</th>
+                            <th class="px-4 py-2 text-left">Discounted &#8597;</th>
+                            <th class="px-4 py-2 text-left">Highlighted &#8597;</th>
+                            <th class="px-4 py-2 text-left"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {orders.map((orders) => ( */}
-                        {/* <tr key={orders._id}> */}
-                            <tr>
-                                <th scope="row">Name</th>
-                                <td>Date</td>
-                                <td>Qty</td>
-                                <td>Total</td>
-                                <td>Status</td>
-                                <td>view details</td>
+                        {categories.map((category) => (
+                            <tr key={category._id}>
+                                <td className="px-4 py-2">{category.name}</td>
+                                <td className="px-4 py-2"><img src={category.image} alt="thumbnail"classname=""/></td>
+                                <td className="px-4 py-2">Qty - getproductsbycategoryname</td>
+                                <td class="px-4 py-2">Discounted - getproductsbycategoryname</td>
+                                <td class="px-4 py-2">checkbox</td>
+                                <td class="px-4 py-2">edit + delete icons</td>
                             </tr>
-                        {/* ))} */}
+                        ))}
                     </tbody>
                 </table>
             </div>
