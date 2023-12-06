@@ -5,15 +5,15 @@ import "../css/Dashboard.css";
 function CustomersSection() {
     const [customers, setCustomers] = useState([]);
 
-      useEffect(() => {
+    useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/user/getAll`)
-          .then((response) => {
-            setCustomers(response.data.data);
-          })
-          .catch((error) => {
-            console.error(`Error fetching customers' data: `, error);
-          });
-      }, []);
+            .then((response) => {
+                setCustomers(response.data.data);
+            })
+            .catch((error) => {
+                console.error(`Error fetching customers' data: `, error);
+            });
+    }, []);
 
     return (
         <div>
@@ -31,11 +31,11 @@ function CustomersSection() {
                     <tbody>
                         {customers
                             .filter((customer) => customer.role === 'client')
-                            .map((customer) => (
-                                <tr key={customer._id}>
+                            .map((customer, index) => (
+                                <tr key={customer._id} className={`${index !== customers.length - 1 ? 'border-b' : ''}`}>
                                     <td class="px-4 py-2 capitalize">{`${customer.fullName.firstName} ${customer.fullName.lastName}`}</td>
                                     <td class="px-4 py-2">{customer.email}</td>
-                                    <td class="px-4 py-2">order</td>
+                                    <td class="px-4 py-2" >nb</td>
                                     <td class="px-4 py-2 italic text-red-700">view details</td>
                                 </tr>
                             ))}

@@ -43,8 +43,8 @@ function TeamSection() {
                     <tbody>
                         {team
                             .filter((teamMember) => teamMember.role === 'admin' || teamMember.role === 'seller')
-                            .map((teamMember) => (
-                                <tr key={teamMember._id}>
+                            .map((teamMember, index) => (
+                                <tr key={teamMember._id} className={`${index !== team.length - 1 ? 'border-b' : ''}`}>
                                     <td class="px-4 py-2 capitalize">{`${teamMember.fullName.firstName} ${teamMember.fullName.lastName}`}</td>
                                     <td class="px-4 py-2">{teamMember.email}</td>
                                     <td class="px-4 py-2">{teamMember.role}</td>
