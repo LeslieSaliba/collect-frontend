@@ -89,8 +89,8 @@ function CategoriesSection() {
                         </tr>
                     </thead>
                     <tbody>
-                        {categories.map((category, index) => (
-                            <tr key={category._id} className={`${index !== categories.length - 1 ? 'border-b' : ''}`}>
+                        {categories.map((category) => (
+                            <tr key={category._id} className='border-b'>
                                 <td className="px-4 py-2 capitalize">{category.name}</td>
                                 <td className="px-4 py-2"><img src={category.image} alt="thumbnail" classname="" /></td>
                                 <td className="px-4 py-2">
@@ -132,6 +132,11 @@ function CategoriesSection() {
                         ))}
                     </tbody>
                 </table>
+
+                <button className="text-red-700 border border-red-700 px-4 py-2 mt-4 hover:bg-red-100">
+                    ADD CATEGORY
+                </button>
+
             </div>
 
         </div>

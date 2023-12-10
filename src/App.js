@@ -21,9 +21,9 @@ function App() {
       {/* <AboutUs /> */}
       <AdminDashboard />
       {/* <SellerDashboard /> */}
-      {/* <ColumnChart/> */}
-      {/* <ApexChart/> */}
-      {/* <PieChart/> */}
+      {/* <ColumnChart /> */}
+      {/* <ApexChart /> */}
+      {/* <PieChart /> */}
       {/* <AuthForm /> */}
     </div>
   );

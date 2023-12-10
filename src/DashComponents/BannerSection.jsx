@@ -31,8 +31,8 @@ function BannerSection() {
                         </tr>
                     </thead>
                     <tbody>
-                        {banners.map((banner, index) => (
-                            <tr key={banner._id} className={`${index !== banners.length - 1 ? 'border-b' : ''}`}>
+                        {banners.map((banner) => (
+                            <tr key={banner._id} className='border-b'>
                                 <td class="px-4 py-2">{banner.text}</td>
                                 <td class="px-4 py-2 uppercase">{banner.textButton}</td>
                                 <td class="px-4 py-2 w-1/4">{banner.link}</td>

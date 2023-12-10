@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import "../css/Dashboard.css";
-// import CustomersSection from './CustomersSection';
 
 function OrdersSection() {
     const [orders, setOrders] = useState([]);
     const [usersName, setUsersName] = useState({});
-    const [ordersPerUser, setOrdersPerUser] = useState({});
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/order/getAll`)
@@ -14,7 +12,6 @@ function OrdersSection() {
                 setOrders(response.data.data);
                 const userIds = response.data.data.map(order => order.userId);
                 userIds.forEach(userId => fetchUserName(userId));
-                calculateOrdersPerUser(response.data.data);
             })
             .catch((error) => {
                 console.error(`Error fetching orders' data: `, error);
@@ -34,18 +31,6 @@ function OrdersSection() {
             console.error(`Error fetching users' data: `, error);
         }
     }
-
-    const calculateOrdersPerUser = (ordersData) => {
-        const ordersCount = {};
-        ordersData.forEach(order => {
-            if (ordersCount[order.userId]) {
-                ordersCount[order.userId]++;
-            } else {
-                ordersCount[order.userId] = 1;
-            }
-        });
-        setOrdersPerUser(ordersCount);
-    };
 
     const [sortOrder, setSortOrder] = useState(true);
     const toggleSort = (field) => {
@@ -74,8 +59,8 @@ function OrdersSection() {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map((order, index) => (
-                            <tr key={order._id} className={`${index !== orders.length - 1 ? 'border-b' : ''}`}>
+                        {orders.map((order) => (
+                            <tr key={order._id} className='border-b'>
                                 <td class="px-4 py-2 capitalize">{usersName[order.userId]}</td>
                                 <td class="px-4 py-2">{new Date(order.createdAt).toLocaleDateString('en-GB')}</td>
                                 <td class="px-4 py-2">
@@ -89,7 +74,6 @@ function OrdersSection() {
                     </tbody>
                 </table>
             </div>
-            {/* <CustomersSection ordersPerUser={ordersPerUser} /> */}
         </div>
     );
 }
