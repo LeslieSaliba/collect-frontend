@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-
-
 import SignIn from "../SignUpInComponents/SignIn";
 
 const AuthForm = () => {

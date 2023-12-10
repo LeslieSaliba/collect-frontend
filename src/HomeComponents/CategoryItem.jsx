@@ -1,13 +1,13 @@
 import "../css/categoryitem.css";
 
-function CategoryItem() {
+function CategoryItem({CategoryName, CategoryImage}) {
   return (
     <div className="CategoryItem-cont">
       <div className="categoryItem-img-container">
-        <img src="../Images/vases.png" alt="" className="categoryItem-img" />
+        <img src={CategoryImage} alt="" className="categoryItem-img" />
       </div>
 
-      <h3 className="text-center text-2xl">Vases</h3>
+      <h3 className="text-center text-2xl">{CategoryName}</h3>
     </div>
   );
 }
