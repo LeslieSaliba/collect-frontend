@@ -30,7 +30,7 @@ function HomeCategories() {
         <div className="homeCategeries-link-container italic">
            <a href=""className="text-3xl homeCategeries-link">See all categories <span className="ml-2 text-3xl">&#8594;</span></a>
         </div>
-            <div className="flex flex-wrap items-center justify-between "> 
+            <div className="flex flex-wrap items-center justify-between HomeCategories-items-cont"> 
          {highlightedCategories.map(category => (
             <CategoryItem
               key={category._id}

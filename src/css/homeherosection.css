@@ -2,3 +2,34 @@
     font-family: "Playfair Display";
     padding-bottom: 2rem;
 }
+
+
+@media (max-width: 900px) {
+    .HomeHeroSection-container{
+        background-image: url("../../public/Images/carpets.png");
+        background-size: cover;
+        background-position: center;
+    }
+    .homeherosection-img{
+        display: none;
+    }
+    .homeherosection-title{
+        color: white;
+        font-size: 1.5rem;
+      width: 100%;
+    }
+    .homeherosection-subtitle{
+        color: white;
+        font-size: 1rem;
+       width: 100%;
+    }
+    .homeherosection-title-cont{
+ 
+        text-align: center;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        gap: 0;
+    }
+
+}

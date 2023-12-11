@@ -8,6 +8,7 @@ import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import AdminDashboard from './Pages/AdminDashboard';
 import SellerDashboard from './Pages/SellerDashboard';
+import AllProduct from './Pages/AllProducts';
 import ColumnChart from './Charts/ColumnChart';
 import ApexChart from './Charts/GraphChart';
 import PieChart from './Charts/PieChart';
@@ -23,6 +24,7 @@ function App() {
       <Route path="/" element={<HomePage/>} />
       <Route path="/Wishlist" element={<Wishlist/>} />
       <Route path="/ContactUs" element={<ContactUs/>} />
+      <Route path= '/Shop' element={<AllProduct/>}/>
       <Route path='/Cart' element={<Cart/>}/>
       <Route path='/AboutUs' element={<AboutUs/>}/>
       <Route path= '/NoAccess' element={<NoAccess/>}/>

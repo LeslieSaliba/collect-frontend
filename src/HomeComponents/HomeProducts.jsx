@@ -32,7 +32,7 @@ function HomeProducts() {
       <div className="homeCategeries-link-container mb-5 italic">
         <a href="" className="text-3xl homeCategeries-link">See all products <span className="ml-2 text-3xl">&#8594;</span></a>
       </div>
-      <div className="flex flex-wrap items-center justify-between ">
+      <div className="flex flex-wrap items-center justify-between HomeArrival-items-cont">
       {products.map((product) => (
           <ProductItem
             key={product._id}
