@@ -4,13 +4,15 @@ import "../css/CartDetails.css";
 function CartDetails ({openModal, cartData}) {
   const [shippingCost, setShippingCost] = useState(3);
   const [shippingMethod, setShippingMethod] = useState("delivery");
-  const [total, setTotal] = useState(cartData.totalPrice);
+  const [total, setTotal] = useState(cartData.cart.totalPrice + shippingCost);
+  const userAddress = cartData.user.fullAddress;
+ const userCity = cartData.user.city;
 
   const handleShippingMethodChange = (event) => {
     const method = event.target.value;
     setShippingMethod(method);
 
-    setTotal(method === "delivery" ? cartData.totalPrice + shippingCost : cartData.totalPrice);
+    setTotal(method === "delivery" ? cartData.cart.totalPrice + shippingCost : cartData.cart.totalPrice);
   };
 
   return (
@@ -31,7 +33,7 @@ function CartDetails ({openModal, cartData}) {
                 />
                 delivery at home (under 5-7 days) - 3 ${" "}
                 <p className="text-lg ml-8 italic">
-                  Maktabi building, Clemenceau, Hamra
+                {userCity}, {userAddress.street},  {userAddress.building}, Floor:{userAddress.floor}
                 </p>
               </label>
             </div>
@@ -58,7 +60,7 @@ function CartDetails ({openModal, cartData}) {
               <p className="text-xl mb-4 italic">Total</p>
             </div>
             <div>
-              <p className="text-xl mb-4 italic">${cartData.totalPrice}</p>
+              <p className="text-xl mb-4 italic">${cartData.cart.totalPrice}</p>
               <p className="text-xl mb-4 italic">{shippingMethod === "delivery" ? `$${shippingCost.toFixed(2)}` : "-"}</p>
               <p className="text-xl mb-4 italic">${total.toFixed(2)}</p>
             </div>

@@ -101,10 +101,18 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
             <tr key={product._id}>
               <td className="p-4 text-center">
                 <img src={product.images[0]} alt="Product" className="w-32 h-52 object-cover mx-auto" />
+                <h1 className="uppercase font-bold text-xl text-red-700">{product.status}</h1>
               </td>
               <td className="p-4 text-start text-2xl">{product.name}</td>
               <td className="p-4 text-center text-2xl">
-                <p>{product.price}$</p>
+              {product.discountPercentage !== 0 ? (
+                    <>
+                      <p className="text-green-500">${(product.price - (product.price * product.discountPercentage) / 100).toFixed(2)}</p>
+                      <p className="line-through ">${product.price}</p>
+                    </>
+                  ) : (
+                    <p>{product.price}$</p>
+                  )}
               </td>
               <td className="p-4 ">
                 <button 

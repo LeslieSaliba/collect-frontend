@@ -18,7 +18,7 @@ function Cart() {
     setCartData((prevData) => {
       const updatedData = {
         ...prevData,
-        productIds: prevData.productIds.filter((product) => product._id !== productId),
+        productIds: prevData.cart.productIds.filter((product) => product._id !== productId),
       };
       return updatedData;
     });
@@ -67,7 +67,7 @@ function Cart() {
     setCartData(newCartData);
   };
 
-  if (!cartData || !cartData.productIds || cartData.productIds.length === 0) {
+  if (!cartData || !cartData.cart.productIds || cartData.cart.productIds.length === 0) {
     return (
       <>
         <NavBar />
@@ -94,7 +94,7 @@ function Cart() {
           </p>
         </div>
         <CartTable 
-        cartData={cartData}
+        cartData={cartData.cart}
         onRemoveFromCart={removeFromCart}
         updateCartData={updateCartData}
         />

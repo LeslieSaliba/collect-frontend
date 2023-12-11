@@ -78,7 +78,12 @@ function CartTable({ cartData, onRemoveFromCart}) {
             </td>
             <td className="p-4 text-center">
               <button
-               onClick={() => removeFromCart(localStorage.getItem('cartId'), product._id)}
+               onClick={() => {
+                removeFromCart(localStorage.getItem('cartId'), product._id);
+                if (onRemoveFromCart) {
+                  onRemoveFromCart(product._id);
+                }
+              }}
               >x</button>
             </td>
           </tr>
