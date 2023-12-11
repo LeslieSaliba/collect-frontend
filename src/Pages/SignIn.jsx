@@ -3,12 +3,15 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { Link} from "react-router-dom";
 import "../css/SignIn.css";
+import FailLogIn from "../SignInUpComponents/FailLogIn";
 
 function SignIn() {
     const [email, setEmail] = useState("");
+    const [showFailLogIn, setShowFailLogIn] = useState(false);
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const [FailMessage, setFailMessage] =  useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -35,6 +38,12 @@ function SignIn() {
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("userId", data.data._id);
         localStorage.setItem("role", data.data.role);
+
+        if (data.data.role === "admin") {
+          navigate("/AdminDashboard"); 
+        } else if (data.data.role === "sellerDashboard") {
+          navigate("/sellerDashboard"); 
+        } 
 
         if (data.data.role === "client") {
           const cartResponse = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getByUserID/${data.data._id}`, {
@@ -110,12 +119,17 @@ function SignIn() {
           }
 
           navigate("/");
+          setShowFailLogIn(true);
         }
       } else {
-        console.error("Login failed:", data.message);
+        console.log("Login failed:", data.message);
+        setShowFailLogIn(true);
+        setFailMessage(data.message);
       }
     } catch (error) {
-      console.error("Error during login:", error.message);
+      console.log("Error during login:", error.message);
+      setShowFailLogIn(true);
+      setFailMessage(error.response?.data.message);
     }
   };
 
@@ -196,6 +210,17 @@ function SignIn() {
         alt="Background"
         className="w-1/2 bg-cover bg-center SignIn-img"
       />
+
+       {showFailLogIn && (
+          <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="absolute bg-white p-8 rounded shadow-md">
+              <FailLogIn 
+              message={FailMessage}
+              closeModal={() => setShowFailLogIn(false)}/>
+              </div>
+          </div>
+        )} 
  
     </div>
   );

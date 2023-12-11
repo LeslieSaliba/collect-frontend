@@ -14,26 +14,20 @@ function Cart() {
    const modalRef = useRef(null);
    const [cartData, setCartData] = useState(null);
 
-   const removeFromCart = (productId) => {
-    setCartData((prevData) => {
-      const updatedData = {
-        ...prevData,
-        productIds: prevData.cart.productIds.filter((product) => product._id !== productId),
-      };
-      return updatedData;
-    });
-  };
 
-
-   useEffect(() => {
+   const getCartItems = () => {
     const userId = localStorage.getItem("userId");
-    axios.get(`http://localhost:8000/cart/getByUserID/${userId}`)
+    axios.get(`${process.env.REACT_APP_API_URL}/cart/getByUserID/${userId}`)
       .then(response => {
         setCartData(response.data.data);
       })
       .catch(error => {
         console.error("Error fetching cart data:", error);
       });
+     
+   }
+   useEffect(() => {
+    getCartItems();
   }, []); 
 
   
@@ -95,8 +89,8 @@ function Cart() {
         </div>
         <CartTable 
         cartData={cartData.cart}
-        onRemoveFromCart={removeFromCart}
         updateCartData={updateCartData}
+        OnDelete={getCartItems}
         />
         <CartDetails openModal={openModal} cartData={cartData}  />
         {isModalOpen && (

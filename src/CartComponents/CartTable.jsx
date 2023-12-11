@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-function CartTable({ cartData, onRemoveFromCart}) {
+function CartTable({ cartData, OnDelete}) {
   const token = localStorage.getItem('token');
+
 
   const removeFromCart = async (cartId, productId) => {
     try {
@@ -18,10 +19,9 @@ function CartTable({ cartData, onRemoveFromCart}) {
         }
       );
       
-      console.log(response.data); 
-      if (onRemoveFromCart) {
-        onRemoveFromCart(productId);
-      }
+  
+
+      OnDelete();
 
 
   
@@ -80,9 +80,7 @@ function CartTable({ cartData, onRemoveFromCart}) {
               <button
                onClick={() => {
                 removeFromCart(localStorage.getItem('cartId'), product._id);
-                if (onRemoveFromCart) {
-                  onRemoveFromCart(product._id);
-                }
+        
               }}
               >x</button>
             </td>

@@ -6,6 +6,7 @@ import Footer from '../FrequentlyUsed/Footer';
 import NavBar from '../FrequentlyUsed/NavBar';
 import "../css/wishlist.css";
 
+
 function Wishlist() {
 
   const [wishlistData, setWishlistData] = useState(null);

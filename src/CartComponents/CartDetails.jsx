@@ -62,7 +62,7 @@ function CartDetails ({openModal, cartData}) {
             <div>
               <p className="text-xl mb-4 italic">${cartData.cart.totalPrice}</p>
               <p className="text-xl mb-4 italic">{shippingMethod === "delivery" ? `$${shippingCost.toFixed(2)}` : "-"}</p>
-              <p className="text-xl mb-4 italic">${total.toFixed(2)}</p>
+              <p className="text-xl mb-4 italic">${(cartData.cart.totalPrice + (shippingMethod === "delivery" ? shippingCost : 0)).toFixed(2)}</p>
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@ function CartDetails ({openModal, cartData}) {
           className="bg-white text-red-700 font-bold py-3 px-2 border border-red-700 w-96 text-lg inline-block mt-5 flex justify-center"
         >
           <p>
-            CHECKOUT <span className="ml-12">{total.toFixed(2)}$ </span>{" "}
+            CHECKOUT <span className="ml-12">${(cartData.cart.totalPrice + (shippingMethod === "delivery" ? shippingCost : 0)).toFixed(2)} </span>{" "}
           </p>
         </button>
       </div>

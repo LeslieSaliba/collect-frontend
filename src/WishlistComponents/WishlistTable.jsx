@@ -1,12 +1,24 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import ErrorAddingToCart from './ErrorAddingToCart'
+import ConfirmAddToCart from "../WishlistComponents/AddToCartConfirmation";
 
 function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
   const userRole = localStorage.getItem('role');
   const cartId = localStorage.getItem('cartId');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showFailCartModal, setShowFailCartModal] = useState(false);
+  const [ModalMessage, setModalMessage] = useState('');
+
+
+  const openConfirmationModal = (productId) => {
+    setSelectedProduct(productId);
+    setShowConfirmationModal(true);
+  };
 
   const navigate = useNavigate();
 
@@ -64,17 +76,26 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
       const data = await response.json();
 
       if (response.ok) {
+        setShowFailCartModal(true);
         setAddToCartStatus({ loading: false, success: data.message, error: null });
         removeFromWishlist(localStorage.getItem('wishlistId'), productId);
       } else {
+        setModalMessage(data.message)
         setAddToCartStatus({ loading: false, success: null, error: data.message });
         console.error("API Error:", data.message);
+        setShowFailCartModal(false);
       }
 
     } catch (error) {
+      setShowFailCartModal(true);
       setAddToCartStatus({ loading: false, success: null, error: 'Unable to add product to cart' });
       console.error("API Error:", error.message);
     }
+  };
+
+  const addToCartWithConfirmation = async (productId) => {
+    await addToCart(cartId, productId);
+    setShowConfirmationModal(false);
   };
 
 
@@ -116,7 +137,7 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
               </td>
               <td className="p-4 ">
                 <button 
-                onClick={() => addToCart(localStorage.getItem('cartId'), product._id)}
+                onClick={() => openConfirmationModal(product._id)}
                 className="bg-white text-red-700 font-bold py-1 px-2 border border-red-700 w-64 text-lg  flex justify-center ml-auto">
                   ADD TO CART{' '}
                   <span>
@@ -132,10 +153,31 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
                   x
                 </button>
               </td>
+          {showConfirmationModal && selectedProduct && (
+          <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
+            <div className="fixed inset-0 bg-black opacity-50"></div>
+            <div className="absolute bg-white p-8 rounded shadow-md">
+              <ConfirmAddToCart
+               onConfirm={() => addToCartWithConfirmation(selectedProduct)}
+               closeModal={() => setShowConfirmationModal(false)} 
+               />
+            </div>
+          </div>
+        )}
             </tr>
           ))}
       </tbody>
     </table>
+    {showFailCartModal && (
+          <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
+            <div className="fixed inset-0 bg-black opacity-50"></div>
+            <div className="absolute bg-white p-8 rounded shadow-md">
+              <ErrorAddingToCart 
+              closeModal={() => setShowFailCartModal(false)}
+               Message={ModalMessage}/>
+            </div>
+          </div>
+        )}
   </div>
   );
 }
