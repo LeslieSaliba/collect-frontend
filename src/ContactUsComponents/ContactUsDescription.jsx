@@ -3,6 +3,7 @@ import { useForm } from "@formspree/react";
 import { useState } from "react";
 function ContactUsDescription() {
   const [state, handleSubmit] = useForm("xknldeaq");
+   const [showThanksMessage, setShowThanksMessage] = useState(false);
    const [formData, setFormData] = useState({
      name: "",
      email: "",
@@ -15,10 +16,16 @@ function ContactUsDescription() {
      });
    };
   const handleFormSubmit = (e) => {
-    console.log("hi")
-    e.preventDefault ();
+    console.log("hi");
+    e.preventDefault();
     handleSubmit(e);
-     setFormData({ name: "", email: "", message: "" });
+    setFormData({ name: "", email: "", message: "" });
+   
+    setShowThanksMessage(true);
+    
+    setTimeout(() => {
+      setShowThanksMessage(false);
+    }, 5000); 
   }
   return (
     <div className="  mx-40 ">
@@ -61,7 +68,7 @@ function ContactUsDescription() {
             SEND
           </button>
         </form>
-        {state.succeeded && (
+        {state.succeeded &&  showThanksMessage && (
           <p className="text-red-700">
             Thank you for contacting us! <br />
             We will get back to you shortly.
