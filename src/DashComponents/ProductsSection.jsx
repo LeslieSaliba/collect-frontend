@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import "../css/Dashboard.css";
 import AddProduct from "./DashModals/AddProduct";
+import DeleteProduct from "./DashModals/DeleteProduct";
+import EditProduct from "./DashModals/EditProduct";
 
 function ProductsSection() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [showAddProductModal, setShowAddProductModal] = useState(false);
+    const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
+    const [showEditProductModal, setShowEditProductModal] = useState(false);
+    const [selectedProductID, setSelectedProductID] = useState(null);
+    const token = localStorage.getItem('token');
 
-    useEffect(() => {
+    const fetchProducts = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/product/getAll`)
             .then((response) => {
                 setProducts(response.data.data);
@@ -18,6 +24,10 @@ function ProductsSection() {
             .catch((error) => {
                 console.error(`Error fetching products' data: `, error);
             });
+    }
+
+    useEffect(() => {
+        fetchProducts();
     }, []);
 
     const fetchCategoryName = async (ID) => {
@@ -52,6 +62,70 @@ function ProductsSection() {
         setShowAddProductModal(false);
     };
 
+    const deleteProduct = async (productID) => {
+        console.log('Product ID to be deleted:', productID);
+        try {
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}/product/delete/${productID}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            console.log('Response after delete request:', response);
+            console.log('Product deleted successfully');
+            await fetchProducts();
+            closeDeleteProductModal();
+        } catch (error) {
+            console.error('Error deleting product data: ', error);
+            console.log('Error response:', error.response);
+            if (error.response) {
+                console.log('Error status:', error.response.status);
+                console.log('Error data:', error.response.data);
+            }
+        }
+    };
+
+    const openDeleteProductModal = (productID) => {
+        setSelectedProductID(productID);
+        setShowDeleteProductModal(true);
+    };
+
+    const closeDeleteProductModal = () => {
+        setShowDeleteProductModal(false);
+    };
+
+    const editProduct = async (productID) => {
+        console.log('Product ID to be deleted:', productID);
+        try {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/product/update/${productID}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            console.log('Response after update request:', response);
+            console.log('Product updated successfully');
+            await fetchProducts();
+            closeEditProductModal();
+        } catch (error) {
+            console.error('Error updating product data: ', error);
+            console.log('Error response:', error.response);
+            if (error.response) {
+                console.log('Error status:', error.response.status);
+                console.log('Error data:', error.response.data);
+            }
+        }
+    };
+
+    const openEditProductModal = (productID) => {
+        setSelectedProductID(productID);
+        setShowEditProductModal(true);
+    };
+
+    const closeEditProductModal = () => {
+        setShowEditProductModal(false);
+    };
+
     return (
         <div>
 
@@ -63,7 +137,7 @@ function ProductsSection() {
                             <th className="px-4 py-2 text-left" onClick={() => toggleSort("name")}>Name &#8597;</th>
                             <th className="px-4 py-2 text-left">Thumbnail</th>
                             <th className="px-4 py-2 text-left" onClick={() => toggleSort("price")}>Price &#8597;</th>
-                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("disocuntPercentage")}>Discounted &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("discountPercentage")}>Discounted &#8597;</th>
                             <th className="px-4 py-2 text-left">Status</th>
                         </tr>
                     </thead>
@@ -77,13 +151,33 @@ function ProductsSection() {
                                 <td className="px-4 py-2 align-middle">{product.discountPercentage !== 0 ? `${product.discountPercentage}%` : '-'}</td>
                                 <td className="px-4 py-2 align-middle">{product.status}</td>
                                 <td className="px-4 py-2 flex">
-                                    <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" />
-                                    <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete" />
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit"
+                                        onClick={() => openEditProductModal(product._id)} />
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete"
+                                        onClick={() => openDeleteProductModal(product._id)} />
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                {showDeleteProductModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeDeleteProductModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <DeleteProduct fetchProducts={fetchProducts} closeDeleteProductModal={closeDeleteProductModal} deleteProduct={deleteProduct} productID={selectedProductID} />
+                        </div>
+                    </div>
+                )}
+                {showEditProductModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeEditProductModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <EditProduct fetchProducts={fetchProducts} closeEditProductModal={closeEditProductModal} editProduct={editProduct} productID={selectedProductID} />
+                        </div>
+                    </div>
+                )}
 
                 <button className="text-red-700 border border-red-700 px-4 py-2 mt-4 hover:bg-red-100"
                     onClick={openAddProductModal}>
@@ -94,7 +188,7 @@ function ProductsSection() {
                         <div className="fixed inset-0 bg-black opacity-50"></div>
                         <div className="bg-white p-6 relative z-10">
                             <button onClick={closeAddProductModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
-                            <AddProduct />
+                            <AddProduct fetchProducts={fetchProducts} closeAddProductModal={closeAddProductModal} />
                         </div>
                     </div>
                 )}

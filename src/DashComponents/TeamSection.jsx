@@ -11,6 +11,7 @@ function TeamSection() {
     const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
     const [showEditUserModal, setShowEditUserModal] = useState(false);
     const [selectedUserID, setSelectedUserID] = useState(null);
+    const token = localStorage.getItem('token');
 
     const fetchTeam = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/user/getAll`)
@@ -51,7 +52,7 @@ function TeamSection() {
             const response = await axios.delete(`${process.env.REACT_APP_API_URL}/user/delete/${userID}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Nzc1OWRhZTBmNzQ1ZDZiMGQ0OTc0MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMjMzMjQwMCwiZXhwIjoxNzAyMzM2MDAwfQ.zZsJRVb-yG6luJqUEY6j2cRk9zNIyCocMiycCJsTM94`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             console.log('User deleted successfully');
@@ -80,7 +81,7 @@ function TeamSection() {
             const response = await axios.put(`${process.env.REACT_APP_API_URL}/user/update/${userID}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Nzc1OWRhZTBmNzQ1ZDZiMGQ0OTc0MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMjMzMjQwMCwiZXhwIjoxNzAyMzM2MDAwfQ.zZsJRVb-yG6luJqUEY6j2cRk9zNIyCocMiycCJsTM94`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             console.log('User updated successfully');
@@ -125,8 +126,8 @@ function TeamSection() {
                                     <td className="px-4 py-2">{teamMember.email}</td>
                                     <td className="px-4 py-2">{teamMember.role}</td>
                                     <td className="px-4 py-2 flex">
-                                        <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" 
-                                        onClick={() => openEditUserModal(teamMember._id)}/>
+                                        <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit"
+                                            onClick={() => openEditUserModal(teamMember._id)} />
                                         <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete"
                                             onClick={() => openDeleteUserModal(teamMember._id)} />
                                     </td>
@@ -139,6 +140,7 @@ function TeamSection() {
                     <div className="fixed inset-0 z-50 flex items-center justify-center">
                         <div className="fixed inset-0 bg-black opacity-50"></div>
                         <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeDeleteUserModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
                             <DeleteUser fetchTeam={fetchTeam} closeDeleteUserModal={closeDeleteUserModal} deleteUser={deleteUser} userID={selectedUserID} />
                         </div>
                     </div>
@@ -147,6 +149,7 @@ function TeamSection() {
                     <div className="fixed inset-0 z-50 flex items-center justify-center">
                         <div className="fixed inset-0 bg-black opacity-50"></div>
                         <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeEditUserModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
                             <EditUser fetchTeam={fetchTeam} closeEditUserModal={closeEditUserModal} editUser={editUser} userID={selectedUserID} />
                         </div>
                     </div>

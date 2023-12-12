@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function AddProduct() {
+function AddProduct(fetchProducts, closeAddProductModal) {
   const [name, setName] = useState('');
   const [images, setImages] = useState([]);
   const [description, setDescription] = useState('');

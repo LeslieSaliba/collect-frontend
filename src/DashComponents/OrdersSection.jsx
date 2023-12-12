@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import "../css/Dashboard.css";
+import DeleteOrder from "./DashModals/DeleteOrder";
+import EditOrder from "./DashModals/EditOrder";
 
 function OrdersSection() {
     const [orders, setOrders] = useState([]);
     const [usersName, setUsersName] = useState({});
+    const [showDeleteOrderModal, setShowDeleteOrderModal] = useState(false);
+    const [showEditOrderModal, setShowEditOrderModal] = useState(false);
+    const [selectedOrderID, setSelectedOrderID] = useState(null);
+    const token = localStorage.getItem('token');
 
-    useEffect(() => {
+    const fetchOrders = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/order/getAll`)
             .then((response) => {
                 setOrders(response.data.data);
@@ -16,6 +22,10 @@ function OrdersSection() {
             .catch((error) => {
                 console.error(`Error fetching orders' data: `, error);
             });
+    }
+
+    useEffect(() => {
+        fetchOrders();
     }, []);
 
     const fetchUserName = async (ID) => {
@@ -43,6 +53,70 @@ function OrdersSection() {
         setSortOrder(!sortOrder);
     };
 
+    const deleteOrder = async (orderID) => {
+        console.log('Order ID to be deleted:', orderID);
+        try {
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}/order/delete/${orderID}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            console.log('Response after delete request:', response);
+            console.log('Order deleted successfully');
+            await fetchOrders();
+            closeDeleteOrderModal();
+        } catch (error) {
+            console.error('Error deleting order data: ', error);
+            console.log('Error response:', error.response);
+            if (error.response) {
+                console.log('Error status:', error.response.status);
+                console.log('Error data:', error.response.data);
+            }
+        }
+    };
+
+    const openDeleteOrderModal = (orderID) => {
+        setSelectedOrderID(orderID);
+        setShowDeleteOrderModal(true);
+    };
+
+    const closeDeleteOrderModal = () => {
+        setShowDeleteOrderModal(false);
+    };
+
+    const editOrder = async (orderID) => {
+        console.log('Order ID to be deleted:', orderID);
+        try {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/order/update/${orderID}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            console.log('Response after update request:', response);
+            console.log('Order updated successfully');
+            await fetchOrders();
+            closeEditOrderModal();
+        } catch (error) {
+            console.error('Error updating order data: ', error);
+            console.log('Error response:', error.response);
+            if (error.response) {
+                console.log('Error status:', error.response.status);
+                console.log('Error data:', error.response.data);
+            }
+        }
+    };
+
+    const openEditOrderModal = (orderID) => {
+        setSelectedOrderID(orderID);
+        setShowEditOrderModal(true);
+    };
+
+    const closeEditOrderModal = () => {
+        setShowEditOrderModal(false);
+    };
+
     return (
         <div>
 
@@ -68,11 +142,36 @@ function OrdersSection() {
                                 </td>
                                 <td className="px-4 py-2">{order.totalPrice} $</td>
                                 <td className="px-4 py-2">{order.status}</td>
-                                <td className="px-4 py-2 italic text-red-700">view details</td>
+                                <td className="px-4 py-2 flex">
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit"
+                                        onClick={() => openEditOrderModal(order._id)} />
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete"
+                                        onClick={() => openDeleteOrderModal(order._id)} />
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+
+                {showDeleteOrderModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeDeleteOrderModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <DeleteOrder fetchOrders={fetchOrders} closeDeleteOrderModal={closeDeleteOrderModal} deleteOrder={deleteOrder} orderID={selectedOrderID} />
+                        </div>
+                    </div>
+                )}
+                {showEditOrderModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeEditOrderModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <EditOrder fetchOrders={fetchOrders} closeEditOrderModal={closeEditOrderModal} editOrder={editOrder} orderID={selectedOrderID} />
+                        </div>
+                    </div>
+                )}
+
             </div>
         </div>
     );

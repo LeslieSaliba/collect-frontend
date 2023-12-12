@@ -3,6 +3,7 @@ import axios from 'axios';
 import "../css/Dashboard.css";
 import AddCategory from "./DashModals/AddCategory";
 import DeleteCategory from "./DashModals/DeleteCategory";
+import EditCategory from "./DashModals/EditCategory";
 
 function CategoriesSection() {
     const [categories, setCategories] = useState([]);
@@ -10,7 +11,9 @@ function CategoriesSection() {
     const [highlightedCategories, setHighlightedCategories] = useState([]);
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
     const [showDeleteCategoryModal, setShowDeleteCategoryModal] = useState(false);
+    const [showEditCategoryModal, setShowEditCategoryModal] = useState(false);
     const [selectedCategoryID, setSelectedCategoryID] = useState(null);
+    const token = localStorage.getItem('token');
 
     const fetchCategories = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/category/getAll`)
@@ -96,7 +99,7 @@ function CategoriesSection() {
             const response = await axios.delete(`${process.env.REACT_APP_API_URL}/category/delete/${categoryID}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Nzc1OWRhZTBmNzQ1ZDZiMGQ0OTc0MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMjMzMjQwMCwiZXhwIjoxNzAyMzM2MDAwfQ.zZsJRVb-yG6luJqUEY6j2cRk9zNIyCocMiycCJsTM94`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             console.log('Response after delete request:', response);
@@ -106,10 +109,10 @@ function CategoriesSection() {
             closeDeleteCategoryModal();
         } catch (error) {
             console.error('Error deleting category data: ', error);
-            console.log('Error response:', error.response); // Log error response
+            console.log('Error response:', error.response);
             if (error.response) {
-                console.log('Error status:', error.response.status); // Log error status
-                console.log('Error data:', error.response.data); // Log error data
+                console.log('Error status:', error.response.status);
+                console.log('Error data:', error.response.data);
             }
         }
     };
@@ -121,6 +124,38 @@ function CategoriesSection() {
 
     const closeDeleteCategoryModal = () => {
         setShowDeleteCategoryModal(false);
+    };
+
+    const editCategory = async (categoryID) => {
+        console.log('Cat ID to be deleted:', categoryID);
+        try {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/category/update/${categoryID}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            console.log('Response after update request:', response);
+            console.log('Category updated successfully');
+            await fetchCategories();
+            closeEditCategoryModal();
+        } catch (error) {
+            console.error('Error updating category data: ', error);
+            console.log('Error response:', error.response);
+            if (error.response) {
+                console.log('Error status:', error.response.status);
+                console.log('Error data:', error.response.data);
+            }
+        }
+    };
+
+    const openEditCategoryModal = (categoryID) => {
+        setSelectedCategoryID(categoryID);
+        setShowEditCategoryModal(true);
+    };
+
+    const closeEditCategoryModal = () => {
+        setShowEditCategoryModal(false);
     };
 
     return (
@@ -175,7 +210,8 @@ function CategoriesSection() {
                                     />
                                 </td>
                                 <td className="px-4 py-2 flex">
-                                    <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" />
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit"
+                                        onClick={() => openEditCategoryModal(category._id)} />
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete"
                                         onClick={() => openDeleteCategoryModal(category._id)} />
                                 </td>
@@ -188,7 +224,17 @@ function CategoriesSection() {
                     <div className="fixed inset-0 z-50 flex items-center justify-center">
                         <div className="fixed inset-0 bg-black opacity-50"></div>
                         <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeDeleteCategoryModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
                             <DeleteCategory fetchCategories={fetchCategories} closeDeleteCategoryModal={closeDeleteCategoryModal} deleteCategory={deleteCategory} categoryID={selectedCategoryID} />
+                        </div>
+                    </div>
+                )}
+                {showEditCategoryModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeEditCategoryModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <EditCategory fetchCategories={fetchCategories} closeEditCategoryModal={closeEditCategoryModal} editCategory={editCategory} categoryID={selectedCategoryID} />
                         </div>
                     </div>
                 )}
