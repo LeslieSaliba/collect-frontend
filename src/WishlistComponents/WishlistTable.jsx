@@ -76,14 +76,14 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
       const data = await response.json();
 
       if (response.ok) {
-        setShowFailCartModal(true);
+        setShowFailCartModal(false);
         setAddToCartStatus({ loading: false, success: data.message, error: null });
         removeFromWishlist(localStorage.getItem('wishlistId'), productId);
       } else {
         setModalMessage(data.message)
         setAddToCartStatus({ loading: false, success: null, error: data.message });
         console.error("API Error:", data.message);
-        setShowFailCartModal(false);
+        setShowFailCartModal(true);
       }
 
     } catch (error) {

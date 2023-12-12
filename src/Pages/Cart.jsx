@@ -5,14 +5,41 @@ import CartEmpty from "../CartComponents/CartEmpty";
 import CartTable from "../CartComponents/CartTable";
 import Footer from '../FrequentlyUsed/Footer';
 import NavBar from '../FrequentlyUsed/NavBar';
+import Thankyou from "../CartComponents/ThankyouMessage";
 import "../css/cart.css";
 import ConfirmCheckout from "../CartComponents/ConfirmCheckout";
 
 function Cart() {
   const [shippingMethod, setShippingMethod] = useState("delivery");
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const [showThankyou, setShowThankyou] = useState(false);
+   const token =  localStorage.getItem('token');
+   const cartId = localStorage.getItem('cartId');
    const modalRef = useRef(null);
    const [cartData, setCartData] = useState(null);
+
+
+   const handleConfirm = async () => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/order/create/${cartId}`, {
+        shippingMethod: shippingMethod,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data);
+      closeModal();
+      setShowThankyou(true);
+      updateCartData(response.data.updatedCart);
+
+    } catch (error) {
+      console.error("Error creating order:", error.message);
+    }
+  };
+
 
 
    const getCartItems = () => {
@@ -72,6 +99,16 @@ function Cart() {
             </p>
           </div>
           <CartEmpty />
+          {showThankyou && (
+          <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="absolute bg-white p-8 rounded shadow-md">
+            <Thankyou 
+            closeModal={() => setShowThankyou(false)}
+            />
+          </div>
+        </div>
+      )}
         </div>
         <Footer />
       </>
@@ -102,12 +139,13 @@ function Cart() {
             >
               <ConfirmCheckout
                closeModal={closeModal} 
-               shippingMethod={shippingMethod}
-               updateCartData={updateCartData}
+               confirm = {handleConfirm}
                />
             </div>
           </div>
         )}
+
+      
       </div>
       <Footer />
     </>

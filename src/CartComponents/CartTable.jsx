@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ConfirmDelete from "./ConfirmDelete";
+
 
 function CartTable({ cartData, OnDelete}) {
   const token = localStorage.getItem('token');
+  const cartId = localStorage.getItem('cartId');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
+
+  const openConfirmationModal = (productId) => {
+    setSelectedProduct(productId);
+    setShowConfirmationModal(true);
+  };
 
   const removeFromCart = async (cartId, productId) => {
     try {
@@ -18,9 +28,8 @@ function CartTable({ cartData, OnDelete}) {
           },
         }
       );
-      
-  
 
+      setShowConfirmationModal(false);
       OnDelete();
 
 
@@ -31,6 +40,10 @@ function CartTable({ cartData, OnDelete}) {
     }
   };
 
+  const removeFromCartWithConfirmation = async (productId) => {
+    await removeFromCart(cartId, productId);
+    setShowConfirmationModal(false);
+  };
 
   
   return (
@@ -78,12 +91,27 @@ function CartTable({ cartData, OnDelete}) {
             </td>
             <td className="p-4 text-center">
               <button
-               onClick={() => {
-                removeFromCart(localStorage.getItem('cartId'), product._id);
+              onClick = {() => {
+                openConfirmationModal(product._id)
+                }
+              }
+              //  onClick={() => {
+              //   removeFromCart(localStorage.getItem('cartId'), product._id);
         
-              }}
+              // }}
               >x</button>
             </td>
+            {showConfirmationModal && selectedProduct && (
+          <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
+            <div className="fixed inset-0 bg-black opacity-50"></div>
+            <div className="absolute bg-white p-8 rounded shadow-md">
+              <ConfirmDelete
+               onConfirm={() => removeFromCartWithConfirmation(selectedProduct)}
+               closeModal={() => setShowConfirmationModal(false)} 
+               />
+            </div>
+          </div>
+        )}
           </tr>
         ))}
       </tbody>

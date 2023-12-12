@@ -1,9 +1,12 @@
-function ErrorAddingToCart ({closeModal,Message}) {
+function Thankyou ({closeModal}) {
     return (
         <div className="  flex items-center justify-center">
           <div className="text-center">
             <p className="text-2xl m-12 w-2/3 mx-auto">
-             {Message}
+               Thank you for your order!
+                You have received a confirmation email.
+
+            <div>Follow us to get all the latest news about Collect!</div>
             </p>
             <div className="flex justify-end bg-gray-100 p-6 items-center">
               <button 
@@ -13,10 +16,8 @@ function ErrorAddingToCart ({closeModal,Message}) {
               </button>
             </div>
           </div>
-          </div>
-
+        </div>
       );
     }
     
-    export default ErrorAddingToCart;
-    
+    export default Thankyou;
