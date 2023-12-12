@@ -46,29 +46,29 @@ function OrdersSection() {
     return (
         <div>
 
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+            <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("userId")}>Name &#8597;</th>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("createdAt")}>Date &#8597;</th>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("productIds")}>Qty &#8597;</th>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("totalPrice")}>Total &#8597;</th>
-                            <th class="px-4 py-2 text-left">Status</th>
-                            <th class="px-4 py-2 text-left"></th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("userId")}>Name &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("createdAt")}>Date &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("productIds")}>Qty &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("totalPrice")}>Total &#8597;</th>
+                            <th className="px-4 py-2 text-left">Status</th>
+                            <th className="px-4 py-2 text-left"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {orders.map((order) => (
                             <tr key={order._id} className='border-b'>
-                                <td class="px-4 py-2 capitalize">{usersName[order.userId]}</td>
-                                <td class="px-4 py-2">{new Date(order.createdAt).toLocaleDateString('en-GB')}</td>
-                                <td class="px-4 py-2">
+                                <td className="px-4 py-2 capitalize">{usersName[order.userId]}</td>
+                                <td className="px-4 py-2">{new Date(order.createdAt).toLocaleDateString('en-GB')}</td>
+                                <td className="px-4 py-2">
                                     {order.productIds.length === 1 ? '1 product' : `${order.productIds.length} products`}
                                 </td>
-                                <td class="px-4 py-2">{order.totalPrice} $</td>
-                                <td class="px-4 py-2">{order.status}</td>
-                                <td class="px-4 py-2 italic text-red-700">view details</td>
+                                <td className="px-4 py-2">{order.totalPrice} $</td>
+                                <td className="px-4 py-2">{order.status}</td>
+                                <td className="px-4 py-2 italic text-red-700">view details</td>
                             </tr>
                         ))}
                     </tbody>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import "../css/Dashboard.css";
+import AddProduct from "./DashModals/AddProduct";
 
 function ProductsSection() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [showAddProductModal, setShowAddProductModal] = useState(false);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/product/getAll`)
@@ -42,31 +44,39 @@ function ProductsSection() {
         setSortOrder(!sortOrder);
     };
 
+    const openAddProductModal = () => {
+        setShowAddProductModal(true);
+    };
+
+    const closeAddProductModal = () => {
+        setShowAddProductModal(false);
+    };
+
     return (
         <div>
 
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+            <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 text-left">Category</th>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("name")}>Name &#8597;</th>
-                            <th class="px-4 py-2 text-left">Thumbnail</th>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("price")}>Price &#8597;</th>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("disocuntPercentage")}>Discounted &#8597;</th>
-                            <th class="px-4 py-2 text-left">Status</th>
+                            <th className="px-4 py-2 text-left">Category</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("name")}>Name &#8597;</th>
+                            <th className="px-4 py-2 text-left">Thumbnail</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("price")}>Price &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("disocuntPercentage")}>Discounted &#8597;</th>
+                            <th className="px-4 py-2 text-left">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {products.map((product) => (
                             <tr key={product._id} className='border-b'>
                                 <td className="px-4 py-2 align-middle capitalize">{categories[product.categoryID]}</td>
-                                <td class="px-4 py-2 align-middle capitalize">{product.name}</td>
-                                <td class="px-4 py-2 align-middle"><img src={product.images[0]} alt="product" /></td>
-                                <td class="px-4 py-2 align-middle">{product.price}</td>
-                                <td class="px-4 py-2 align-middle">{product.discountPercentage !== 0 ? `${product.discountPercentage}%` : '-'}</td>
-                                <td class="px-4 py-2 align-middle">{product.status}</td>
-                                <td class="px-4 py-2 flex">
+                                <td className="px-4 py-2 align-middle capitalize">{product.name}</td>
+                                <td className="px-4 py-2 align-middle"><img src={product.images[0]} alt="product" /></td>
+                                <td className="px-4 py-2 align-middle">{product.price}</td>
+                                <td className="px-4 py-2 align-middle">{product.discountPercentage !== 0 ? `${product.discountPercentage}%` : '-'}</td>
+                                <td className="px-4 py-2 align-middle">{product.status}</td>
+                                <td className="px-4 py-2 flex">
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" />
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete" />
                                 </td>
@@ -75,9 +85,19 @@ function ProductsSection() {
                     </tbody>
                 </table>
 
-                <button className="text-red-700 border border-red-700 px-4 py-2 mt-4 hover:bg-red-100">
+                <button className="text-red-700 border border-red-700 px-4 py-2 mt-4 hover:bg-red-100"
+                    onClick={openAddProductModal}>
                     ADD PRODUCT
                 </button>
+                {showAddProductModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeAddProductModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <AddProduct />
+                        </div>
+                    </div>
+                )}
 
             </div>
 

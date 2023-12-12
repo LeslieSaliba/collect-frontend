@@ -12,22 +12,22 @@ import AnalyticsSection from '../DashComponents/AnalyticsSection';
 function AdminDashboard() {
     return (
         <div className='dashboard-flex'>
-            <BrowserRouter>
+
                 <div className='dashboard-sidebar'>
                     <SidebarAdmin />
                 </div>
                 <div className='dashboard-main'>
                     <Routes>
-                        <Route path="/admin/orders" element={<OrdersSection />} />
-                        <Route path="/admin/categories" element={<CategoriesSection />} />
-                        <Route path="/admin/products" element={<ProductsSection />} />
-                        <Route path="/admin/banner" element={<BannerSection />} />
-                        <Route path="/admin/customers" element={<CustomersSection />} />
-                        <Route path="/admin/team" element={<TeamSection />} />
-                        <Route path="/admin/analytics" element={<AnalyticsSection />} />
+                        <Route path="orders" element={<OrdersSection />} />
+                        <Route path="categories" element={<CategoriesSection />} />
+                        <Route path="products" element={<ProductsSection />} />
+                        <Route path="banner" element={<BannerSection />} />
+                        <Route path="customers" element={<CustomersSection />} />
+                        <Route path="team" element={<TeamSection />} />
+                        <Route path="analytics" element={<AnalyticsSection />} />
                     </Routes>
                 </div>
-            </BrowserRouter>
+
         </div>
     );
 }

@@ -34,14 +34,14 @@ function CustomersSection() {
     return (
         <div>
 
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+            <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 text-left">Name &#8597;</th>
-                            <th class="px-4 py-2 text-left">Email &#8597;</th>
-                            <th class="px-4 py-2 text-left">Number of orders &#8597;</th>
-                            <th class="px-4 py-2 text-left"></th>
+                            <th className="px-4 py-2 text-left">Name &#8597;</th>
+                            <th className="px-4 py-2 text-left">Email &#8597;</th>
+                            <th className="px-4 py-2 text-left">Number of orders &#8597;</th>
+                            <th className="px-4 py-2 text-left"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,10 +49,10 @@ function CustomersSection() {
                             .filter((customer) => customer.role === 'client')
                             .map((customer) => (
                                 <tr key={customer._id} className='border-b'>
-                                    <td class="px-4 py-2 capitalize">{`${customer.fullName.firstName} ${customer.fullName.lastName}`}</td>
-                                    <td class="px-4 py-2">{customer.email}</td>
-                                    <td class="px-4 py-2" >{ordersPerUser[customer._id] || 0}</td>
-                                    <td class="px-4 py-2 italic text-red-700">view details</td>
+                                    <td className="px-4 py-2 capitalize">{`${customer.fullName.firstName} ${customer.fullName.lastName}`}</td>
+                                    <td className="px-4 py-2">{customer.email}</td>
+                                    <td className="px-4 py-2" >{ordersPerUser[customer._id] || 0}</td>
+                                    <td className="px-4 py-2 italic text-red-700">view details</td>
                                 </tr>
                             ))}
                     </tbody>

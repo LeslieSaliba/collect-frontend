@@ -18,27 +18,27 @@ function BannerSection() {
     return (
         <div>
 
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+            <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 text-left">Text</th>
-                            <th class="px-4 py-2 text-left">Text button</th>
-                            <th class="px-4 py-2 text-left">Link</th>
-                            <th class="px-4 py-2 text-left">Preview</th>
-                            <th class="px-4 py-2 text-left">Highlighted</th>
-                            <th class="px-4 py-2 text-left"></th>
+                            <th className="px-4 py-2 text-left">Text</th>
+                            <th className="px-4 py-2 text-left">Text button</th>
+                            <th className="px-4 py-2 text-left">Link</th>
+                            <th className="px-4 py-2 text-left">Preview</th>
+                            <th className="px-4 py-2 text-left">Highlighted</th>
+                            <th className="px-4 py-2 text-left"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {banners.map((banner) => (
                             <tr key={banner._id} className='border-b'>
-                                <td class="px-4 py-2">{banner.text}</td>
-                                <td class="px-4 py-2 uppercase">{banner.textButton}</td>
-                                <td class="px-4 py-2 w-1/4">{banner.link}</td>
-                                <td class="px-4 py-2"><img src={banner.image} alt="" /></td>
-                                <td class="px-4 py-2"><input type="checkbox" /></td>
-                                <td class="px-4 py-2">                                    <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" /></td>
+                                <td className="px-4 py-2">{banner.text}</td>
+                                <td className="px-4 py-2 uppercase">{banner.textButton}</td>
+                                <td className="px-4 py-2 w-1/4">{banner.link}</td>
+                                <td className="px-4 py-2"><img src={banner.image} alt="" /></td>
+                                <td className="px-4 py-2"><input type="checkbox" /></td>
+                                <td className="px-4 py-2">                                    <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" /></td>
                             </tr>
                         ))}
                     </tbody>

@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import "../css/Dashboard.css";
+import AddCategory from "./DashModals/AddCategory";
+import DeleteCategory from "./DashModals/DeleteCategory";
 
 function CategoriesSection() {
     const [categories, setCategories] = useState([]);
     const [productsInfo, setProductsInfo] = useState([]);
     const [highlightedCategories, setHighlightedCategories] = useState([]);
+    const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+    const [showDeleteCategoryModal, setShowDeleteCategoryModal] = useState(false);
+    const [selectedCategoryID, setSelectedCategoryID] = useState(null);
 
-    useEffect(() => {
+    const fetchCategories = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/category/getAll`)
             .then((response) => {
                 setCategories(response.data.data);
@@ -19,6 +24,10 @@ function CategoriesSection() {
             .catch((error) => {
                 console.error(`Error fetching categories' data: `, error);
             });
+    }
+
+    useEffect(() => {
+        fetchCategories();
     }, []);
 
     const handleProductsInfo = async (categoryName) => {
@@ -29,7 +38,7 @@ function CategoriesSection() {
                 [categoryName]: response.data.data
             }));
         } catch (error) {
-            console.error(`Error fetching users' data: `, error);
+            console.error(`Error fetching products' data: `, error);
         }
     }
 
@@ -73,19 +82,60 @@ function CategoriesSection() {
         setSortOrder(!sortOrder);
     };
 
+    const openAddCategoryModal = () => {
+        setShowAddCategoryModal(true);
+    };
+
+    const closeAddCategoryModal = () => {
+        setShowAddCategoryModal(false);
+    };
+
+    const deleteCategory = async (categoryID) => {
+        console.log('Cat ID to be deleted:', categoryID);
+        try {
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}/category/delete/${categoryID}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Nzc1OWRhZTBmNzQ1ZDZiMGQ0OTc0MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMjMzMjQwMCwiZXhwIjoxNzAyMzM2MDAwfQ.zZsJRVb-yG6luJqUEY6j2cRk9zNIyCocMiycCJsTM94`,
+                },
+            });
+            console.log('Response after delete request:', response);
+            console.log('token: ', `${process.env.TOKEN}`);
+            console.log('Category deleted successfully');
+            await fetchCategories();
+            closeDeleteCategoryModal();
+        } catch (error) {
+            console.error('Error deleting category data: ', error);
+            console.log('Error response:', error.response); // Log error response
+            if (error.response) {
+                console.log('Error status:', error.response.status); // Log error status
+                console.log('Error data:', error.response.data); // Log error data
+            }
+        }
+    };
+
+    const openDeleteCategoryModal = (categoryID) => {
+        setSelectedCategoryID(categoryID);
+        setShowDeleteCategoryModal(true);
+    };
+
+    const closeDeleteCategoryModal = () => {
+        setShowDeleteCategoryModal(false);
+    };
+
     return (
         <div>
 
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+            <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("name")}>Category &#8597;</th>
-                            <th class="px-4 py-2 text-left">Thumbnail</th>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("category")}>Qty &#8597;</th>
-                            <th class="px-4 py-2 text-left" onClick={() => toggleSort("discountPercentage")}>Discounted &#8597;</th>
-                            <th class="px-4 py-2 text-left">Highlighted &#8597;</th>
-                            <th class="px-4 py-2 text-left"></th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("name")}>Category &#8597;</th>
+                            <th className="px-4 py-2 text-left">Thumbnail</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("category")}>Qty &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("discountPercentage")}>Discounted &#8597;</th>
+                            <th className="px-4 py-2 text-left">Highlighted &#8597;</th>
+                            <th className="px-4 py-2 text-left"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -114,7 +164,7 @@ function CategoriesSection() {
                                         "-"
                                     )}
                                 </td>
-                                <td class="px-4 py-2">
+                                <td className="px-4 py-2">
                                     <input
                                         type="checkbox"
                                         checked={highlightedCategories.includes(category.name) && category.highlighted}
@@ -124,18 +174,38 @@ function CategoriesSection() {
                                         }}
                                     />
                                 </td>
-                                <td class="px-4 py-2 flex">
+                                <td className="px-4 py-2 flex">
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit" />
-                                    <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete" />
+                                    <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete"
+                                        onClick={() => openDeleteCategoryModal(category._id)} />
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
 
-                <button className="text-red-700 border border-red-700 px-4 py-2 mt-4 hover:bg-red-100">
+                {showDeleteCategoryModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <DeleteCategory fetchCategories={fetchCategories} closeDeleteCategoryModal={closeDeleteCategoryModal} deleteCategory={deleteCategory} categoryID={selectedCategoryID} />
+                        </div>
+                    </div>
+                )}
+
+                <button className="text-red-700 border border-red-700 px-4 py-2 mt-4 hover:bg-red-100"
+                    onClick={openAddCategoryModal}>
                     ADD CATEGORY
                 </button>
+                {showAddCategoryModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={closeAddCategoryModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <AddCategory fetchCategories={fetchCategories} closeAddCategoryModal={closeAddCategoryModal} />
+                        </div>
+                    </div>
+                )}
 
             </div>
 
