@@ -7,7 +7,7 @@ function HomeArrival() {
        
        
       
-        <p class="text-3xl text-center  underline HomeArrival-title">LATEST ARRIVALS</p>
+        <p className="text-3xl text-center  underline HomeArrival-title">LATEST ARRIVALS</p>
         <div className="homeCategeries-link-container mb-5 italic">
         <a href=""className="text-3xl homeCategeries-link">See all arrivals <span className="ml-2 text-3xl">&#8594;</span></a>
         </div>

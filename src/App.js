@@ -1,11 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
+import './App.css';
 import HomePage from './Pages/HomePage';
 import ContactUs from './Pages/ContactUs';
 import AboutUs from './Pages/AboutUs';
 import Wishlist from "./Pages/Wishlist"
 import Cart from "./Pages/Cart";
-// import SignIn from "./Pages/SignIn";
-// import SignUp from "./Pages/SignUp";
 import AdminDashboard from './Pages/AdminDashboard';
 import SellerDashboard from './Pages/SellerDashboard';
 import ColumnChart from './Charts/ColumnChart';

@@ -142,7 +142,7 @@ function CategoriesSection() {
                         {categories.map((category) => (
                             <tr key={category._id} className='border-b'>
                                 <td className="px-4 py-2 capitalize">{category.name}</td>
-                                <td className="px-4 py-2"><img src={category.image} alt="thumbnail" classname="" /></td>
+                                <td className="px-4 py-2"><img src={category.image} alt="thumbnail" className="" /></td>
                                 <td className="px-4 py-2">
                                     {productsInfo[category.name] ? (
                                         <span>

@@ -3,7 +3,7 @@ import "../css/ContactUsDescription.css";
 function ContactUsDescription() {
   return (
     <div className="  mx-40 ">
-      <p class="text-3xl text-center  underline HomeArrival-title">
+      <p className="text-3xl text-center  underline HomeArrival-title">
         GET IN TOUCH
       </p>
       <div className="text-center ">
