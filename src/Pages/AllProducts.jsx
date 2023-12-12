@@ -424,16 +424,16 @@ const AllProduct = () => {
                 </Transition>
               </Menu>
 
-              <button
+              {/* <button
                 type="button"
                 className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
               >
                 <span className="sr-only">View grid</span>
-              </button>
+              </button> */}
               {/* mobile */}
               <button
                 type="button"
-                className="-m-2 ml-4 p-2 bg-red-600text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                className="-m-2 mr-4 ml-1 p-2 bg-red-600text-gray-400 hover:text-gray-500 sm:ml-1 lg:hidden"
                 onClick={showModal}
               >
                 <span className="sr-only">Filters</span>
@@ -443,7 +443,7 @@ const AllProduct = () => {
           </div>
 
           <section aria-labelledby="products-heading" className="pb-20 pt-6">
-            <div className="grid  grid-cols-4">
+            <div className="grid  lg:grid-cols-4  grid-cols-1">
               {/* Filters  2*/}
 
               <form className="hidden lg:block">
@@ -570,8 +570,9 @@ const AllProduct = () => {
               {/* Product grid */}
 
               <div className="col-span-3 px-6 ">
-                {/* <ProductItem products={currentPosts} /> */}
-                <div className="flex flex-wrap items-center justify-between">
+               
+                
+                <div className="flex flex-wrap items-center justify-center md:justify-between sm:justify-between lg:justify-between">
                   {currentPosts.map((product) => (
                     <ProductItem
                       Key={product._id}
