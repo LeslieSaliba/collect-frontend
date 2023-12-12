@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import './App.css';
 import HomePage from './Pages/HomePage';
 import ContactUs from './Pages/ContactUs';
 import AboutUs from './Pages/AboutUs';
@@ -12,8 +13,8 @@ import AllProduct from './Pages/AllProducts';
 import ColumnChart from './Charts/ColumnChart';
 import ApexChart from './Charts/GraphChart';
 import PieChart from './Charts/PieChart';
-import PrivateRoute from './PrivateRoute';
 import PageNotFound from './Pages/PageNotFound';
+import PrivateRoute from './PrivateRoute';
 import NoAccess from './Pages/NoAccess';
 
 function App() {

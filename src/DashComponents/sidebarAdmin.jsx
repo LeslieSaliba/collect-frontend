@@ -45,10 +45,6 @@ function SidebarAdmin() {
     },
   ];
 
-  // const handleSectionClick = (section) => {
-  //   setSelectedSection(section);
-  //   setHoveredSection(section);
-  // };
   const handleSectionClick = (section) => {
     setSelectedSection(section);
     navigate(`/AdminDashboard/${section.toLowerCase()}`);
