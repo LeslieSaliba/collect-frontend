@@ -24,3 +24,18 @@ background-color: white;
 .homeCategeries-link:hover{
     color: #B6322C;
 }
+@media (max-width: 900px) {
+    .HomeCategories-cont{
+        z-index: 0;
+        position: initial
+    }
+
+
+}
+
+@media (max-width: 500px) {
+    .HomeCategories-items-cont{
+        justify-content: center;
+    }
+
+}
