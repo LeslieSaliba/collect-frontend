@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 import "../css/Dashboard.css";
 import SidebarSeller from '../DashComponents/sidebarSeller';
 import OrdersSection from '../DashComponents/OrdersSection';

@@ -1,14 +1,7 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import "../css/SingleProductSlider.css";
 
-function SingleProductSlider() {
-  const images = [
-    "BS-2 (1).JPG",
-    "BS-5 (1).JPG",
-    "12-1.JPG",
-
-  ];
-
+function SingleProductSlider({ images }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = () => {
@@ -28,7 +21,7 @@ function SingleProductSlider() {
         <img className="p-7" onClick={prevImage} src="Images/left.png" />
 
         <img
-          src={`Images/${images[currentImageIndex]}`}
+          src={images[currentImageIndex]}
           alt={`Product ${currentImageIndex + 1}`}
           className="SingleProductSlider-img"
         />

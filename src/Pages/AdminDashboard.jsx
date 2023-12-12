@@ -12,7 +12,6 @@ import AnalyticsSection from '../DashComponents/AnalyticsSection';
 function AdminDashboard() {
     return (
         <div className='dashboard-flex'>
-
                 <div className='dashboard-sidebar'>
                     <SidebarAdmin />
                 </div>
@@ -27,7 +26,6 @@ function AdminDashboard() {
                         <Route path="analytics" element={<AnalyticsSection />} />
                     </Routes>
                 </div>
-
         </div>
     );
 }
