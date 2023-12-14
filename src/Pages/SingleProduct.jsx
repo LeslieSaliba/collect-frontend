@@ -30,7 +30,7 @@ function SingleProduct({ProductID}) {
   const addToCart = async () => {
 
     if (!userId || role !== 'client') {
-      navigate('/AuthForm');
+      navigate('/SignIn');
       return;
     }
    

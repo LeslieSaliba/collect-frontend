@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 import ErrorAddingToCart from './ErrorAddingToCart'
 import ConfirmAddToCart from "../WishlistComponents/AddToCartConfirmation";
 
@@ -58,7 +58,7 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
 
     try {
       if (!userId || userRole !== 'client') {
-        navigate('/AuthForm');
+        navigate('/SignIn');
         return;
       }
 
@@ -76,14 +76,14 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
       const data = await response.json();
 
       if (response.ok) {
-        setShowFailCartModal(true);
+        setShowFailCartModal(false);
         setAddToCartStatus({ loading: false, success: data.message, error: null });
         removeFromWishlist(localStorage.getItem('wishlistId'), productId);
       } else {
         setModalMessage(data.message)
         setAddToCartStatus({ loading: false, success: null, error: data.message });
         console.error("API Error:", data.message);
-        setShowFailCartModal(false);
+        setShowFailCartModal(true);
       }
 
     } catch (error) {
@@ -102,9 +102,9 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
   return (
     <div className="mt-8">
     <div className="homeCategeries-link-container italic">
-      <a href="" className="text-3xl homeCategeries-link">
+     <Link to='/Shop'> <a href="" className="text-3xl homeCategeries-link">
         Continue Shopping <span className="ml-2 text-3xl">&#8594;</span>
-      </a>
+      </a></Link>
     </div>
     <table className="min-w-full bg-white">
       <thead>
