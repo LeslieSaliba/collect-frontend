@@ -6,7 +6,7 @@ function Thankyou ({closeModal}) {
                Thank you for your order!
                 You have received a confirmation email.
 
-            <div>Follow us to get all the latest news about Collect!</div>
+            <div><a href="https://www.instagram.com/collect.leb?igshid=OGQ5ZDc2ODk2ZA==" target='_blank' className='underline'>Follow us </a> to get all the latest news about Collect!</div>
             </p>
             <div className="flex justify-end bg-gray-100 p-6 items-center">
               <button 

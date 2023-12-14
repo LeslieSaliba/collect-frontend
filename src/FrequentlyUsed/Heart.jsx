@@ -39,7 +39,7 @@ function Heart({ productId }) {
     const wishlistId = localStorage.getItem('wishlistId');
 
     if (!userId || role !== 'client') {
-      navigate('/AuthForm');
+      navigate('/SignIn');
       return;
     }
 

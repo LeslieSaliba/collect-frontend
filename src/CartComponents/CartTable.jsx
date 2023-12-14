@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Link} from 'react-router-dom';
 import axios from "axios";
 import ConfirmDelete from "./ConfirmDelete";
 
@@ -49,9 +50,9 @@ function CartTable({ cartData, OnDelete}) {
   return (
     <div className="mt-8">
         <div className="homeCategeries-link-container italic">
-        <a href="" className="text-3xl homeCategeries-link">
+        <Link to='/Shop'><a href="" className="text-3xl homeCategeries-link">
           Continue Shopping <span className="ml-2 text-3xl">&#8594;</span>
-        </a>
+        </a></Link>
       </div>
       <table className="min-w-full bg-white">
         <thead>
@@ -95,10 +96,7 @@ function CartTable({ cartData, OnDelete}) {
                 openConfirmationModal(product._id)
                 }
               }
-              //  onClick={() => {
-              //   removeFromCart(localStorage.getItem('cartId'), product._id);
-        
-              // }}
+          
               >x</button>
             </td>
             {showConfirmationModal && selectedProduct && (

@@ -15,7 +15,7 @@ function SingleProductData({ openModal, productData }) {
   const addToWishlist = async () => {
 
     if (!userId || role !== 'client') {
-      navigate('/AuthForm');
+      navigate('/SignIn');
       return;
     }
 

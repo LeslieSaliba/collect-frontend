@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../css/homecategories.css"
 import CategoryItem from './CategoryItem';
+import {Link} from 'react-router-dom';
+
 
 function HomeCategories() {
 
@@ -28,7 +30,7 @@ function HomeCategories() {
     <div className='HomeCategories-cont'>
         <div className="max-w-screen-xl mx-auto p-4 homeCategories-mini">
         <div className="homeCategeries-link-container italic">
-           <a href=""className="text-3xl homeCategeries-link">See all categories <span className="ml-2 text-3xl">&#8594;</span></a>
+        <Link to='/shop'><a href=""className="text-3xl homeCategeries-link">See all categories <span className="ml-2 text-3xl">&#8594;</span></a> </Link>
         </div>
             <div className="flex flex-wrap items-center justify-between HomeCategories-items-cont"> 
          {highlightedCategories.map(category => (

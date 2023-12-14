@@ -1,4 +1,5 @@
 import "../css/footer.css";
+import {Link} from 'react-router-dom';
 
 function Footer() {
   return (
@@ -13,13 +14,13 @@ function Footer() {
       <div className="Footer-Links w-full md:w-1/3 text-center md:text-left">
         <ul className="space-y-4">
           <li>
-            <a href="" className="text-sm md:text-lg md:hover:text-red-700">Shop</a>
+           <Link to='/shop'> <a href="" className="text-sm md:text-lg md:hover:text-red-700">Shop</a></Link>
           </li>
           <li>
-            <a href="" className="text-sm md:text-lg md:hover:text-red-700">About</a>
+          <Link to='/AboutUs'><a href="" className="text-sm md:text-lg md:hover:text-red-700">About</a></Link>
           </li>
           <li>
-            <a href="" className="text-sm md:text-lg md:hover:text-red-700">Contact</a>
+            <Link to='/ContactUs'><a href="" className="text-sm md:text-lg md:hover:text-red-700">Contact</a></Link>
           </li>
         </ul>
       </div>
