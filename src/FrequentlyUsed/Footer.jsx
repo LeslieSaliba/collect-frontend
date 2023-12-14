@@ -27,26 +27,28 @@ function Footer() {
      <table className="Footer-Socials">
     <tr>
         <td className="Footer-Socials flex items-center">
-            <img src="../Images/location 1.png" className="content-center footer-socials-img" alt="" />
+            <img src="../Images/location 1.png" className="content-center footer-socials-img" alt="Location" />
             <p className="ml-2">Betchay, Baabda, Lebanon</p>
         </td>
     </tr>
+  <tr>
+    <td className="Footer-Socials flex items-center">
+        <a href="mailto:collect.leb@gmail.com">
+            <img src="../Images/mail 1.png" className="content-center footer-socials-img" alt="Email" />
+        </a>
+        <a href="mailto:collect.leb@gmail.com" class="ml-2">collect.leb@gmail.com</a>
+    </td>
+</tr>
     <tr>
         <td className="Footer-Socials flex items-center">
-            <img src="../Images/mail 1.png" className="content-center footer-socials-img" alt="" />
-            <p className="ml-2">collect.leb@gmail.com</p>
+        <a href="https://www.instagram.com/collect.leb/" target="_blank" rel="noopener noreferrer"><img src="../Images/insta 1.png" className="content-center footer-socials-img" alt="Instagram" /></a>
+        <a href="https://www.instagram.com/collect.leb/" target="_blank" rel="noopener noreferrer" className="ml-2">@collect.leb</a>
         </td>
     </tr>
     <tr>
         <td className="Footer-Socials flex items-center">
-            <img src="../Images/insta 1.png" className="content-center footer-socials-img" alt="" />
-            <p className="ml-2">@collect.leb</p>
-        </td>
-    </tr>
-    <tr>
-        <td className="Footer-Socials flex items-center">
-            <img src="../Images/facebook 1.png" className="content-center footer-socials-img" alt="" />
-            <p className="ml-2">@collect.leb</p>
+            <a href="https://www.facebook.com/collect.leb/photos" target="_blank" rel="noopener noreferrer"><img src="../Images/facebook 1.png" className="content-center footer-socials-img" alt="Facebook" /></a>
+            <a href="https://www.facebook.com/collect.leb/photos" target="_blank" rel="noopener noreferrer" className="ml-2">@collect.leb</a>
         </td>
     </tr>
 </table>

@@ -1,7 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function EditUser({fetchTeam, closeEditUserModal, editUser, userID}) {
+function EditUser({ fetchTeam, closeEditUserModal, userID }) {
+  const [userInfo, setUserInfo] = useState({
+    fullName: { firstName: '', lastName: '' },
+    email: '',
+    phoneNumber: ''
+  });
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,30 +22,32 @@ function EditUser({fetchTeam, closeEditUserModal, editUser, userID}) {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [showEditUserModal, setShowEditUserModal] = useState(true);
   const [error, setError] = useState('');
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const getUserInfoByID = async (userID) => {
+      console.log('User ID to be checked:', userID);
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/user/getById/${userID}`);
+        console.log('User data retrieved successfully');
+        console.log(response.data.data);
+        setUserInfo(response.data.data);
+      } catch (error) {
+        console.error('Error retrieving user data: ', error);
+      }
+    };
+
+    getUserInfoByID(userID);
+  }, [userID]);
 
   const validateInput = () => {
-    if (!firstName) {
-      setError("First name is required.");
-      return false;
-    }
-    if (!lastName) {
-      setError("Last name is required.");
-      return false;
-    }
-    if (!email || !isValidEmail(email)) {
-      setError("Email is required.");
-      return false;
-    }
+
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return false;
     }
     if (password.length < 6) {
       setError("Password must be at least 6 characters long.");
-      return false;
-    }
-    if (!phoneNumber) {
-      setError("Phone number is required.");
       return false;
     }
     return true;
@@ -51,34 +58,69 @@ function EditUser({fetchTeam, closeEditUserModal, editUser, userID}) {
     return emailRegex.test(email);
   };
 
+  const editUser = async (userID, userData) => {
+    console.log('User ID to be updated:', userID);
+    try {
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/user/update/${userID}`, userData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      console.log('User updated successfully');
+
+    } catch (error) {
+      console.error('Error updating team member data: ', error);
+      if (error.response) {
+        console.log('Error while updating user')
+      }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateInput()) return;
+  
+    if (!role) {
+      setError("Please select a role.");
+      return;
+    }
+  
+    const updatedFields = {};
+  
+       if (email !== '' && email !== userInfo.email) {
+        updatedFields.email = email;
+      } else {
+        updatedFields.email = userInfo.email;
+      }
+    
+      if (phoneNumber !== '' && phoneNumber !== userInfo.phoneNumber) {
+        updatedFields.phoneNumber = phoneNumber;
+      } else {
+        updatedFields.phoneNumber = userInfo.phoneNumber;
+      }
+    
+      if (password !== '' && password === confirmPassword && password !== userInfo.password) {
+        updatedFields.password = password;
+      }
+    
+      if (role !== userInfo.role) {
+        updatedFields.role = role;
+      }
+
+      if (password !== confirmPassword) {
+        setError("Passwords do not match.");
+        return false;
+      }
+  
     const user = {
-      fullName:
-      {
-        firstName,
-        lastName
-      },
-      password,
-      role,
-      email,
-      phoneNumber,
-      city,
-      fullAddress:
-      {
-        street,
-        building,
-        floor,
-        description
-      },
+      ...updatedFields,
     };
-    console.log(user);
+  
+    console.log("Updated user object:", user);
     try {
-      editUser(userID);
+      await editUser(userID, updatedFields);
       closeEditUserModal();
       fetchTeam();
-
     } catch (error) {
       setError(error.response.data.error);
     }
@@ -90,26 +132,18 @@ function EditUser({fetchTeam, closeEditUserModal, editUser, userID}) {
       <div className="text-center">
         <form className="py-4" onSubmit={handleSubmit}>
           <div className="flex mb-4">
-            <input
-              type="text"
-              placeholder="First name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
-            />
+            <p className="flex-1 px-4 py-2 bg-gray-100 text-lg text-black text-left">
+              {userInfo.fullName.firstName}
+            </p>
             <span className="mx-4"></span>
-            <input
-              type="text"
-              placeholder="Last name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
-            />
+            <p className="flex-1 px-4 py-2 bg-gray-100 text-lg text-black text-left">
+              {userInfo.fullName.lastName}
+            </p>
           </div>
           <div className="flex mb-4">
             <input
               type="email"
-              placeholder="Email"
+              placeholder={userInfo.email}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
@@ -117,7 +151,7 @@ function EditUser({fetchTeam, closeEditUserModal, editUser, userID}) {
             <span className="mx-4"></span>
             <input
               type="text"
-              placeholder="Phone number"
+              placeholder={userInfo.phoneNumber}
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
@@ -126,7 +160,7 @@ function EditUser({fetchTeam, closeEditUserModal, editUser, userID}) {
           <div className="flex mb-4">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="******"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
@@ -134,7 +168,7 @@ function EditUser({fetchTeam, closeEditUserModal, editUser, userID}) {
             <span className="mx-4"></span>
             <input
               type="password"
-              placeholder="Confirm password"
+              placeholder="******"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"

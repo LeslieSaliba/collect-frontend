@@ -75,25 +75,25 @@ function TeamSection() {
         setShowDeleteUserModal(false);
     };
 
-    const editUser = async (userID) => {
-        console.log('User ID to be updated:', userID);
-        try {
-            const response = await axios.put(`${process.env.REACT_APP_API_URL}/user/update/${userID}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            console.log('User updated successfully');
-            await fetchTeam();
-            closeEditUserModal();
-        } catch (error) {
-            console.error('Error updating team member data: ', error);
-            if (error.response) {
-                console.log('Error while updating user')
-            }
-        }
-    };
+    // const editUser = async (userID) => {
+    //     console.log('User ID to be updated:', userID);
+    //     try {
+    //         const response = await axios.put(`${process.env.REACT_APP_API_URL}/user/update/${userID}`, {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`,
+    //             },
+    //         });
+    //         console.log('User updated successfully');
+    //         await fetchTeam();
+    //         closeEditUserModal();
+    //     } catch (error) {
+    //         console.error('Error updating team member data: ', error);
+    //         if (error.response) {
+    //             console.log('Error while updating user')
+    //         }
+    //     }
+    // };
 
     const openEditUserModal = (userID) => {
         setSelectedUserID(userID);
@@ -150,7 +150,7 @@ function TeamSection() {
                         <div className="fixed inset-0 bg-black opacity-50"></div>
                         <div className="bg-white p-6 relative z-10">
                             <button onClick={closeEditUserModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
-                            <EditUser fetchTeam={fetchTeam} closeEditUserModal={closeEditUserModal} editUser={editUser} userID={selectedUserID} />
+                            <EditUser fetchTeam={fetchTeam} closeEditUserModal={closeEditUserModal} userID={selectedUserID} />
                         </div>
                     </div>
                 )}
