@@ -33,6 +33,7 @@ function AddUser({ fetchTeam, closeAddUserModal }) {
     }
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
+      setPasswordsMatch(false);
       return false;
     }
     if (password.length < 6) {
@@ -41,6 +42,10 @@ function AddUser({ fetchTeam, closeAddUserModal }) {
     }
     if (!phoneNumber) {
       setError("Phone number is required.");
+      return false;
+    }
+    if (!role) {
+      setError("Role is required.");
       return false;
     }
     return true;
@@ -53,7 +58,9 @@ function AddUser({ fetchTeam, closeAddUserModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateInput()) return;
+    if (!validateInput() || !role) {
+      return;
+    }
     const user = {
       fullName:
       {

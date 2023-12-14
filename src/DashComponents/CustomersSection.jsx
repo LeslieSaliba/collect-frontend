@@ -28,6 +28,17 @@ function CustomersSection() {
         // getUserInfoByID()
     }, []);
 
+    const [sortOrder, setSortOrder] = useState(true);
+    const toggleSort = (field) => {
+        const sortedData = [...customers].sort((a, b) => {
+            if (a[field] < b[field]) return sortOrder ? -1 : 1;
+            if (a[field] > b[field]) return sortOrder ? 1 : -1;
+            return 0;
+        });
+        setCustomers(sortedData);
+        setSortOrder(!sortOrder);
+    };
+
     const countOrderPerCustomer = async (userID) => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/order/getOrdersByUser/${userID}`);
@@ -69,9 +80,9 @@ function CustomersSection() {
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th className="px-4 py-2 text-left">Name &#8597;</th>
-                            <th className="px-4 py-2 text-left">Email &#8597;</th>
-                            <th className="px-4 py-2 text-left">Number of orders &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("xxx")}>Name &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("email")}>Email &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("xxx")}>Number of orders &#8597;</th>
                             <th className="px-4 py-2 text-left"></th>
                         </tr>
                     </thead>

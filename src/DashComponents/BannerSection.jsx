@@ -7,6 +7,7 @@ function BannerSection() {
     const [banners, setBanners] = useState([]);
     const [showEditBannerModal, setShowEditBannerModal] = useState(false);
     const [selectedBannerID, setSelectedBannerID] = useState(null);
+    const [selectedBanner, setSelectedBanner] = useState(null);
     const token = localStorage.getItem('token');
 
     const fetchBanners = () => {
@@ -23,30 +24,9 @@ function BannerSection() {
         fetchBanners();
     }, []);
 
-    const editBanner = async (bannerID) => {
-        console.log('Banner ID to be deleted:', bannerID);
-        try {
-            const response = await axios.put(`${process.env.REACT_APP_API_URL}/banner/update/${bannerID}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            console.log('Response after update request:', response);
-            console.log('Banner updated successfully');
-            await fetchBanners();
-            closeEditBannerModal();
-        } catch (error) {
-            console.error('Error updating category data: ', error);
-            console.log('Error response:', error.response);
-            if (error.response) {
-                console.log('Error status:', error.response.status);
-                console.log('Error data:', error.response.data);
-            }
-        }
-    }
-
     const openEditBannerModal = (bannerID) => {
+        const selected = banners.find(banner => banner._id === bannerID);
+        setSelectedBanner(selected);
         setSelectedBannerID(bannerID);
         setShowEditBannerModal(true);
     };
@@ -83,6 +63,7 @@ function BannerSection() {
                                         onClick={() => openEditBannerModal(banner._id)} />
                                 </td>
                             </tr>
+
                         ))}
                     </tbody>
                 </table>
@@ -92,7 +73,7 @@ function BannerSection() {
                     <div className="fixed inset-0 bg-black opacity-50"></div>
                     <div className="bg-white p-6 relative z-10 w-96">
                         <button onClick={closeEditBannerModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
-                        <EditBanner closeEditBannerModal={closeEditBannerModal} editBanner={editBanner} bannerID={selectedBannerID} />
+                        <EditBanner fetchBanners={fetchBanners} closeEditBannerModal={closeEditBannerModal} bannerID={selectedBannerID} banner={selectedBanner} />
                     </div>
                 </div>
             )}
