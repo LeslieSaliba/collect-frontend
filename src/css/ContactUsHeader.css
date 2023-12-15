@@ -5,3 +5,30 @@
     background: linear-gradient(to bottom, #f5f5f5 80%, transparent 35%);
 
 }
+
+@media screen and (max-width: 500px) {
+    .contactUsHeader-cont{
+        background:  #f5f5f5;
+    
+    }
+    .contactUs-title{
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+    .contactUs-mini{
+        align-items: center; 
+      text-align: center; 
+      margin-left: 0;
+      margin-right: 0;
+      gap: 0;
+    
+    }
+    .contactUs-socials-table{
+        scale: 0.8;
+    }
+    .contactus-img-cont {
+        margin-left: 0; 
+       margin-top: 0;
+      }
+}

@@ -1,3 +1,16 @@
 .contactUs-input{
-    width: 48.5%;
+    width: 49%;
+}
+.contactUsDescription-span{
+    width: 2%;
+    margin:0;
+}
+@media screen and (max-width: 500px) {
+.contactUsDescription-cont{
+    margin: 0 3rem;
+    margin-top:1rem;
+
+}
+
+
 }
