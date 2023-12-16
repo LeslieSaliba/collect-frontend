@@ -30,8 +30,8 @@ function ContactUsDescription() {
   };
 
   return (
-    <div className="mx-40">
-      <p className="text-3xl text-center underline HomeArrival-title">
+    <div className="  mx-40 contactUsDescription-cont ">
+      <p className="text-3xl text-center  underline HomeArrival-title">
         GET IN TOUCH
       </p>
       <div className="text-center">
@@ -46,7 +46,7 @@ function ContactUsDescription() {
               className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black contactUs-input"
               required
             />
-            <span className="mx-4"></span>
+            <span className="mx-4 contactUsDescription-span"></span>
             <input
               type="email"
               name="email"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../css/CartDetails.css";
 
-function CartDetails ({openModal, cartData}) {
+function CartDetails ({openModal,openAddressModal, cartData}) {
   const [shippingCost, setShippingCost] = useState(3);
   const [shippingMethod, setShippingMethod] = useState("delivery");
   const [total, setTotal] = useState(cartData.cart.totalPrice + shippingCost);
@@ -34,6 +34,7 @@ function CartDetails ({openModal, cartData}) {
                 delivery at home (under 5-7 days) - 3 ${" "}
                 <p className="text-lg ml-8 italic">
                 {userCity}, {userAddress.street},  {userAddress.building}, Floor:{userAddress.floor}
+                <a onClick={openAddressModal}  className="underline ml-4 not-italic">edit address</a>
                 </p>
               </label>
             </div>
