@@ -62,28 +62,7 @@ function ProductsSection() {
         setShowAddProductModal(false);
     };
 
-    const deleteProduct = async (productID) => {
-        console.log('Product ID to be deleted:', productID);
-        try {
-            const response = await axios.delete(`${process.env.REACT_APP_API_URL}/product/delete/${productID}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            console.log('Response after delete request:', response);
-            console.log('Product deleted successfully');
-            await fetchProducts();
-            closeDeleteProductModal();
-        } catch (error) {
-            console.error('Error deleting product data: ', error);
-            console.log('Error response:', error.response);
-            if (error.response) {
-                console.log('Error status:', error.response.status);
-                console.log('Error data:', error.response.data);
-            }
-        }
-    };
+
 
     const openDeleteProductModal = (productID) => {
         setSelectedProductID(productID);
@@ -154,7 +133,7 @@ function ProductsSection() {
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit"
                                         onClick={() => openEditProductModal(product._id)} />
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete"
-                                        onClick={() => openDeleteProductModal(product._id)} />
+                                        onClick={(e) => openDeleteProductModal(product._id)} />
                                 </td>
                             </tr>
                         ))}
@@ -165,7 +144,7 @@ function ProductsSection() {
                         <div className="fixed inset-0 bg-black opacity-50"></div>
                         <div className="bg-white p-6 relative z-10">
                             <button onClick={closeDeleteProductModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
-                            <DeleteProduct fetchProducts={fetchProducts} closeDeleteProductModal={closeDeleteProductModal} deleteProduct={deleteProduct} productID={selectedProductID} />
+                            <DeleteProduct fetchProducts={fetchProducts} closeDeleteProductModal={closeDeleteProductModal} productID={selectedProductID} />
                         </div>
                     </div>
                 )}

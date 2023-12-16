@@ -1,9 +1,29 @@
-function DeleteProduct({ fetchProducts, closeDeleteProductModal, deleteProduct, productID }) {
-    const handleDelete = () => {
-        console.log('Product ID to delete: ', productID);
-        closeDeleteProductModal();
-        deleteProduct(productID);
-        fetchProducts();
+import axios from 'axios';
+
+function DeleteProduct({ fetchProducts, closeDeleteProductModal, productID }) {
+    const token = localStorage.getItem('token');
+
+    const deleteProduct = async (productID) => {
+        console.log('Product ID to be deleted:', productID);
+        try {
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}/product/delete/${productID}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            console.log('Response after delete request:', response);
+            console.log('Product deleted successfully');
+            await fetchProducts();
+            closeDeleteProductModal();
+        } catch (error) {
+            console.error('Error deleting product data: ', error);
+            console.log('Error response:', error.response);
+            if (error.response) {
+                console.log('Error status:', error.response.status);
+                console.log('Error data:', error.response.data);
+            }
+        }
     };
 
     return (
@@ -18,7 +38,7 @@ function DeleteProduct({ fetchProducts, closeDeleteProductModal, deleteProduct, 
                         CANCEL
                     </button>
                     <button
-                        onClick={handleDelete}
+                        onClick={deleteProduct(productID)}
                         className="bg-red-700 text-white font-bold py-1 px-2 border border-red-700 w-32 text-lg inline-block"
                     >
                         CONFIRM

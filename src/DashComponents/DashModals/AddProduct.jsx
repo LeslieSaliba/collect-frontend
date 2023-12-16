@@ -14,6 +14,7 @@ function AddProduct(fetchProducts, closeAddProductModal) {
   const [discountPercentage, setDiscountPercentage] = useState('');
   const [showAddProductModal, setShowAddProductModal] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const token = localStorage.getItem('token');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,55 +24,80 @@ function AddProduct(fetchProducts, closeAddProductModal) {
       return;
     }
 
-    const newCategory = {
-      name,
-      images,
-      discountPercentage: discountPercentage || 0,
-    };
+    const newProduct = new FormData();
+    newProduct.append('name', name);
+    newProduct.append('category', category);
+    newProduct.append('status', status);
+    newProduct.append('description', description);
+    newProduct.append('price', price);
+    // newProduct.append('discountPercentage', discountPercentage || 0);
+    for (let i = 0; i < images.length; i++) {
+      newProduct.append('images', images[i]);
+    }
+
+    console.log(newProduct, 'new product')
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/category/add`, newCategory, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/product/add`, newProduct, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          "Authorization": `Bearer ${token}`
         },
       });
-      console.log('Category added:', response.data);
-      setName('');
-      setImages('');
-      setDiscountPercentage('');
+      console.log('Product added:', response.data);
       setShowAddProductModal(false);
     } catch (error) {
-      console.error('Error adding category:', error);
+      console.log(newProduct, 'new product111')
+      console.error('Error adding product:', error);
     }
   };
 
-  const handleCheckboxChange = (e) => {
-    setApplyDiscount(e.target.checked);
-    if (!e.target.checked) {
-      setDiscountPercentage('');
-    }
-  };
-
-  const handleDiscountChange = (e) => {
-    setDiscountPercentage(e.target.value);
-  };
-
-  // const handleImageChange = (e) => {
-  //   const selectedImages = Array.from(e.target.files).slice(0, 6); // Limit to 6 images
-  //   if (selectedImages.length >= 3) {
-  //     setImages(selectedImages);
-  //   } else {
-  //     setErrorMessage('Upload between 3 and 6 images for each product');
+  // const handleCheckboxChange = (e) => {
+  //   setApplyDiscount(e.target.checked);
+  //   if (!e.target.checked) {
+  //     setDiscountPercentage('');
   //   }
   // };
 
+  // const handleDiscountChange = (e) => {
+  //   setDiscountPercentage(e.target.value);
+  // };
+
   const handleImageChange = (e) => {
-    const selectedImages = Array.from(e.target.files).slice(0, 6);
-    if (selectedImages.length >= 3) {
-      setImages((prevImages) => [...prevImages, ...selectedImages]);
-      setErrorMessage('');
-    } else {
-      setErrorMessage('Upload between 3 and 6 images for each product');
+    const selectedImages = e.target.files;
+
+    if (selectedImages.length + images.length > 6) {
+      setErrorMessage('Maximum 6 images allowed per product');
+      return;
     }
+
+    setImages((prevImages) => {
+      const newImages = [...prevImages];
+      for (let i = 0; i < selectedImages.length; i++) {
+        newImages.push(selectedImages[i]);
+      }
+      return newImages;
+    });
+    setErrorMessage('');
+  };
+
+  const renderImageInputs = () => {
+    const inputs = [];
+    const remainingSlots = 6 - images.length;
+    console.log(remainingSlots, 'remains')
+
+    for (let i = 0; i < remainingSlots; i++) {
+      inputs.push(
+        <input
+          key={i}
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          multiple
+          className="flex-1 px-4 py-1 focus:outline-none text-black"
+        />
+      );
+    }
+    return inputs;
   };
 
   useEffect(() => {
@@ -83,6 +109,14 @@ function AddProduct(fetchProducts, closeAddProductModal) {
         console.error(`Error fetching categories' data: `, error);
       });
   }, []);
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
+  };
 
   return (
     <div>
@@ -100,13 +134,13 @@ function AddProduct(fetchProducts, closeAddProductModal) {
             <span className="mx-4"></span>
             <div className="flex mb-4">
               <select
-                // value={category}
-                // onChange={handleCategoryChange}
+                value={category}
+                onChange={handleCategoryChange}
                 className=" px-4 py-2 mr-4 bg-gray-100 focus:outline-none text-lg text-black"
               >
                 <option value="">Select category</option>
                 {allCategories.map((category) => (
-                  <option key={category._id} value={category.name} className=" capitalize " >
+                  <option key={category._id} value={category.name} className="capitalize" >
                     {category.name}
                   </option>
                 ))};
@@ -114,8 +148,8 @@ function AddProduct(fetchProducts, closeAddProductModal) {
             </div>
             <div className="flex mb-4">
               <select
-                // value={role}
-                // onChange={handleRoleChange}
+                value={status}
+                onChange={handleStatusChange}
                 className=" px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
               >
                 <option value="">Status</option>
@@ -128,33 +162,28 @@ function AddProduct(fetchProducts, closeAddProductModal) {
             <textarea
               rows={5}
               placeholder="Description"
-              // value={description}
-              // onChange={(e) => setDescription(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black resize-none"
             />
             <span className="mx-4"></span>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              multiple
-              className="flex-1 px-4 py-2 focus:outline-none text-black"
-            />
+            <div className='flex flex-col'>{renderImageInputs()}
+            </div>
           </div>
           <div className="flex mb-4">
             <input
               type="text"
               placeholder="Price"
-              // value={price}
-              // onChange={handlePasswordChange}
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
               className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
             />
             <span className="mx-4"></span>
             <input
               type="text"
               placeholder="Reference"
-              // value={reference}
-              // onChange={handleConfirmPasswordChange}
+              value={reference}
+              onChange={(e) => setReference(e.target.value)}
               className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
             />
           </div>
@@ -164,7 +193,7 @@ function AddProduct(fetchProducts, closeAddProductModal) {
                 <input
                   type="checkbox"
                   checked={applyDiscount}
-                  onChange={handleCheckboxChange}
+                  // onChange={handleCheckboxChange}
                   className="mr-2"
                 />
                 <p className="text-black">Apply discount</p>
@@ -175,7 +204,7 @@ function AddProduct(fetchProducts, closeAddProductModal) {
                     type="text"
                     placeholder="Discount percentage %"
                     value={discountPercentage}
-                    onChange={handleDiscountChange}
+                    // onChange={handleDiscountChange}
                     className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
                   />
                 </div>

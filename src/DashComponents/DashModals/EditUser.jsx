@@ -7,20 +7,20 @@ function EditUser({ fetchTeam, closeEditUserModal, userID }) {
     email: '',
     phoneNumber: ''
   });
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState('');
-  const [city, setCity] = useState("");
-  const [street, setStreet] = useState("");
-  const [building, setBuilding] = useState("");
-  const [floor, setFloor] = useState("");
-  const [description, setDescription] = useState("");
+  // const [city, setCity] = useState("");
+  // const [street, setStreet] = useState("");
+  // const [building, setBuilding] = useState("");
+  // const [floor, setFloor] = useState("");
+  // const [description, setDescription] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [showEditUserModal, setShowEditUserModal] = useState(true);
+  // const [showEditUserModal, setShowEditUserModal] = useState(true);
   const [error, setError] = useState('');
   const token = localStorage.getItem('token');
 

@@ -1,6 +1,7 @@
 import "../css/ContactUsDescription.css";
 import { useForm } from "@formspree/react";
 import { useState } from "react";
+
 function ContactUsDescription() {
   const [state, handleSubmit] = useForm("xknldeaq");
   const [showThanksMessage, setShowThanksMessage] = useState(false);
@@ -9,32 +10,31 @@ function ContactUsDescription() {
     email: "",
     message: "",
   });
+
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleFormSubmit = (e) => {
-    console.log("hi");
     e.preventDefault();
     handleSubmit(e);
     setFormData({ name: "", email: "", message: "" });
-
     setShowThanksMessage(true);
-
-    setTimeout(() => {
-      setShowThanksMessage(false);
-    }, 8000);
   };
 
+  const closeModal = () => {
+    setShowThanksMessage(false);
+  };
 
   return (
-    <div className="  mx-40 ">
-      <p className="text-3xl text-center  underline HomeArrival-title">
+    <div className="mx-40">
+      <p className="text-3xl text-center underline HomeArrival-title">
         GET IN TOUCH
       </p>
-      <div className="text-center ">
+      <div className="text-center">
         <form className="py-4" onSubmit={handleFormSubmit}>
           <div className="flex flex-wrap mb-4">
             <input
@@ -53,12 +53,12 @@ function ContactUsDescription() {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="E-mail"
-              className=" md:mt-0 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black contactUs-input"
+              className="md:mt-0 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black contactUs-input"
               required
             />
           </div>
           <textarea
-            className="w-full px-4 py-2 h-32 bg-gray-100 focus:outline-none  text-lg text-black"
+            className="w-full px-4 py-2 h-32 bg-gray-100 focus:outline-none text-lg text-black"
             placeholder="Your message..."
             value={formData.message}
             onChange={handleInputChange}
@@ -74,16 +74,23 @@ function ContactUsDescription() {
           </button>
         </form>
         {state.succeeded && showThanksMessage && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center ">
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>
             <div className="bg-white p-6 relative z-10 w-96">
-              <div className="flex items-center justify-center">
-                <div className="text-center w-70">
-                  <p className="text-2xl m-12 text-red-700  mx-auto">
+              <div className="  flex items-center justify-center">
+                <div className="text-center">
+                  <p className="text-2xl m-12 w-2/3 mx-auto">
                     Thank you for contacting us!
                     <br />
                     We will get back to you shortly.
                   </p>
+                  <div className="flex justify-end bg-gray-100 p-6 items-center">
+                    <button
+                      onClick={closeModal}
+                      className="bg-red-700 text-white  font-bold py-1 px-2 border border-red-700 w-32 text-lg inline-block " >
+                      CANCEL
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
