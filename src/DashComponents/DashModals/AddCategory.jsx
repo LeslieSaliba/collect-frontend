@@ -4,10 +4,8 @@ import axios from 'axios';
 function AddCategory({ fetchCategories, closeAddCategoryModal }) {
     const [name, setName] = useState('');
     const [image, setImage] = useState(null);
-    const [applyDiscount, setApplyDiscount] = useState(false);
-    const [discountPercentage, setDiscountPercentage] = useState('');
-    const [showAddCategoryModal, setShowAddCategoryModal] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const token = localStorage.getItem('token');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,29 +23,15 @@ function AddCategory({ fetchCategories, closeAddCategoryModal }) {
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/category/add`, newCategory, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzcwODQ5MTkyMzFjYWE2NDQ0YTFlMyIsInJvbGUiOiJzZWxsZXIiLCJpYXQiOjE3MDIzMTA4NDYsImV4cCI6MTcwMjMxNDQ0Nn0.y248-zKsprfalb_d4amr_R8RLoVSBHyHf-JHlB_9pDw`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
             console.log('Category added:', response.data);
-            // setName('');
-            // setImage('');
-            // setDiscountPercentage('');
             fetchCategories();
             closeAddCategoryModal();
         } catch (error) {
             console.error('Error adding category:', error);
         }
-    };
-
-    const handleCheckboxChange = (e) => {
-        setApplyDiscount(e.target.checked);
-        if (!e.target.checked) {
-            setDiscountPercentage('');
-        }
-    };
-
-    const handleDiscountChange = (e) => {
-        setDiscountPercentage(e.target.value);
     };
 
     return (
@@ -65,29 +49,6 @@ function AddCategory({ fetchCategories, closeAddCategoryModal }) {
                                 className="w-full px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
                             />
                         </div>
-                        <span className="mx-4"></span>
-                        <div>
-                            <div className="flex items-center mb-2">
-                                <input
-                                    type="checkbox"
-                                    checked={applyDiscount}
-                                    onChange={handleCheckboxChange}
-                                    className="mr-2"
-                                />
-                                <p className="text-black">Apply discount on all products of this category</p>
-                            </div>
-                            {applyDiscount && (
-                                <div className="flex flex-col">
-                                    <input
-                                        type="text"
-                                        placeholder="Discount percentage %"
-                                        value={discountPercentage}
-                                        onChange={handleDiscountChange}
-                                        className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
-                                    />
-                                </div>
-                            )}
-                        </div>
                     </div>
                     <div className="flex mb-4">
                         <input
@@ -96,7 +57,6 @@ function AddCategory({ fetchCategories, closeAddCategoryModal }) {
                             onChange={(e) => setImage(e.target.files[0])}
                             className="flex-1 px-4 py-2 focus:outline-none text-black"
                         />
-                        <span className="mx-4"></span>
                     </div>
 
                     {setErrorMessage !== '' && <p className="text-red-700 text-sm">{errorMessage}</p>}

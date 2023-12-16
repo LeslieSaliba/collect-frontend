@@ -12,6 +12,7 @@ function CategoriesSection() {
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
     const [showDeleteCategoryModal, setShowDeleteCategoryModal] = useState(false);
     const [showEditCategoryModal, setShowEditCategoryModal] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedCategoryID, setSelectedCategoryID] = useState(null);
     const token = localStorage.getItem('token');
 
@@ -126,30 +127,9 @@ function CategoriesSection() {
         setShowDeleteCategoryModal(false);
     };
 
-    const editCategory = async (categoryID) => {
-        console.log('Cat ID to be deleted:', categoryID);
-        try {
-            const response = await axios.put(`${process.env.REACT_APP_API_URL}/category/update/${categoryID}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            console.log('Response after update request:', response);
-            console.log('Category updated successfully');
-            await fetchCategories();
-            closeEditCategoryModal();
-        } catch (error) {
-            console.error('Error updating category data: ', error);
-            console.log('Error response:', error.response);
-            if (error.response) {
-                console.log('Error status:', error.response.status);
-                console.log('Error data:', error.response.data);
-            }
-        }
-    };
-
     const openEditCategoryModal = (categoryID) => {
+        const selected = categories.find(category => category._id === categoryID);
+        setSelectedCategory(selected);
         setSelectedCategoryID(categoryID);
         setShowEditCategoryModal(true);
     };
@@ -234,7 +214,7 @@ function CategoriesSection() {
                         <div className="fixed inset-0 bg-black opacity-50"></div>
                         <div className="bg-white p-6 relative z-10">
                             <button onClick={closeEditCategoryModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
-                            <EditCategory fetchCategories={fetchCategories} closeEditCategoryModal={closeEditCategoryModal} editCategory={editCategory} categoryID={selectedCategoryID} />
+                            <EditCategory fetchCategories={fetchCategories} closeEditCategoryModal={closeEditCategoryModal} categoryID={selectedCategoryID} category={selectedCategory} />
                         </div>
                     </div>
                 )}
