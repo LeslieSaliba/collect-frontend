@@ -5,6 +5,7 @@ import CartEmpty from "../CartComponents/CartEmpty";
 import CartTable from "../CartComponents/CartTable";
 import Footer from '../FrequentlyUsed/Footer';
 import NavBar from '../FrequentlyUsed/NavBar';
+import CartAddress from '../CartComponents/CartAddress'
 import Thankyou from "../CartComponents/ThankyouMessage";
 import "../css/cart.css";
 import ConfirmCheckout from "../CartComponents/ConfirmCheckout";
@@ -12,11 +13,20 @@ import ConfirmCheckout from "../CartComponents/ConfirmCheckout";
 function Cart() {
   const [shippingMethod, setShippingMethod] = useState("delivery");
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const [isAddressModalOpen, setAddressModalOpen] = useState(false);
    const [showThankyou, setShowThankyou] = useState(false);
    const token =  localStorage.getItem('token');
    const cartId = localStorage.getItem('cartId');
    const modalRef = useRef(null);
    const [cartData, setCartData] = useState(null);
+
+   const openAddressModal = () => {
+    setAddressModalOpen(true);
+  };
+
+  const closeAddressModal = () => {
+    setAddressModalOpen(false);
+  };
 
 
    const handleConfirm = async () => {
@@ -129,7 +139,7 @@ function Cart() {
         updateCartData={updateCartData}
         OnDelete={getCartItems}
         />
-        <CartDetails openModal={openModal} cartData={cartData}  />
+        <CartDetails openModal={openModal} cartData={cartData}  openAddressModal={openAddressModal}/>
         {isModalOpen && (
           <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
             <div className="fixed inset-0 bg-black opacity-50"></div>
@@ -144,7 +154,13 @@ function Cart() {
             </div>
           </div>
         )}
-
+      {isAddressModalOpen && 
+      <div className="fixed inset-0 flex items-center justify-center z-40">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="absolute bg-white p-8 rounded shadow-md">
+            <CartAddress closeModal={closeAddressModal}  />
+          </div>
+        </div>}
       
       </div>
       <Footer />
