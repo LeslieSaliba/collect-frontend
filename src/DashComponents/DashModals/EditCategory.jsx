@@ -2,13 +2,12 @@ import { useState } from 'react';
 import axios from 'axios';
 import CategoryDiscount from './CategoryDiscount';
 
-function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, category }) {
+function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, category, updateDiscountSuccess }) {
     const [name, setName] = useState(category.name || '');
     const [image, setImage] = useState(null);
     const [applyDiscount, setApplyDiscount] = useState(false);
     const [showCategoryDiscount, setShowCategoryDiscount] = useState(false);
     const [discountPercentage, setDiscountPercentage] = useState('');
-    const [showEditCategoryModal, setShowEditCategoryModal] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
     const token = localStorage.getItem('token');
 
@@ -44,7 +43,8 @@ function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, cat
                     }
                 );
                 console.log('Discount updated successfully:', discountResponse);
-                setShowCategoryDiscount(true)
+                setShowCategoryDiscount(true);
+                updateDiscountSuccess(true);
                 console.log('Discount updated successfully:', showCategoryDiscount);
             }
 
