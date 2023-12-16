@@ -4,6 +4,7 @@ import "../css/Dashboard.css";
 import AddCategory from "./DashModals/AddCategory";
 import DeleteCategory from "./DashModals/DeleteCategory";
 import EditCategory from "./DashModals/EditCategory";
+import CantHighlight from './DashModals/CantHighlight'
 
 function CategoriesSection() {
     const [categories, setCategories] = useState([]);
@@ -11,6 +12,7 @@ function CategoriesSection() {
     const [highlightedCategories, setHighlightedCategories] = useState([]);
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
     const [showDeleteCategoryModal, setShowDeleteCategoryModal] = useState(false);
+    const [showCantHighlight, setShowCantHighlight] = useState(false);
     const [showEditCategoryModal, setShowEditCategoryModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedCategoryID, setSelectedCategoryID] = useState(null);
@@ -46,9 +48,11 @@ function CategoriesSection() {
         }
     }
 
+    console.log("products", productsInfo)
+
     const handleHighlight = (category) => {
         const isHighlighted = highlightedCategories.includes(category);
-
+    
         if (isHighlighted) {
             const updatedHighlightedCategories = highlightedCategories.filter((item) => item !== category);
             setHighlightedCategories(updatedHighlightedCategories);
@@ -56,24 +60,13 @@ function CategoriesSection() {
             if (highlightedCategories.length < 4) {
                 setHighlightedCategories((prevHighlightedCategories) => [...prevHighlightedCategories, category]);
             } else {
-                const updatedHighlightedCategories = [...highlightedCategories.slice(1), category];
-                setHighlightedCategories(updatedHighlightedCategories);
+                 console.log(showCantHighlight)
+                setShowCantHighlight(true)
             }
         }
     };
 
-    // not working yet, to check with full update
-    // const updateHighlight = async (ID) => {
-    //     try {
-    //         const response = await axios.put(`${process.env.REACT_APP_API_URL}/category/update//${ID}`);
-    //         setHighlightedCategories(prevhighlightedCategories => ({
-    //             ...prevhighlightedCategories,
-    //             [ID]: response.data.data._id
-    //         }));
-    //     } catch (error) {
-    //         console.error(`Error updating highlighted data: `, error);
-    //     }
-    // }
+
 
     const [sortOrder, setSortOrder] = useState(true);
     const toggleSort = (field) => {
@@ -138,6 +131,33 @@ function CategoriesSection() {
         setShowEditCategoryModal(false);
     };
 
+    const handleCheckboxChange = async (category) => {
+        const isHighlighted = highlightedCategories.includes(category.name);
+        const updatedCategories = [...categories];
+
+     
+
+        try {
+            const updatedCategoryIndex = updatedCategories.findIndex(c => c._id === category._id);
+            updatedCategories[updatedCategoryIndex].highlighted = !isHighlighted;
+            setCategories(updatedCategories);
+
+            await axios.put(`${process.env.REACT_APP_API_URL}/category/update/${category._id}`, {
+                highlighted: !isHighlighted,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            handleHighlight(category.name);
+        } catch (error) {
+            console.error('Error updating category data: ', error);
+         
+        }
+    };
+
+
     return (
         <div>
 
@@ -180,14 +200,11 @@ function CategoriesSection() {
                                     )}
                                 </td>
                                 <td className="px-4 py-2">
-                                    <input
-                                        type="checkbox"
-                                        checked={highlightedCategories.includes(category.name) && category.highlighted}
-                                        onChange={() => {
-                                            handleHighlight(category.name);
-                                            // updateHighlight(category._id);
-                                        }}
-                                    />
+                                <input
+                                type="checkbox"
+                                checked={highlightedCategories.includes(category.name) && category.highlighted}
+                                onChange={() => handleCheckboxChange(category)}
+                            />
                                 </td>
                                 <td className="px-4 py-2 flex">
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit"
@@ -229,6 +246,16 @@ function CategoriesSection() {
                         <div className="bg-white p-6 relative z-10">
                             <button onClick={closeAddCategoryModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
                             <AddCategory fetchCategories={fetchCategories} closeAddCategoryModal={closeAddCategoryModal} />
+                        </div>
+                    </div>
+                )}
+
+                {showCantHighlight && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={() => setShowCantHighlight(false)} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <CantHighlight closeModal={() => setShowCantHighlight(false)} />
                         </div>
                     </div>
                 )}

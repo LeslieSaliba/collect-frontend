@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
+import CategoryDiscount from './CategoryDiscount';
 
 function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, category }) {
     const [name, setName] = useState(category.name || '');
     const [image, setImage] = useState(null);
     const [applyDiscount, setApplyDiscount] = useState(false);
+    const [showCategoryDiscount, setShowCategoryDiscount] = useState(false);
     const [discountPercentage, setDiscountPercentage] = useState('');
     const [showEditCategoryModal, setShowEditCategoryModal] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
@@ -12,7 +14,6 @@ function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, cat
 
     const handleSubmit = async (e, categoryID) => {
         e.preventDefault();
-        console.log(categoryID, ' category ID');
 
         const updatedCategory = new FormData();
 
@@ -21,11 +22,6 @@ function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, cat
             updatedCategory.append('image', image);
         }
 
-        console.log('Updated Category Data:', {
-            name: name,
-            image: image,
-        });
-
         try {
             const response = await axios.put(`${process.env.REACT_APP_API_URL}/category/update/${categoryID}`, updatedCategory, {
                 headers: {
@@ -33,8 +29,25 @@ function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, cat
                     'Authorization': `Bearer ${token}`,
                 },
             });
+
             console.log('Response after update request:', response);
             console.log('Category updated successfully');
+            if (applyDiscount && !isNaN(discountPercentage) && discountPercentage >= 0) {
+                const discountResponse = await axios.post(
+                    `${process.env.REACT_APP_API_URL}/product/updateDiscountByCategoryID/${categoryID}`,
+                    { discountPercentage: parseFloat(discountPercentage) },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                    }
+                );
+                console.log('Discount updated successfully:', discountResponse);
+                setShowCategoryDiscount(true)
+                console.log('Discount updated successfully:', showCategoryDiscount);
+            }
+
             await fetchCategories();
             closeEditCategoryModal();
         } catch (error) {
@@ -74,11 +87,11 @@ function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, cat
                     <div className="flex mb-4">
                         <div>
                             <div className="flex items-center mb-2">
-                                <input
+                            <input
                                     type="checkbox"
-                                    // checked={applyDiscount}
-                                    // onChange={handleCheckboxChange}
                                     className="mr-2"
+                                    checked={applyDiscount}
+                                    onChange={() => setApplyDiscount(!applyDiscount)}
                                 />
                                 <p className="text-black">Apply discount on all products of this category</p>
                             </div>
@@ -87,8 +100,8 @@ function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, cat
                                     <input
                                         type="text"
                                         placeholder="Discount percentage %"
-                                        // value={discountPercentage}
-                                        // onChange={handleDiscountChange}
+                                        value={discountPercentage}
+                                        onChange={(e) => setDiscountPercentage(e.target.value)}
                                         className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
                                     />
                                 </div>
@@ -105,6 +118,16 @@ function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, cat
                     </div>
                 </form>
             </div>
+
+            {showCategoryDiscount && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={() => setShowCategoryDiscount(false)} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <CategoryDiscount closeModal={() => setShowCategoryDiscount(false)} />
+                        </div>
+                    </div>
+                )}
         </div>
     );
 }
