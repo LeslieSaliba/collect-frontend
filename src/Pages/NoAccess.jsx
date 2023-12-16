@@ -8,7 +8,7 @@ const NoAccess = () => {
     <img src="Images/PageNotFound.png" className="" alt="not found" />
     <div className="flex-title-not-found">
       <h1 className="title-text-not-found">Ooooooops!</h1>
-      <p className="subTitle-not-found"> You Dont Have Access To This Page</p>
+      <p className="subTitle-not-found"> You don't have access to this page</p>
       <div className="home-button-not-found">
         <Link to="/" className="btn-not">Go to Home </Link>
         </div>
