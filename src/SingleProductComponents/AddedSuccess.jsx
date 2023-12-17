@@ -3,7 +3,7 @@ function AddedSuccess ({closeModal}) {
         <div className="  flex items-center justify-center">
           <div className="text-center">
             <p className="text-2xl m-12 w-2/3 mx-auto">
-              Product added to your wishlist successfully
+              Product added to your wishlist successfully!
             </p>
             <div className="flex justify-end bg-gray-100 p-6 items-center">
               <button 

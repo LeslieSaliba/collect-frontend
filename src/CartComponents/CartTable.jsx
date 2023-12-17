@@ -59,7 +59,7 @@ function CartTable({ cartData, OnDelete}) {
           <tr>
             <th className="border-b border-black p-4 text-center font-thin text-2xl">Product</th>
             <th className="border-b border-black p-4 text-center"></th>
-            <th className="border-b border-black p-4 text-center font-thin text-2xl">Original Price</th>
+            <th className="border-b border-black p-4 text-center font-thin text-2xl">Original price</th>
             <th className="border-b border-black p-4 text-center font-thin text-2xl">Discount</th>
             <th className="border-b border-black p-4 text-center font-thin text-2xl">Price</th>
             <th className="p-4 text-center"></th>

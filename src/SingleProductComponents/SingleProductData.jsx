@@ -48,7 +48,7 @@ function SingleProductData({ openModal, productData }) {
       {productData ? (
         <>
           <div className="mb-5">
-            <p className="text-4xl font-bold">{productData.name}</p>
+            <p className="text-4xl font-bold capitalize">{productData.name}</p>
           </div>
 
           <div className="italic text-3xl">{productData.price} $</div>
@@ -69,7 +69,7 @@ function SingleProductData({ openModal, productData }) {
           onClick={() => { 
             openModal();
           }}
-          className="bg-white text-red-700 font-bold py-1 px-2 border border-red-700 w-96 text-lg inline-block mt-5 flex justify-center">
+          className="bg-white text-red-700 font-bold py-1 px-2 border border-red-700 w-96 text-lg inline-block mt-5 flex justify-center hover:bg-red-100">
             ADD TO CART{" "}
             <span>
               <img src="Images/cart.png" className="w-5 h-5 ml-1 mt-1" alt="cart" />

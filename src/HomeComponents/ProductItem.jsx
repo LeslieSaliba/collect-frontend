@@ -43,7 +43,7 @@ function ProductItem({ProductName, ProductPrice, ProductImage, ProductID,Product
         )}
         {ProductStatus !== "sold" && DiscountPercentage !== 0 && (
           <div className="absolute top-0 right-0 bg-white text-green-700 my-4 font-sans py-1 px-4 z-10 shadow-xl font-bold">
-            {DiscountPercentage}% Off
+            {DiscountPercentage}% off
           </div>
         )}
         <img
@@ -54,18 +54,18 @@ function ProductItem({ProductName, ProductPrice, ProductImage, ProductID,Product
         />
       </div>
 
-      <h3 className="text-left text-2xl">{ProductName}</h3>
+      <h3 className="text-left text-2xl capitalize">{ProductName}</h3>
       <div className="flex justify-between items-center">
         <div className="flex flex-col">
           {DiscountPercentage !== 0 ? (
             <div className="flex items-center">
-              <span className="text-xl line-through mr-2">${ProductPrice}</span>
+              <span className="text-xl line-through mr-2">{ProductPrice} $</span>
               <span className="text-green-700 text-xl font-bold">
-                ${calculateDiscountedPrice(ProductPrice, DiscountPercentage)}
+                {calculateDiscountedPrice(ProductPrice, DiscountPercentage)} $
               </span>
             </div>
           ) : (
-            <h4 className="text-xl">${ProductPrice}</h4>
+            <h4 className="text-xl">{ProductPrice} $</h4>
           )}
         </div>
         <div className="flex justify-end">

@@ -34,7 +34,7 @@ function HomeBanner() {
                 <div className="HomeBanner-title-btn ml-20">
                     <h1 className="text-4xl mb-4 w-96 italic">{banner.text}</h1>
                     <button
-                        className="bg-white text-red-700 font-bold py-2 px-10 border border-red-700  text-lg inline-block mt-5"
+                        className="bg-white text-red-700 font-bold py-2 px-10 border border-red-700 text-lg inline-block mt-5 hover:bg-red-100"
                         onClick={goToLink}
                     >
                         {banner.textButton}
