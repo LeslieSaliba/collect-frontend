@@ -4,35 +4,46 @@ import "../css/Dashboard.css";
 import AddCategory from "./DashModals/AddCategory";
 import DeleteCategory from "./DashModals/DeleteCategory";
 import EditCategory from "./DashModals/EditCategory";
+import CantHighlight from './DashModals/CantHighlight';
+import CategoryDiscount from "./DashModals/CategoryDiscount";
 
 function CategoriesSection() {
     const [categories, setCategories] = useState([]);
     const [productsInfo, setProductsInfo] = useState([]);
-    const [highlightedCategories, setHighlightedCategories] = useState([]);
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
     const [showDeleteCategoryModal, setShowDeleteCategoryModal] = useState(false);
+    const [showCantHighlight, setShowCantHighlight] = useState(false);
     const [showEditCategoryModal, setShowEditCategoryModal] = useState(false);
+    const [highlightedCategories, setHighlightedCategories] = useState({});
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [discountUpdated, setDiscountUpdated] = useState(false);
     const [selectedCategoryID, setSelectedCategoryID] = useState(null);
     const token = localStorage.getItem('token');
 
     const fetchCategories = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/category/getAll`)
             .then((response) => {
-                setCategories(response.data.data);
-                response.data.data.forEach((category) => {
+                const categoriesData = response.data.data;
+                const highlightedCategoriesData = categoriesData.reduce((acc, category) => {
+                    acc[category._id] = category.highlighted;
+                    return acc;
+                }, {});
+                setHighlightedCategories(highlightedCategoriesData);
+                setCategories(categoriesData);
+                categoriesData.forEach((category) => {
                     handleProductsInfo(category.name);
-                    handleHighlight(category.name);
                 });
             })
             .catch((error) => {
                 console.error(`Error fetching categories' data: `, error);
             });
-    }
+    };
 
     useEffect(() => {
         fetchCategories();
     }, []);
+
+    
 
     const handleProductsInfo = async (categoryName) => {
         try {
@@ -46,34 +57,8 @@ function CategoriesSection() {
         }
     }
 
-    const handleHighlight = (category) => {
-        const isHighlighted = highlightedCategories.includes(category);
+    console.log("products", productsInfo)
 
-        if (isHighlighted) {
-            const updatedHighlightedCategories = highlightedCategories.filter((item) => item !== category);
-            setHighlightedCategories(updatedHighlightedCategories);
-        } else {
-            if (highlightedCategories.length < 4) {
-                setHighlightedCategories((prevHighlightedCategories) => [...prevHighlightedCategories, category]);
-            } else {
-                const updatedHighlightedCategories = [...highlightedCategories.slice(1), category];
-                setHighlightedCategories(updatedHighlightedCategories);
-            }
-        }
-    };
-
-    // not working yet, to check with full update
-    // const updateHighlight = async (ID) => {
-    //     try {
-    //         const response = await axios.put(`${process.env.REACT_APP_API_URL}/category/update//${ID}`);
-    //         setHighlightedCategories(prevhighlightedCategories => ({
-    //             ...prevhighlightedCategories,
-    //             [ID]: response.data.data._id
-    //         }));
-    //     } catch (error) {
-    //         console.error(`Error updating highlighted data: `, error);
-    //     }
-    // }
 
     const [sortOrder, setSortOrder] = useState(true);
     const toggleSort = (field) => {
@@ -138,6 +123,45 @@ function CategoriesSection() {
         setShowEditCategoryModal(false);
     };
 
+    const handleCheckboxChange = async (categoryID) => {
+        // Check if highlighting more than 4 categories
+        const highlightedCount = Object.values(highlightedCategories).filter(value => value).length;
+    
+        if (highlightedCount >= 4 && !highlightedCategories[categoryID]) {
+            setShowCantHighlight(true);
+            return;
+        }
+    
+        setHighlightedCategories((prevHighlightedCategories) => ({
+            ...prevHighlightedCategories,
+            [categoryID]: !prevHighlightedCategories[categoryID],
+        }));
+    
+        try {
+            // Send a request to update the highlighted status
+            await axios.put(
+                `${process.env.REACT_APP_API_URL}/category/update/${categoryID}`,
+                {
+                    highlighted: !highlightedCategories[categoryID], // Toggle the highlighted status
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
+            // Optionally, you can fetch categories after updating to reflect the changes immediately
+            await fetchCategories();
+        } catch (error) {
+            console.error('Error updating highlighted status: ', error);
+            // Handle the error as needed
+        }
+    };
+    const updateDiscountSuccess = (success) => {
+        setDiscountUpdated(success);
+    };
+
     return (
         <div>
 
@@ -180,14 +204,12 @@ function CategoriesSection() {
                                     )}
                                 </td>
                                 <td className="px-4 py-2">
-                                    <input
-                                        type="checkbox"
-                                        checked={highlightedCategories.includes(category.name) && category.highlighted}
-                                        onChange={() => {
-                                            handleHighlight(category.name);
-                                            // updateHighlight(category._id);
-                                        }}
-                                    />
+                                <input
+                                type="checkbox"
+                                checked={highlightedCategories[category._id]}
+                                onChange={() => handleCheckboxChange(category._id)}
+                                
+                            />
                                 </td>
                                 <td className="px-4 py-2 flex">
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit"
@@ -214,7 +236,7 @@ function CategoriesSection() {
                         <div className="fixed inset-0 bg-black opacity-50"></div>
                         <div className="bg-white p-6 relative z-10">
                             <button onClick={closeEditCategoryModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
-                            <EditCategory fetchCategories={fetchCategories} closeEditCategoryModal={closeEditCategoryModal} categoryID={selectedCategoryID} category={selectedCategory} />
+                            <EditCategory fetchCategories={fetchCategories} closeEditCategoryModal={closeEditCategoryModal} categoryID={selectedCategoryID} category={selectedCategory} updateDiscountSuccess={updateDiscountSuccess} />
                         </div>
                     </div>
                 )}
@@ -232,6 +254,26 @@ function CategoriesSection() {
                         </div>
                     </div>
                 )}
+
+                {showCantHighlight && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={() => setShowCantHighlight(false)} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <CantHighlight closeModal={() => setShowCantHighlight(false)} />
+                        </div>
+                    </div>
+                )}
+
+             {discountUpdated && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                    <div className="fixed inset-0 bg-black opacity-50"></div>
+                    <div className="bg-white p-6 relative z-10">
+                        <button onClick={() => setDiscountUpdated(false)} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                        <CategoryDiscount closeModal={() => setDiscountUpdated(false)}/>
+                    </div>
+                </div>
+            )}
 
             </div>
 
