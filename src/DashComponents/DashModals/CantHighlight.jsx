@@ -3,7 +3,7 @@ function CantHighlight ({closeModal}) {
         <div className="  flex items-center justify-center">
           <div className="text-center">
             <p className="text-2xl m-12 w-2/3 mx-auto">
-             You cant highlight more than 4 categories
+             You can't highlight more than 4 categories
             </p>
             <div className="flex justify-end bg-gray-100 p-6 items-center">
               <button 
