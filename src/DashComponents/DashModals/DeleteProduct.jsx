@@ -3,7 +3,7 @@ import axios from 'axios';
 function DeleteProduct({ fetchProducts, closeDeleteProductModal, productID }) {
     const token = localStorage.getItem('token');
 
-    const deleteProduct = async (productID) => {
+    const deleteProduct = async () => {
         console.log('Product ID to be deleted:', productID);
         try {
             const response = await axios.delete(`${process.env.REACT_APP_API_URL}/product/delete/${productID}`, {
@@ -26,6 +26,7 @@ function DeleteProduct({ fetchProducts, closeDeleteProductModal, productID }) {
         }
     };
 
+
     return (
         <div className="flex items-center justify-center">
             <div className="text-center">
@@ -38,7 +39,7 @@ function DeleteProduct({ fetchProducts, closeDeleteProductModal, productID }) {
                         CANCEL
                     </button>
                     <button
-                        onClick={deleteProduct(productID)}
+                        onClick={deleteProduct}
                         className="bg-red-700 text-white font-bold py-1 px-2 border border-red-700 w-32 text-lg inline-block"
                     >
                         CONFIRM
