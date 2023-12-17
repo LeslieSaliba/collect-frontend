@@ -6,7 +6,7 @@ import SingleProduct from "../Pages/SingleProduct";
 function ProductItem({ProductName, ProductPrice, ProductImage, ProductID,ProductStatus,DiscountPercentage}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef(null);
-  console.log(ProductStatus, ProductName)
+  // console.log(ProductStatus, ProductName)
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {

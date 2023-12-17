@@ -35,11 +35,11 @@ function ViewCustomer({ userID }) {
             <div className="text-center">
                 <div className="py-4">
                     <div className="flex mb-4">
-                        <p className="flex-1 px-4 py-2 bg-gray-100 text-lg text-black text-left">
+                        <p className="flex-1 px-4 py-2 bg-gray-100 text-lg text-black text-left capitalize">
                             {customerInfo.fullName.firstName}
                         </p>
                         <span className="mx-4"></span>
-                        <p className="flex-1 px-4 py-2 bg-gray-100 text-lg text-black text-left">
+                        <p className="flex-1 px-4 py-2 bg-gray-100 text-lg text-black text-left capitalize">
                             {customerInfo.fullName.lastName}
                         </p>
                     </div>

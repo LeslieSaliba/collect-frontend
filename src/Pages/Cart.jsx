@@ -12,15 +12,15 @@ import ConfirmCheckout from "../CartComponents/ConfirmCheckout";
 
 function Cart() {
   const [shippingMethod, setShippingMethod] = useState("delivery");
-   const [isModalOpen, setIsModalOpen] = useState(false);
-   const [isAddressModalOpen, setAddressModalOpen] = useState(false);
-   const [showThankyou, setShowThankyou] = useState(false);
-   const token =  localStorage.getItem('token');
-   const cartId = localStorage.getItem('cartId');
-   const modalRef = useRef(null);
-   const [cartData, setCartData] = useState(null);
-
-   const openAddressModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddressModalOpen, setAddressModalOpen] = useState(false);
+  const [showThankyou, setShowThankyou] = useState(false);
+  const token = localStorage.getItem('token');
+  const cartId = localStorage.getItem('cartId');
+  const modalRef = useRef(null);
+  const [cartData, setCartData] = useState(null);
+  
+  const openAddressModal = () => {
     setAddressModalOpen(true);
   };
 
@@ -28,17 +28,16 @@ function Cart() {
     setAddressModalOpen(false);
   };
 
-
-   const handleConfirm = async () => {
+  const handleConfirm = async () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/order/create/${cartId}`, {
         shippingMethod: shippingMethod,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
       console.log(response.data);
       closeModal();
@@ -50,9 +49,7 @@ function Cart() {
     }
   };
 
-
-
-   const getCartItems = () => {
+  const getCartItems = () => {
     const userId = localStorage.getItem("userId");
     axios.get(`${process.env.REACT_APP_API_URL}/cart/getByUserID/${userId}`)
       .then(response => {
@@ -61,13 +58,13 @@ function Cart() {
       .catch(error => {
         console.error("Error fetching cart data:", error);
       });
-     
-   }
-   useEffect(() => {
-    getCartItems();
-  }, []); 
 
-  
+  }
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -88,7 +85,7 @@ function Cart() {
     setIsModalOpen(true);
     setShippingMethod(shippingMethod);
   };
-  console.log(shippingMethod);
+  // console.log(shippingMethod);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -110,15 +107,15 @@ function Cart() {
           </div>
           <CartEmpty />
           {showThankyou && (
-          <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
-          <div className="fixed inset-0 bg-black opacity-50"></div>
-          <div className="absolute bg-white p-8 rounded shadow-md">
-            <Thankyou 
-            closeModal={() => setShowThankyou(false)}
-            />
-          </div>
-        </div>
-      )}
+            <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
+              <div className="fixed inset-0 bg-black opacity-50"></div>
+              <div className="absolute bg-white p-8 rounded shadow-md">
+                <Thankyou
+                  closeModal={() => setShowThankyou(false)}
+                />
+              </div>
+            </div>
+          )}
         </div>
         <Footer />
       </>
@@ -134,12 +131,12 @@ function Cart() {
             My Cart
           </p>
         </div>
-        <CartTable 
-        cartData={cartData.cart}
-        updateCartData={updateCartData}
-        OnDelete={getCartItems}
+        <CartTable
+          cartData={cartData.cart}
+          updateCartData={updateCartData}
+          OnDelete={getCartItems}
         />
-        <CartDetails openModal={openModal} cartData={cartData}  openAddressModal={openAddressModal}/>
+        <CartDetails openModal={openModal} cartData={cartData} openAddressModal={openAddressModal} />
         {isModalOpen && (
           <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
             <div className="fixed inset-0 bg-black opacity-50"></div>
@@ -148,20 +145,20 @@ function Cart() {
               className="absolute bg-white p-8 rounded shadow-md"
             >
               <ConfirmCheckout
-               closeModal={closeModal} 
-               confirm = {handleConfirm}
-               />
+                closeModal={closeModal}
+                confirm={handleConfirm}
+              />
             </div>
           </div>
         )}
-      {isAddressModalOpen && 
-      <div className="fixed inset-0 flex items-center justify-center z-40">
-          <div className="fixed inset-0 bg-black opacity-50"></div>
-          <div className="absolute bg-white p-8 rounded shadow-md">
-            <CartAddress closeModal={closeAddressModal}  />
-          </div>
-        </div>}
-      
+        {isAddressModalOpen &&
+          <div className="fixed inset-0 flex items-center justify-center z-40">
+            <div className="fixed inset-0 bg-black opacity-50"></div>
+            <div className="absolute bg-white p-8 rounded shadow-md">
+              <CartAddress closeModal={closeAddressModal} cartData={cartData}/>
+            </div>
+          </div>}
+
       </div>
       <Footer />
     </>

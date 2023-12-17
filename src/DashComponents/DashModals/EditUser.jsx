@@ -7,20 +7,12 @@ function EditUser({ fetchTeam, closeEditUserModal, userID }) {
     email: '',
     phoneNumber: ''
   });
-  // const [firstName, setFirstName] = useState('');
-  // const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState('');
-  // const [city, setCity] = useState("");
-  // const [street, setStreet] = useState("");
-  // const [building, setBuilding] = useState("");
-  // const [floor, setFloor] = useState("");
-  // const [description, setDescription] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-  // const [showEditUserModal, setShowEditUserModal] = useState(true);
   const [error, setError] = useState('');
   const token = localStorage.getItem('token');
 
@@ -30,7 +22,7 @@ function EditUser({ fetchTeam, closeEditUserModal, userID }) {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/user/getById/${userID}`);
         console.log('User data retrieved successfully');
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setUserInfo(response.data.data);
       } catch (error) {
         console.error('Error retrieving user data: ', error);
@@ -116,7 +108,7 @@ function EditUser({ fetchTeam, closeEditUserModal, userID }) {
       ...updatedFields,
     };
   
-    console.log("Updated user object:", user);
+    // console.log("Updated user object:", user);
     try {
       await editUser(userID, updatedFields);
       closeEditUserModal();

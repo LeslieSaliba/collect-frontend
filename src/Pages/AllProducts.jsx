@@ -547,7 +547,7 @@ const AllProduct = () => {
                       htmlFor="discount"
                       className="ml-3 text-sm text-black-600"
                     >
-                      Discount
+                      Discounted
                     </label>
                   </div>
                 </Disclosure>

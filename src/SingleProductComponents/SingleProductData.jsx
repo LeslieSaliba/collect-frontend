@@ -56,7 +56,7 @@ function SingleProductData({ openModal, productData }) {
           <div className="mt-32">
             <button
              onClick={addToWishlist}
-             className="bg-white font-bold py-1 px-2 border border-black w-96 text-lg inline-block mt-5 flex justify-center">
+             className="bg-white font-bold py-1 px-2 border border-black w-96 text-lg inline-block mt-5 flex justify-center hover:bg-gray-100">
 
               ADD TO WISHLIST{" "}
               <span>

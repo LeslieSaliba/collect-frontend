@@ -14,7 +14,6 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
   const [showFailCartModal, setShowFailCartModal] = useState(false);
   const [ModalMessage, setModalMessage] = useState('');
 
-
   const openConfirmationModal = (productId) => {
     setSelectedProduct(productId);
     setShowConfirmationModal(true);
@@ -40,7 +39,6 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
         onRemoveFromWishlist(productId);
       }
 
-  
     } catch (error) {
       console.error('Error removing product from wishlist:', error);
       
