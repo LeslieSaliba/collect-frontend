@@ -16,7 +16,7 @@ const PieChart = () => {
         "#B75E2F",
         "#F6F6F6",
         "#EAEAEA",
-        "#DDDDDD"
+       
       ],
       fill: {
        
@@ -26,7 +26,7 @@ const PieChart = () => {
     "#B75E2F",
     "#F6F6F6",
     "#EAEAEA",
-    "#DDDDDD"
+   
   ],
        
       },

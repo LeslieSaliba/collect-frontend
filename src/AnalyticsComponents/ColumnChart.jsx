@@ -2,20 +2,11 @@ import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const ColumnChart = () => {
-    const colors = [
-        "#B7312D",
-        "#B7452E",
-        "#B75E2F",
-        "#B6322C",
-        "#EAEAEA",
-        "#DDDDDD",
-        "#4C4C4C", 
-        "#999999"  
-      ];
+  const colors = ["#B7312D"];
 
   const [chartData, setChartData] = useState({
     series: [{
-      data: [21, 22, 10, 28, 16, 21, 13, 30]
+      data: [21, 22, 10, 28, 16, 21, 13, 30, 21, 13, 30, 20]
     }],
     options: {
       chart: {
@@ -30,8 +21,8 @@ const ColumnChart = () => {
       colors: colors,
       plotOptions: {
         bar: {
-          columnWidth: '45%',
-          distributed: true,
+          columnWidth: '90%',
+          distributed: false,
         }
       },
       dataLabels: {
@@ -42,20 +33,25 @@ const ColumnChart = () => {
       },
       xaxis: {
         categories: [
-          ['John', 'Doe'],
-          ['Joe', 'Smith'],
-          ['Jake', 'Williams'],
-          'Amber',
-          ['Peter', 'Brown'],
-          ['Mary', 'Evans'],
-          ['David', 'Wilson'],
-          ['Lily', 'Roberts'],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
         ],
         labels: {
           style: {
-            colors: colors,
-            fontSize: '12px'
-          }
+            colors: "#000000",
+            fontSize: '15px',
+          },
+          rotate: -45, 
         }
       }
     },
