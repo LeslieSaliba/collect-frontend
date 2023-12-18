@@ -15,8 +15,8 @@
 }
 
 .footer-socials-img {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
 }
 
 @media (max-width: 500px) {
@@ -44,6 +44,11 @@
 
     .Footer-Links li {
         margin-right: 10px;
-        margin-top: 0 !important; 
+        margin-top: 0 !important;
+    }
+
+    .footer-logo {
+        width: 50%;
+        margin: 0% 25%;
     }
 }

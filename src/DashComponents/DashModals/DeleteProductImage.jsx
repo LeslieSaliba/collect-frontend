@@ -2,10 +2,10 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function DeleteProductImage({ closeDeleteProductImageModal, ImageIndex, ProductID }) {
-    const [error, setError] = useState('');
+  const [error, setError] = useState('');
 
   const handleConfirm = async () => {
-    const token = localStorage.getItem('token'); 
+    const token = localStorage.getItem('token');
 
     try {
       const response = await axios.post(
@@ -29,15 +29,12 @@ function DeleteProductImage({ closeDeleteProductImageModal, ImageIndex, ProductI
         closeDeleteProductImageModal();
       } else {
         console.error('Error removing image:', data);
-        setError("you should at least have 3 images");
-        
+        setError("You should at least have 3 images");
       }
     } catch (error) {
       console.error('Error removing image:', error.message);
-      setError("you should at least have 3 images");
+      setError("You should at least have 3 images");
     }
-
-    
   };
 
   return (
@@ -62,7 +59,7 @@ function DeleteProductImage({ closeDeleteProductImageModal, ImageIndex, ProductI
             CONFIRM
           </button>
         </div>
-    
+
       </div>
     </div>
   );

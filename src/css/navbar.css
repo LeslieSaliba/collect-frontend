@@ -17,6 +17,10 @@
 
     .navbar-logo-image,
     .navbar-cart-heart-cont {
-        width: 0rem;
+        width: 100%;
+    }
+
+    .shadow-navbar {
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 }

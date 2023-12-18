@@ -113,8 +113,8 @@ function AddProduct({ fetchProducts , closeAddProductModal}) {
     setCategory(selectedCategoryId);
   };
 
-  console.log(category)
-  console.log(reference)
+  // console.log(category)
+  // console.log(reference)
 
   return (
     <div>

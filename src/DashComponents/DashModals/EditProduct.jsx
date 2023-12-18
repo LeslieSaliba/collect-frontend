@@ -14,10 +14,9 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
         applyDiscount: false,
         discountPercentage: ''
     });
-
     const [allCategories, setAllCategories] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const [showDiscount, setShowDiscount]= useState(false);
+    const [showDiscount, setShowDiscount] = useState(false);
     const [showDeleteProductImageModal, setShowDeleteProductImageModal] = useState({
         isOpen: false,
         imageIndex: null,
@@ -26,34 +25,35 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        try {
-          const token = localStorage.getItem('token');
-          const config = {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          };
-    
-          const response = await axios.put(
-            `${process.env.REACT_APP_API_URL}/product/update/${productID}`,
-            productData,
-            config
-          );
 
-          fetchProducts();
-          closeEditProductModal();
+        try {
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+
+            const response = await axios.put(
+                `${process.env.REACT_APP_API_URL}/product/update/${productID}`,
+                productData,
+                config
+            );
+
+            fetchProducts();
+            closeEditProductModal();
         } catch (error) {
-          console.error('Error updating product:', error);
-          setErrorMessage('Failed to update product. Please try again.');
+            console.error('Error updating product:', error.response.data);
+            setErrorMessage('Failed to update product. Please try again.');
         }
-      };
+    };
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/product/getByID/${productID}`)
             .then((response) => {
                 const product = response.data.data;
                 setProductData({
+                    ...productData,
                     name: product.name,
                     images: product.images,
                     description: product.description,
@@ -76,11 +76,20 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                 console.error(`Error fetching categories' data: `, error);
             });
     }, [productID]);
+
     console.log('showDeleteProductImageModal:', showDeleteProductImageModal);
 
     const handleDeleteImageModalClose = () => {
         setShowDeleteProductImageModal({ isOpen: false });
-      };
+    };
+
+    const handleCategoryChange = (e) => {
+        const selectedCategoryId = e.target.value;
+        setProductData(prevProductData => ({
+            ...prevProductData,
+            category: selectedCategoryId
+        }));
+    };
 
     return (
         <div>
@@ -97,25 +106,30 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                         />
                         <span className="mx-4"></span>
                         <div className="flex mb-4">
-                        <select
-                            value={productData.category}
-                            onChange={(e) => setProductData({ ...productData, category: e.target.value })}
-                            className="px-4 py-2 mr-4 bg-gray-100 focus:outline-none text-lg text-black"
-                        >
-                            <option value="">Select category</option>
-                            {allCategories.map((category) => (
-                                <option key={category._id} value={category._id} className="capitalize">
-                                    {category.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                            <select
+                                value={productData.category}
+                                onChange={handleCategoryChange}
+                                className="px-4 py-2 mr-4 bg-gray-100 focus:outline-none text-lg text-black"
+                            >
+                                <option value="">Select category</option>
+                                {allCategories.map((category) => (
+                                    <option
+                                        key={category._id}
+                                        value={category._id}
+                                        className="capitalize"
+                                    >
+                                        {category.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
                         <div className="flex mb-4">
-                        <select
-                        value={productData.status}
-                        onChange={(e) => setProductData({ ...productData, status: e.target.value })}
-                        className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
-                    >
+                            <select
+                                value={productData.status}
+                                onChange={(e) => setProductData({ ...productData, status: e.target.value })}
+                                className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
+                            >
                                 <option value={productData.name}>Status</option>
                                 <option value="available">Available</option>
                                 <option value="sold">Sold</option>
@@ -127,30 +141,31 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                             rows={5}
                             placeholder="Description"
                             value={productData.description}
+                            onChange={(e) => setProductData({ ...productData, description: e.target.value })}
                             className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black resize-none"
                         />
                         <span className="mx-4"></span>
                         <div className="flex flex-wrap justify-between w-96">
                             {productData.images.map((image, index) => (
-                             <div className='relative w-fit'
-                             style={{ maxWidth: '100px', minWidth: '100px', maxHeight: '100px', minHeight: '100px'}}>
-                             <img
-                                 key={index}
-                                 src={image}
-                                 alt={`Product Image ${index + 1}`}
-                                 style={{ maxWidth: '100px', minWidth: '100px', maxHeight: '100px', minHeight: '100px', objectFit: 'cover' }}
-                                 className="mx-2 mb-2"
-                             />
-                             <img src="../Images/dashboardIcons/delete.png" className="bg-white h-6 w-6 absolute bottom-2 right-0 z-10" alt="Delete Icon" 
-                             onClick={() => {
-                                setShowDeleteProductImageModal({
-                                    isOpen: true,
-                                    imageIndex: index,
-                                    productId: productID,
-                                });
-                            }}
-                             />
-                         </div>
+                                <div className='relative w-fit'
+                                    style={{ maxWidth: '100px', minWidth: '100px', maxHeight: '100px', minHeight: '100px' }}>
+                                    <img
+                                        key={index}
+                                        src={image}
+                                        alt={`Product Image ${index + 1}`}
+                                        style={{ maxWidth: '100px', minWidth: '100px', maxHeight: '100px', minHeight: '100px', objectFit: 'cover' }}
+                                        className="mx-2 mb-2"
+                                    />
+                                    <img src="../Images/dashboardIcons/delete.png" className="bg-white h-6 w-6 absolute bottom-2 right-0 z-10" alt="Delete Icon"
+                                        onClick={() => {
+                                            setShowDeleteProductImageModal({
+                                                isOpen: true,
+                                                imageIndex: index,
+                                                productId: productID,
+                                            });
+                                        }}
+                                    />
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -159,6 +174,7 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                             type="text"
                             placeholder="Price"
                             value={productData.price}
+                            onChange={(e) => setProductData({ ...productData, price: e.target.value })}
                             className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
                         />
                         <span className="mx-4"></span>
@@ -166,6 +182,7 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                             type="text"
                             placeholder="Reference"
                             value={productData.reference}
+                            onChange={(e) => setProductData({ ...productData, reference: e.target.value })}
                             className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
                         />
                     </div>
@@ -175,7 +192,7 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                                 <input
                                     type="checkbox"
                                     checked={showDiscount}
-                                    onChange={() => setShowDiscount(!showDiscount)}  
+                                    onChange={() => setShowDiscount(!showDiscount)}
                                     className="mr-2"
                                 />
                                 <p className="text-black">Apply discount</p>
@@ -183,10 +200,10 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
 
                             {showDiscount && (
                                 <div className="flex flex-col">
-                                   <input
+                                    <input
                                         type="text"
                                         placeholder="Discount percentage %"
-                                        value={productData.discountPercentage}  
+                                        value={productData.discountPercentage}
                                         className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
                                         onChange={(e) => setProductData({ ...productData, discountPercentage: e.target.value })}
                                     />
@@ -194,25 +211,25 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                             )}
                         </div>
                     </div>
-                    
+
                     {showDeleteProductImageModal.isOpen === true && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black opacity-50"></div>
-          <div className="bg-white p-6 relative z-10">
-            <button
-              onClick={handleDeleteImageModalClose}
-              className="absolute top-0 right-0 m-4 px-2 py-1"
-            >
-              X
-            </button>
-            <DeleteProductImage
-              closeDeleteProductImageModal={handleDeleteImageModalClose}
-              ImageIndex={showDeleteProductImageModal.imageIndex}
-              ProductID={showDeleteProductImageModal.productId}
-            />
-          </div>
-        </div>
-      )}
+                        <div className="fixed inset-0 z-50 flex items-center justify-center">
+                            <div className="fixed inset-0 bg-black opacity-50"></div>
+                            <div className="bg-white p-6 relative z-10">
+                                <button
+                                    onClick={handleDeleteImageModalClose}
+                                    className="absolute top-0 right-0 m-4 px-2 py-1"
+                                >
+                                    X
+                                </button>
+                                <DeleteProductImage
+                                    closeDeleteProductImageModal={handleDeleteImageModalClose}
+                                    ImageIndex={showDeleteProductImageModal.imageIndex}
+                                    ProductID={showDeleteProductImageModal.productId}
+                                />
+                            </div>
+                        </div>
+                    )}
 
                     {setErrorMessage !== '' && <p className="text-red-700 text-sm">{errorMessage}</p>}
                     <div className="flex justify-end">
