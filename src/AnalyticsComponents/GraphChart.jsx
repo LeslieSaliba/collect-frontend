@@ -5,7 +5,7 @@ const ApexChart = () => {
   const [chartData, setChartData] = useState({
     series: [{
       name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148,62, 69,62,]
+      data: [10, 41, 35, 51, 49, 62, 69, 91, 148, 62, 69, 62,]
     }],
     options: {
       chart: {
@@ -21,10 +21,10 @@ const ApexChart = () => {
       },
       stroke: {
         curve: 'straight',
-     
+
       },
-   
- 
+
+
       grid: {
         row: {
           colors: ['#f3f3f3', 'transparent'],
@@ -51,7 +51,7 @@ const ApexChart = () => {
             colors: "#000000",
             fontSize: '15px',
           },
-          rotate: -45, 
+          rotate: -45,
         }
       }
     },

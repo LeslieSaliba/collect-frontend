@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const ColumnChart = () => {
-  const colors = ["#B7312D"];
+  const colors = ["#B6322C"];
 
   const [chartData, setChartData] = useState({
     series: [{

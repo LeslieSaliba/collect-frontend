@@ -106,7 +106,7 @@ function OrdersSection() {
      try {
        const response = await axios.put(
          `${process.env.REACT_APP_API_URL}/order/update/${orderID}`,
-         { status: orderStatus  }, // Include the necessary data in the request body
+         { status: orderStatus  }, 
          {
            headers: {
              "Content-Type": "application/json",
@@ -120,16 +120,12 @@ function OrdersSection() {
        closeEditOrderModal();
      } catch (error) {
        if (error.response) {
-         // The request was made and the server responded with a status code
-         // that falls out of the range of 2xx
          console.error("Server responded with an error:", error.response.data);
          console.error("Status code:", error.response.status);
          console.error("Headers:", error.response.headers);
        } else if (error.request) {
-         // The request was made but no response was received
          console.error("No response received:", error.request);
        } else {
-         // Something happened in setting up the request that triggered an Error
          console.error("Error setting up the request:", error.message);
        }
      }
