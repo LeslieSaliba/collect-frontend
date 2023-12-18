@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/CartDetails.css";
 
 function CartDetails({ openModal, openAddressModal, cartData }) {
@@ -11,7 +11,6 @@ function CartDetails({ openModal, openAddressModal, cartData }) {
   const handleShippingMethodChange = (event) => {
     const method = event.target.value;
     setShippingMethod(method);
-
     setTotal(method === "delivery" ? cartData.cart.totalPrice + shippingCost : cartData.cart.totalPrice);
   };
 
@@ -33,7 +32,7 @@ function CartDetails({ openModal, openAddressModal, cartData }) {
                 />
                 delivery at home (under 5-7 days) - 3 ${" "}
                 <p className="text-lg ml-8 italic">
-                  {userCity}, {userAddress.street},  {userAddress.building}, Floor:{userAddress.floor}
+                  {userCity}, {userAddress.street},  {userAddress.building}, Floor: {userAddress.floor}
                   <a onClick={openAddressModal} className="underline ml-4 not-italic">edit address</a>
                 </p>
               </label>

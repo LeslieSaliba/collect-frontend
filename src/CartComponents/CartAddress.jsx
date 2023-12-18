@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
-function CartAddress({ closeModal, cartData }) {
+function CartAddress({ closeModal, cartData, updateCartData }) {
   const token = localStorage.getItem('token');
   const fullAddress = cartData.user.fullAddress;
   const userID = cartData.user._id
-  const [floor, setFloor] = useState('');
-  const [city, setCity] = useState('');
-  const [building, setBuilding] = useState('');
-  const [description, setDescription] = useState('');
-  const [street, setStreet] = useState('');
+  const [floor, setFloor] = useState(fullAddress.floor || '');
+  const [city, setCity] = useState(cartData.user.city || '');
+  const [building, setBuilding] = useState(fullAddress.building || '');
+  const [description, setDescription] = useState(fullAddress.description || '');
+  const [street, setStreet] = useState(fullAddress.street || '');
 
   const editAddress = async (userID, newAddress) => {
     console.log('User ID to be updated:', userID);
@@ -32,51 +32,34 @@ function CartAddress({ closeModal, cartData }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedFields = {};
+    const updateCartData = {
+      city: city !== cartData.user.city ? city : cartData.user.city,
+      fullAddress: {
+        floor: floor !== fullAddress.floor ? floor : fullAddress.floor,
+        building: building !== fullAddress.building ? building : fullAddress.building,
+        description: description !== fullAddress.description ? description : fullAddress.description,
+        street: street !== fullAddress.street ? street : fullAddress.street,
+      }
+    };
 
-    if (floor !== '' && floor !== fullAddress.floor) {
-      updatedFields.floor = floor;
-    } else {
-      updatedFields.floor = fullAddress.floor;
-    }
+    console.log("Updated fields: ", updateCartData);
 
-    if (city !== '' && city !== cartData.user.city) {
-      updatedFields.city = city;
-    } else {
-      updatedFields.city = cartData.user.city;
-    }
-
-    if (building !== fullAddress.building) {
-      updatedFields.building = building;
-    } else {
-      updatedFields.building = fullAddress.building;
-    }
-
-    if (description !== fullAddress.description) {
-      updatedFields.description = description;
-    } else {
-      updatedFields.description = fullAddress.description;
-    }
-
-    if (street !== fullAddress.street) {
-      updatedFields.street = street;
-    } else {
-      updatedFields.street = fullAddress.street;
-    }
-
-    // const user = {
-    //   ...updatedFields,
-    // };
-
-    // console.log("Updated user object:", user);
     try {
-      await editAddress(userID, updatedFields);
+      await editAddress(userID, updateCartData);
       closeModal();
-      // fetchTeam();
+      updateCartData(updateCartData);
     } catch (error) {
-      // setError(error.response.data.error);
+      console.log(error)
     }
   };
+
+  useEffect(() => {
+    setFloor(cartData.user.fullAddress.floor || '');
+    setCity(cartData.user.city || '');
+    setBuilding(cartData.user.fullAddress.building || '');
+    setDescription(cartData.user.fullAddress.description || '');
+    setStreet(cartData.user.fullAddress.street || '');
+  }, [cartData]);
 
   return (
     <div className="  flex items-center justify-center">
@@ -90,9 +73,9 @@ function CartAddress({ closeModal, cartData }) {
             <input
               type="number"
               name="floor"
+              placeholder="Floor"
               value={floor}
               onChange={(e) => setFloor(e.target.value)}
-              placeholder={fullAddress.floor}
               className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black contactUs-input"
               required
             />
@@ -100,9 +83,9 @@ function CartAddress({ closeModal, cartData }) {
             <input
               type="text"
               name="building"
+              placeholder='Building'
               value={building}
               onChange={(e) => setBuilding(e.target.value)}
-              placeholder={fullAddress.building}
               className=" md:mt-0 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black contactUs-input"
               required
             />
@@ -111,9 +94,9 @@ function CartAddress({ closeModal, cartData }) {
             <input
               type="text"
               name="city"
-              value={cartData.user.city}
-              onChange={(e) => setCity(e.target.value)}
               placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
               className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black contactUs-input"
               required
             />
@@ -121,9 +104,9 @@ function CartAddress({ closeModal, cartData }) {
             <input
               type="text"
               name="street"
-              value={fullAddress.street}
-              onChange={(e) => setStreet(e.target.value)}
               placeholder="Street"
+              value={street}
+              onChange={(e) => setStreet(e.target.value)}
               className=" md:mt-0 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black contactUs-input"
               required
             />
@@ -131,7 +114,7 @@ function CartAddress({ closeModal, cartData }) {
           <textarea
             className="w-full px-4 py-2 h-28 bg-gray-100 focus:outline-none  text-lg text-black"
             placeholder="Additional description"
-            value={fullAddress.description}
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
             name="description"
             required

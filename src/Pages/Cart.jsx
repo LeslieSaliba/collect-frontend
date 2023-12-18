@@ -19,13 +19,14 @@ function Cart() {
   const cartId = localStorage.getItem('cartId');
   const modalRef = useRef(null);
   const [cartData, setCartData] = useState(null);
-  
+
   const openAddressModal = () => {
     setAddressModalOpen(true);
   };
 
   const closeAddressModal = () => {
     setAddressModalOpen(false);
+    window.location.reload();
   };
 
   const handleConfirm = async () => {
@@ -64,6 +65,7 @@ function Cart() {
     getCartItems();
   }, []);
 
+  console.log(cartData, ` cartData`)
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -96,6 +98,7 @@ function Cart() {
   };
 
   if (!cartData || !cartData.cart.productIds || cartData.cart.productIds.length === 0) {
+
     return (
       <>
         <NavBar />
@@ -155,7 +158,7 @@ function Cart() {
           <div className="fixed inset-0 flex items-center justify-center z-40">
             <div className="fixed inset-0 bg-black opacity-50"></div>
             <div className="absolute bg-white p-8 rounded shadow-md">
-              <CartAddress closeModal={closeAddressModal} cartData={cartData}/>
+              <CartAddress closeModal={closeAddressModal} cartData={cartData} updateCartData={updateCartData} />
             </div>
           </div>}
 
