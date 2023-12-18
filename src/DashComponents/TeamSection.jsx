@@ -75,26 +75,6 @@ function TeamSection() {
         setShowDeleteUserModal(false);
     };
 
-    // const editUser = async (userID) => {
-    //     console.log('User ID to be updated:', userID);
-    //     try {
-    //         const response = await axios.put(`${process.env.REACT_APP_API_URL}/user/update/${userID}`, {
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${token}`,
-    //             },
-    //         });
-    //         console.log('User updated successfully');
-    //         await fetchTeam();
-    //         closeEditUserModal();
-    //     } catch (error) {
-    //         console.error('Error updating team member data: ', error);
-    //         if (error.response) {
-    //             console.log('Error while updating user')
-    //         }
-    //     }
-    // };
-
     const openEditUserModal = (userID) => {
         setSelectedUserID(userID);
         setShowEditUserModal(true);

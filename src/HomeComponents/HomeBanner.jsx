@@ -13,20 +13,17 @@ function HomeBanner() {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/banner/getHiglighted`);
             if (response) {
-                console.log("response", response.data.data[0]);
                 setBanner(response.data.data[0]);
             }
             else {
                 console.log("response", "empty");
             }
-
         } catch (error) {
             console.error(`Error fetching banners' data: `, error);
         }
     };
 
     bannerToDisplay();
-    console.log("banner", banner)
 
     return (
         <div className="HomeBanner-container flex items-center justify-center">
@@ -34,7 +31,7 @@ function HomeBanner() {
                 <div className="HomeBanner-title-btn ml-20">
                     <h1 className="text-4xl mb-4 w-96 italic">{banner.text}</h1>
                     <button
-                        className="bg-white text-red-700 font-bold py-2 px-10 border border-red-700  text-lg inline-block mt-5"
+                        className="bg-white text-red-700 font-bold py-2 px-10 border border-red-700 text-lg inline-block mt-5 hover:bg-red-100"
                         onClick={goToLink}
                     >
                         {banner.textButton}

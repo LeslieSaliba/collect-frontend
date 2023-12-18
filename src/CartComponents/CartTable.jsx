@@ -3,13 +3,11 @@ import {Link} from 'react-router-dom';
 import axios from "axios";
 import ConfirmDelete from "./ConfirmDelete";
 
-
 function CartTable({ cartData, OnDelete}) {
   const token = localStorage.getItem('token');
   const cartId = localStorage.getItem('cartId');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-
 
   const openConfirmationModal = (productId) => {
     setSelectedProduct(productId);
@@ -59,7 +57,7 @@ function CartTable({ cartData, OnDelete}) {
           <tr>
             <th className="border-b border-black p-4 text-center font-thin text-2xl">Product</th>
             <th className="border-b border-black p-4 text-center"></th>
-            <th className="border-b border-black p-4 text-center font-thin text-2xl">Original Price</th>
+            <th className="border-b border-black p-4 text-center font-thin text-2xl">Original price</th>
             <th className="border-b border-black p-4 text-center font-thin text-2xl">Discount</th>
             <th className="border-b border-black p-4 text-center font-thin text-2xl">Price</th>
             <th className="p-4 text-center"></th>

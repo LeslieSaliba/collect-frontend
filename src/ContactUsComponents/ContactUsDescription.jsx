@@ -58,7 +58,7 @@ function ContactUsDescription() {
             />
           </div>
           <textarea
-            className="w-full px-4 py-2 h-32 bg-gray-100 focus:outline-none text-lg text-black"
+            className="resize-none w-full px-4 py-2 h-32 bg-gray-100 focus:outline-none text-lg text-black"
             placeholder="Your message..."
             value={formData.message}
             onChange={handleInputChange}
