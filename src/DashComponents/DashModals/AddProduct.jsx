@@ -90,8 +90,8 @@ function AddProduct({ fetchProducts , closeAddProductModal}) {
     }
 
     inputs.push(
-      <button key={inputs.length} onClick={handleAddImageInput} className="flex-1 px-4 py-1 focus:outline-none text-black">
-        Add Image
+      <button key={inputs.length} onClick={handleAddImageInput} className="flex-1 px-4 py-1 focus:outline-none text-black hover:underline">
+        Add image
       </button>
     );
 
@@ -112,7 +112,6 @@ function AddProduct({ fetchProducts , closeAddProductModal}) {
     const selectedCategoryId = e.target.value;
     setCategory(selectedCategoryId);
   };
-
 
   console.log(category)
   console.log(reference)

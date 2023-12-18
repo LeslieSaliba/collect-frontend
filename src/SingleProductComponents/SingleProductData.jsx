@@ -48,7 +48,7 @@ function SingleProductData({ openModal, productData }) {
       {productData ? (
         <>
           <div className="mb-5">
-            <p className="text-4xl font-bold">{productData.name}</p>
+            <p className="text-4xl font-bold capitalize">{productData.name}</p>
           </div>
 
           <div className="italic text-3xl">{productData.price} $</div>
