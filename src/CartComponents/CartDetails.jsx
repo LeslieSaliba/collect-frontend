@@ -16,10 +16,10 @@ function CartDetails({ openModal, openAddressModal, cartData }) {
 
   return (
     <div className="cartDetails-cont p-8 scale-90 mt-4">
-      <p className="text-3xl italic mb-9 ml-8">Choose shipping method</p>
+      <p className="text-3xl italic mb-9 ml-8 CartDetails-Title">Choose shipping method</p>
       <form>
-        <div className="flex justify-between">
-          <div className="ml-12">
+        <div className="flex justify-between CartDetails-form">
+          <div className="ml-12 CartDetails-input">
             <div className="mb-4">
               <label className="text-2xl">
                 <input
@@ -53,7 +53,7 @@ function CartDetails({ openModal, openAddressModal, cartData }) {
             </div>
           </div>
 
-          <div className="flex gap-60">
+          <div className="flex gap-60 CartDetails-receipt">
             <div>
               <p className="text-xl mb-4 italic">Subtotal</p>
               <p className="text-xl mb-4 italic">Shipping</p>

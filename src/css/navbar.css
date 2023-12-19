@@ -1,10 +1,26 @@
-.navbar-logo-image , .navbar-cart-heart-cont{
+.navbar-logo-image,
+.navbar-cart-heart-cont {
     width: 9rem;
 }
-.navbar-title{
+
+.navbar-title {
     font-family: "Playfair Display";
     font-size: 20px;
 }
-.navbar-container ,.navbar-list{
+
+.navbar-container,
+.navbar-list {
     background-color: #F5F5F5;
+}
+
+@media (max-width: 767px) {
+
+    .navbar-logo-image,
+    .navbar-cart-heart-cont {
+        width: 100%;
+    }
+
+    .shadow-navbar {
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
 }

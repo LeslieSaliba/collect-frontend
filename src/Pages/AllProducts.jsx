@@ -273,7 +273,7 @@ const AllProduct = () => {
                                       value="All"
                                       type="checkbox"
                                       onChange={handleChangeCheckBox}
-                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                      className="h-4 w-4 rounded border-gray-300 text-red-700 focus:ring-red-700"
                                     />
                                     <label className="ml-3 text-sm text-black-600">
                                       <strong>All</strong>
@@ -294,7 +294,7 @@ const AllProduct = () => {
                                           isSelectedItem.includes(option._id)
                                         }
                                         onChange={handleChangeCheckBox}
-                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                        className="h-4 w-4 rounded border-gray-300 text-red-700 focus:ring-red-700"
                                       />
                                       <label
                                         htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
@@ -314,7 +314,7 @@ const AllProduct = () => {
                         as="div"
                         className="border-b border-gray-200 px-4 py-6"
                       >
-                        Price Range
+                        Price range
                         <div className="relative mb-6">
                           <label
                             htmlFor="labels-range-input"
@@ -332,15 +332,15 @@ const AllProduct = () => {
                             onChange={handleChange}
                             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                           />
-                          <span className="text-sm text-black-500 dark:text-black-400 absolute start-0 -bottom-6">
-                            Min ($1)
+
+                          <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
+                            Min (1 $)
                           </span>
                           <span className="text-sm text-black-500 dark:text-black-400 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
                             {range}
                           </span>
-
-                          <span className="text-sm text-black-500 dark:text-black-400 absolute end-0 -bottom-6">
-                            Max ($100)
+                          <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6">
+                            Max (100 $)
                           </span>
                         </div>
                       </Disclosure>
@@ -354,7 +354,7 @@ const AllProduct = () => {
                             type="checkbox"
                             value="discount"
                             onChange={handleChangeCheckBox}
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            className="h-4 w-4 rounded border-gray-300 text-red-700 focus:ring-red-700"
                           />
                           <label
                             htmlFor="discount"
@@ -469,7 +469,7 @@ const AllProduct = () => {
                                 value="All"
                                 type="checkbox"
                                 onChange={handleChangeCheckBox}
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                className="h-4 w-4 rounded border-gray-300 text-red-700 focus:ring-red-700"
                               />
                               <label className="ml-3 text-sm text-black-600">
                                 <strong>All</strong>
@@ -490,7 +490,7 @@ const AllProduct = () => {
                                     isSelectedItem.includes(option._id)
                                   }
                                   onChange={handleChangeCheckBox}
-                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                  className="h-4 w-4 rounded border-gray-300 text-red-700 focus:ring-red-700"
                                 />
                                 <label
                                   htmlFor={`filter-${section.id}-${optionIdx}`}
@@ -522,15 +522,15 @@ const AllProduct = () => {
                       onChange={handleChange}
                       className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     />
-                    <span className="text-sm text-black-500 dark:text-black-400 absolute start-0 -bottom-6">
-                      Min (1$)
+                    <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
+                      Min (1 $)
                     </span>
-                    <span className="text-sm text-black-500 dark:text-black-400 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
-                      {range}$
+                    <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
+                      {range} $
                     </span>
 
-                    <span className="text-sm text-black-500 dark:text-black-400 absolute end-0 -bottom-6">
-                      Max (100$)
+                    <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6">
+                      Max (100 $)
                     </span>
                   </div>
                 </Disclosure>
@@ -541,7 +541,7 @@ const AllProduct = () => {
                       type="checkbox"
                       value="discount"
                       onChange={handleChangeCheckBox}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 rounded border-gray-300 text-red-700 focus:ring-red-700"
                     />
                     <label
                       htmlFor="discount"
@@ -581,15 +581,18 @@ const AllProduct = () => {
                       <span className="sr-only">Previous</span>
                       <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
                     </li>
+
                     {pageNumbers.map((n, i) => (
                       <li
                         key={i}
                         href="#"
                         onClick={() => onChangeCurrent(n)}
                         aria-current="page"
-                        className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold text-black-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0
-                        ${currentPage == n
-                            ? "relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+
+                        className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0
+                        ${
+                          currentPage == n
+                            ? "relative z-10 inline-flex items-center bg-red-700 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700"
                             : " "
                           }`}
                       >

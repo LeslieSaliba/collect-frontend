@@ -3,3 +3,18 @@
     width: 80vw;
     height: 100vh;
 }
+
+@media screen and (max-width: 500px) {
+
+    .SingleProduct-cont{
+       
+        padding: 0;
+        width: -1;
+        height: -1;
+        flex-wrap: nowrap;
+        gap: 0;
+    }
+    .ProductItem-modal{
+        padding: 0;
+    }
+}

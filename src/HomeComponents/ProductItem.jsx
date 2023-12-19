@@ -82,7 +82,7 @@ function ProductItem({ProductName, ProductPrice, ProductImage, ProductID,Product
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-40">
           <div className="fixed inset-0 bg-black opacity-50"></div>
-          <div ref={modalRef} className="absolute bg-white p-8 rounded shadow-md">
+          <div ref={modalRef} className="absolute bg-white p-8 rounded shadow-md ProductItem-modal">
             <SingleProduct ProductID={ProductID} />
           </div>
         </div>

@@ -7,6 +7,7 @@ import ConfirmationEmail from "../SignInUpComponents/ConfirmationEmail";
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
   const [showConfirmEmail, setShowConfirmEmail] = useState(false);
   const [error, setError] = useState(null);
   const [firstName, setFirstName] = useState("");
@@ -22,6 +23,18 @@ function SignUp() {
   const [floor, setFloor] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    if (!value.match(/^[0-9]*$/)) {
+      setPhoneError("Invalid number");
+    } else if (value.length < 8) {
+      setPhoneError("Invalid phone number");
+    } else {
+      setPhoneError("");
+    }
+    setPhoneNumber(value);
+  };
 
   const validateInput = () => {
     if (!firstName) {
@@ -131,12 +144,11 @@ function SignUp() {
       />
       <div className="w-1/2 flex items-center justify-center SignUp-form ">
         <form className="p-12 py-0 w-full signup-title" onSubmit={handleSubmit}>
-          <h1 className="text-4xl  mb-4 text-center signup-title">WELCOME TO COLLECT</h1>
-          <h1 className="text-2xl mb-8 italic text-center signup-description">
+          <h1 className="text-4xl  mb-4 text-center signup-title text-shadow">WELCOME TO COLLECT</h1>
+          <h1 className="text-2xl mb-8 italic text-center signup-description text-shadow">
             The place to shop vintage items
           </h1>
 
-     
           <div className="flex">
       
             <div className="mb-8 mr-4 flex-1 signup-input-container">
@@ -149,10 +161,9 @@ function SignUp() {
                   setFirstName(e.target.value)
                 }}
                 className="w-full p-2 py-3 border border-black bg-gray-100 italic text-xl signup-input"
-                placeholder="First Name"
+                placeholder="First name"
               />
             </div>
-
          
             <div className="mb-8 flex-1 signup-input-container">
               <input
@@ -164,7 +175,7 @@ function SignUp() {
                   setLastName(e.target.value)
                 }}
                 className="w-full p-2 py-3 border border-black bg-gray-100 italic text-xl signup-input"
-                placeholder="Last Name"
+                placeholder="Last name"
               />
             </div>
           </div>
@@ -184,19 +195,17 @@ function SignUp() {
               />
             </div>
 
-  
             <div className="mb-8 flex-1 signup-input-container">
-              <input
-                type="number"
-                id="phone"
-                name="phone"
-                value={phoneNumber}
-                onChange={(e) => {
-                  setPhoneNumber(e.target.value)
-                }}
-                className="w-full p-2 py-3 border border-black bg-gray-100 italic text-xl signup-input"
-                placeholder="Phone Number"
-              />
+            <input
+              type="number"
+              id="phone"
+              name="phone"
+              value={phoneNumber}
+              onChange={handlePhoneChange}
+              className="w-full p-2 py-3 border border-black bg-gray-100 italic text-xl signup-input"
+              placeholder="Phone number"
+            />
+            {phoneError && <p className="error-message">{phoneError}</p>}
             </div>
           </div>
           <div className="flex signup-password">
@@ -239,7 +248,6 @@ function SignUp() {
               </div>
             </div>
 
-     
             <div className="mb-4 flex-1 relative signup-input-container">
               <input
                 type={showPassword ? "text" : "password"}
@@ -250,7 +258,7 @@ function SignUp() {
                   setConfirmPassword(e.target.value)
                 }}
                 className="w-full p-2 py-3 border border-black bg-gray-100 pr-10 italic text-xl"
-                placeholder="Confirm Password"
+                placeholder="Confirm password"
               />
               <div
                 className="absolute top-1/2 transform -translate-y-1/2 right-2 cursor-pointer"
@@ -281,7 +289,7 @@ function SignUp() {
 
           <div className="flex items-center mb-4 signup-delivery">
             <div className="flex-grow  h-[3px] bg-black ml-12 signup-line"></div>
-            <p className="mx-4 text-lg font-bold">for delivery purposes</p>
+            <p className="mx-4 text-lg font-bold text-shadow">for delivery purposes</p>
             <div className="flex-grow h-[3px] bg-black mr-12 signup-line"></div>
           </div>
 
@@ -301,7 +309,6 @@ function SignUp() {
               />
             </div>
 
-       
             <div className="mb-8 flex-1 signup-input-container">
               <input
                 type="text"
@@ -356,7 +363,7 @@ function SignUp() {
                   setDescription(e.target.value)
                 }}
               className="w-full p-2 py-3 border border-black bg-gray-100 italic text-xl signup-input"
-              placeholder="Additional Description"
+              placeholder="Additional description"
             />
           </div>
 
@@ -367,7 +374,7 @@ function SignUp() {
             {error && <p className="error-message">{error}</p>}
           </div>
           <div className="text-center signup-loginlink">
-          <Link to="/SignIn"><a href="" className="underline text-lg hover:text-red-700">
+          <Link to="/SignIn"><a href="" className="underline text-lg hover:text-red-700 text-shadow">
               Already have an account? Log in
             </a></Link>
           </div>

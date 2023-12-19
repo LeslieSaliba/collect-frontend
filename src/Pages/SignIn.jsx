@@ -138,8 +138,8 @@ function SignIn() {
 
       <div className="w-1/2 flex items-center justify-center SignIn-form">
         <form onSubmit={handleSignIn} className="max-w-md p-12 w-full">
-          <h1 className="text-4xl  mb-4 text-center">WELCOME BACK</h1>
-          <h1 className="text-2xl mb-8 italic text-center">We're glad to see you again!</h1>
+          <h1 className="text-4xl  mb-4 text-center text-shadow">WELCOME BACK</h1>
+          <h1 className="text-2xl mb-8 italic text-center text-shadow">We're glad to see you again!</h1>
 
 
           <div className="mb-8">
@@ -193,17 +193,17 @@ function SignIn() {
           {/* <div className="text-right mb-4">
             <a href="" className="underline text-lg hover:text-red-700">Forgot Password?</a>
           </div> */}
+
           <button className="bg-red-700 text-white  font-bold py-2 px-4 border border-red-700 w-full text-2xl mb-4 ">
             LOG IN
           </button>
           <div className="mb-4 text-center">
-          <Link to="/SignUp"><a href="" className="underline text-lg hover:text-red-700">Don’t have an account yet? Sign up</a></Link>
+          <Link to="/SignUp"><a href="" className="underline text-lg hover:text-red-700 text-shadow">Don’t have an account yet? Sign up</a></Link>
           </div>
         </form>
         
       </div>
      
-
       <img
         src="Images/12-1.JPG"
         alt="Background"

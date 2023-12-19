@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import "../css/Dashboard.css";
 
 function SidebarAdmin() {
   const [selectedSection, setSelectedSection] = useState('Orders');
   const [hoveredSection, setHoveredSection] = useState(null);
+  const [initialVisit, setInitialVisit] = useState(true);
   const navigate = useNavigate();
 
   const sectionData = [
@@ -28,12 +29,29 @@ function SidebarAdmin() {
       imageSrc: '../Images/dashboardIcons/users.png',
       imageSrcHover: '../Images/dashboardIcons/users-red.png',
     },
+    {
+      name: 'Logout',
+      imageSrc: '../Images/dashboardIcons/logout.png',
+      imageSrcHover: '../Images/dashboardIcons/logout-red.png',
+    },
   ];
 
   const handleSectionClick = (section) => {
-    setSelectedSection(section);
-    navigate(`/SellerDashboard/${section.toLowerCase()}`);
+    if (section === 'Logout') {
+      localStorage.clear();
+      navigate('/SignIn');
+    } else {
+      setSelectedSection(section);
+      navigate(`/AdminDashboard/${section.toLowerCase()}`);
+    }
   };
+
+  useEffect(() => {
+    if (initialVisit) {
+      navigate('/AdminDashboard/Orders');
+      setInitialVisit(false);
+    }
+  }, [navigate, initialVisit]);
 
   return (
     <div className="sidebar bg-gray-100 h-screen fixed left-0 top-0 w-36">
