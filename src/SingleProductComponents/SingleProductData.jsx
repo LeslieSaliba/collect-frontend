@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import AddedSuccess from './AddedSuccess'; 
 import AlreadyInWishlist from './AlreadyInWishlist'; 
+import "../css/SingleProductData.css"
 import { useNavigate } from 'react-router-dom';
 
 function SingleProductData({ openModal, productData }) {
@@ -48,16 +49,17 @@ function SingleProductData({ openModal, productData }) {
       {productData ? (
         <>
           <div className="mb-5">
-            <p className="text-4xl font-bold capitalize">{productData.name}</p>
+
+            <p className="text-4xl font-bold capitalize SingleProductData-Title">{productData.name}</p>
+
           </div>
 
-          <div className="italic text-3xl">{productData.price} $</div>
-          <div className="mb-4 w-96 text-2xl">{productData.description}</div>
+          <div className="italic text-3xl SingleProductData-Cost">{productData.price} $</div>
+          <div className="mb-4 w-96 text-2xl SingleProductData-Desc">{productData.description}</div>
           <div className="mt-32">
             <button
              onClick={addToWishlist}
-             className="bg-white font-bold py-1 px-2 border border-black w-96 text-lg inline-block mt-5 flex justify-center hover:bg-gray-100">
-
+             className="bg-white font-bold py-1 px-2 border border-black w-96 text-lg inline-block mt-5 flex justify-center hover:bg-gray-100 SingleProductData-Wishlist-responsive">
               ADD TO WISHLIST{" "}
               <span>
                 <img src="Images/heart.png" className="w-5 h-5 ml-1 mt-1" alt="heart" />
@@ -69,7 +71,8 @@ function SingleProductData({ openModal, productData }) {
           onClick={() => { 
             openModal();
           }}
-          className="bg-white text-red-700 font-bold py-1 px-2 border border-red-700 w-96 text-lg inline-block mt-5 flex justify-center hover:bg-red-100">
+          className="bg-white text-red-700 font-bold py-1 px-2 border border-red-700 w-96 text-lg inline-block mt-5 flex justify-center hover:bg-red-100 SingleProductData-Cart-responsive">
+
             ADD TO CART{" "}
             <span>
               <img src="Images/cart.png" className="w-5 h-5 ml-1 mt-1" alt="cart" />

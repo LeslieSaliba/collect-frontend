@@ -43,13 +43,22 @@ function SidebarAdmin() {
       imageSrc: '../Images/dashboardIcons/analytics.png',
       imageSrcHover: '../Images/dashboardIcons/analytics-red.png',
     },
+    {
+      name: 'Logout',
+      imageSrc: '../Images/dashboardIcons/logout.png',
+      imageSrcHover: '../Images/dashboardIcons/logout-red.png',
+    },
   ];
 
   const handleSectionClick = (section) => {
-    setSelectedSection(section);
-    navigate(`/AdminDashboard/${section.toLowerCase()}`);
+    if (section === 'Logout') {
+      localStorage.clear();
+      navigate('/SignIn');
+    } else {
+      setSelectedSection(section);
+      navigate(`/AdminDashboard/${section.toLowerCase()}`);
+    }
   };
-
   return (
     <div className="sidebar bg-gray-100 h-screen fixed left-0 top-0 w-36">
       <img src="../Images/logo.png" alt="Collect logo" className='p-6' />

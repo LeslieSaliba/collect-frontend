@@ -15,51 +15,16 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
         applyDiscount: false,
         discountPercentage: ''
     });
+    const [imageAdded, setImageAdded] = useState(false);
     const [allCategories, setAllCategories] = useState([]);
     const [imageFile, setImageFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [showDiscount, setShowDiscount] = useState(false);
-    const [isEditingImage, setISEditingImage] = useState(false);
     const [showDeleteProductImageModal, setShowDeleteProductImageModal] = useState({
         isOpen: false,
         imageIndex: null,
         productId: null,
     });
-
-    const handleAddImage = async () => {
-        try {
-            const formData = new FormData();
-            formData.append('image', imageFile);
-            formData.append('productID', productID);
-    
-            const token = localStorage.getItem('token');
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data',
-                },
-            };
-    
-            const response = await axios.post(
-                `${process.env.REACT_APP_API_URL}/product/addImage`,
-                formData,
-                config
-            );
-
-            setISEditingImage((prev)=>!prev);
-
-            setProductData((prevProductData) => ({
-                ...prevProductData,
-                images: [...prevProductData.images, response.data.data.downloadURL],
-            }));
-    
-            setImageFile(null);
-           
-        } catch (error) {
-            console.error('Error adding image:', error.response.data.message);
-            setErrorMessage('Failed to add image. Please try again.');
-        }
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -86,12 +51,46 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
         }
     };
 
+    const handleAddImage = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('image', imageFile);
+            formData.append('productID', productID);
+    
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            };
+    
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_URL}/product/addImage`,
+                formData,
+                config
+            );
+
+            setProductData((prevProductData) => ({
+                ...prevProductData,
+                images: [...prevProductData.images, response.data.data.downloadURL],
+            }));
+    
+            setImageFile(null);
+            setImageAdded((prev) => !prev);
+        } catch (error) {
+            console.error('Error adding image:', error.response.data);
+            setErrorMessage('Failed to add image. Please try again.');
+        }
+    };
+
+
     useEffect(() => {
-        console.log('hello')
         axios.get(`${process.env.REACT_APP_API_URL}/product/getByID/${productID}`)
             .then((response) => {
                 const product = response.data.data;
-                setProductData((prev)=>({...prev,  
+                setProductData({
+                    ...productData,
                     name: product.name,
                     images: product.images,
                     description: product.description,
@@ -99,7 +98,8 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                     price: product.price,
                     category: product.categoryID,
                     status: product.status,
-                    discountPercentage: product.discountPercentage || 0}))
+                    discountPercentage: product.discountPercentage
+                });
             })
             .catch((error) => {
                 console.error(`Error fetching product data: `, error);
@@ -112,8 +112,9 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
             .catch((error) => {
                 console.error(`Error fetching categories' data: `, error);
             });
-    }, [productID,isEditingImage]);
+    }, [productID,handleAddImage ]);
 
+    console.log('showDeleteProductImageModal:', showDeleteProductImageModal);
 
     const handleDeleteImageModalClose = () => {
         setShowDeleteProductImageModal({ isOpen: false });
@@ -123,10 +124,11 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
         const selectedCategoryId = e.target.value;
         setProductData(prevProductData => ({
             ...prevProductData,
-            categoryID: selectedCategoryId 
+            category: selectedCategoryId
         }));
     };
 
+    
     return (
         <div>
             <p className="text-red-700 text-3xl text-center underline my-5">EDIT PRODUCT</p>
@@ -143,7 +145,7 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                         <span className="mx-4"></span>
                         <div className="flex mb-4">
                             <select
-                                value={productData.categoryID}
+                                value={productData.category}
                                 onChange={handleCategoryChange}
                                 className="px-4 py-2 mr-4 bg-gray-100 focus:outline-none text-lg text-black"
                             >
@@ -182,12 +184,12 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                         />
                         <span className="mx-4"></span>
                         <div className="flex flex-wrap justify-between w-96">
-                            {productData.images.map((image, index) => (
-                                <div key={index} className='relative w-fit'
+                        {productData.images.map((image, index) => (
+                                <div className='relative w-fit' key={index}
                                     style={{ maxWidth: '100px', minWidth: '100px', maxHeight: '100px', minHeight: '100px' }}>
                                     <img
                                         src={image}
-                                        alt="img"
+                                        alt={`Product Image ${index + 1}`}
                                         style={{ maxWidth: '100px', minWidth: '100px', maxHeight: '100px', minHeight: '100px', objectFit: 'cover' }}
                                         className="mx-2 mb-2"
                                     />
@@ -203,15 +205,17 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                                 </div>
                             ))}
                         </div>
+                       
                     </div>
                     <div className="flex mb-4">
                             <input
                                 type="file"
                                 onChange={(e) => setImageFile(e.target.files[0])}
+                                // className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
                             />
                             <button
-                                type='button'
                                 onClick={handleAddImage}
+                                // className="ml-4 px-4 py-2 bg-green-500 text-white hover:bg-green-600 focus:outline-none text-lg"
                             >
                                 Add
                             </button>
@@ -247,18 +251,13 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
 
                             {showDiscount && (
                                 <div className="flex flex-col">
-                                <input
-                                    type="number"
-                                    placeholder="Discount percentage %"
-                                    value={Math.max(0, productData.discountPercentage)} 
-                                    className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
-                                    onChange={(e) =>
-                                    setProductData({
-                                        ...productData,
-                                        discountPercentage: Math.max(0, e.target.value), 
-                                    })
-                                    }
-                                />
+                                    <input
+                                        type="text"
+                                        placeholder="Discount percentage %"
+                                        value={productData.discountPercentage}
+                                        className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
+                                        onChange={(e) => setProductData({ ...productData, discountPercentage: e.target.value })}
+                                    />
                                 </div>
                             )}
                         </div>
@@ -278,8 +277,6 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                                     closeDeleteProductImageModal={handleDeleteImageModalClose}
                                     ImageIndex={showDeleteProductImageModal.imageIndex}
                                     ProductID={showDeleteProductImageModal.productId}
-                                    setISEditingImage={setISEditingImage}
-
                                 />
                             </div>
                         </div>

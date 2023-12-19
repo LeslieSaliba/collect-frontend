@@ -13,8 +13,11 @@
     }
   
     .SignIn-img {
-    
       display: none;
+    }
+
+    .text-shadow{
+      text-shadow: 0 0 2px white;
     }
     
 

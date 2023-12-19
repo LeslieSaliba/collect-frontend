@@ -5,7 +5,7 @@ function Footer() {
   return (
     <div className="footer-container flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0 md:space-x-4 pt-8 md:pt-16 pb-4 px-4 md:px-10">
       <div className="Footer-Description w-full md:w-1/3 text-center md:text-left">
-        <img src="Images/logo.png" alt="" className="h-8 navbar-logo-image" />
+        <img src="Images/logo.png" alt="" className="h-8 navbar-logo-image footer-logo" />
         <p className="text-sm md:text-lg mb-4 italic pt-5">
           Small description to describe Collect’s concept... Small description to describe Collect’s concept...
         </p>

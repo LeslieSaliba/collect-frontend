@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import "../css/wishlistTable.css"
 import {Link, useNavigate } from 'react-router-dom';
 import ErrorAddingToCart from './ErrorAddingToCart'
 import ConfirmAddToCart from "../WishlistComponents/AddToCartConfirmation";
@@ -98,7 +99,7 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
 
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 wishlistTable-table">
     <div className="homeCategeries-link-container italic">
      <Link to='/Shop'> <a href="" className="text-3xl homeCategeries-link">
         Continue Shopping <span className="ml-2 text-3xl">&#8594;</span>
