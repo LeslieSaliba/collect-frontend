@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../css/navbar.css";
+import LogoutConfirm from './LogoutConfirm';
 
 function NavBar() {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const loggedIn = Object.keys(localStorage).length > 0;
+    setIsLoggedIn(loggedIn);
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
@@ -14,21 +22,36 @@ function NavBar() {
     return location.pathname === path;
   };
 
+  const openLogoutModal = () => {
+    setShowLogoutModal(true);
+  };
+
+  const closeLogoutModal = () => {
+    setShowLogoutModal(false);
+  };
+
   return (
     <div className="App">
       <nav className="bg-white border-gray-200 white:bg-gray-900 navbar-container">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="../Images/logo.png" className="h-7 navbar-logo-image" alt="Flowbite Logo" />
+            <img src="../Images/logo.png" className="h-7 navbar-logo-image" alt="Collect" />
           </Link>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <div className="flex items-center navbar-cart-heart-cont">
-              <Link to="/Wishlist">
-                <img src="../Images/heart 1.png" className="h-7" alt="Flowbite Logo" />
+              <Link to="/Wishlist" className="mr-2">
+                <img src="../Images/heart 1.png" className="h-7" alt="wishlist" />
               </Link>
-              <Link to="/Cart" className="mr-4">
-                <img src="../Images/cart 1.png" className="h-7" alt="Flowbite Logo" />
+              <Link to="/Cart" className="mr-2">
+                <img src="../Images/cart 1.png" className="h-7" alt="cart" />
               </Link>
+              {isLoggedIn ? (
+                <img onClick={openLogoutModal} src="../Images/dashboardIcons/logout.png" className="h-7" alt="logout" />
+              ) : (
+                <Link to="/SignIn">
+                  <img src="../Images/dashboardIcons/profile.png" className="h-7" alt="profile" />
+                </Link>
+              )}
             </div>
             <button
               data-collapse-toggle="navbar-cta"
@@ -57,20 +80,17 @@ function NavBar() {
             </button>
           </div>
           <div
-            className={`md:flex items-center w-full md:w-auto md:order-1 ${
-              isMenuOpen ? " justify-end block fixed top-16 right-0 left-0 z-50 flex bg-transparent" : "hidden"
-            }`}
+            className={`md:flex items-center w-full md:w-auto md:order-1 ${isMenuOpen ? " justify-end block fixed top-16 right-0 left-0 z-50 flex bg-transparent" : "hidden"
+              }`}
             id="navbar-cta"
           >
-            <ul className={`flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white white:bg-gray-800 md:white:bg-gray-900 white:border-gray-700 navbar-list ${
-              isMenuOpen ? "md:ml-auto" : ""
-            } sm:flex-col sm:items-end`}>
+            <ul className={`flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white white:bg-gray-800 md:white:bg-gray-900 white:border-gray-700 navbar-list ${isMenuOpen ? "md:ml-auto" : ""
+              } sm:flex-col sm:items-end`}>
               <li>
                 <Link
                   to="/"
-                  className={`block py-2 px-3 md:p-0 rounded ${
-                    isCurrentPage("/") ? "text-red-700" : "hover:text-red-700"
-                  } md:hover:bg-transparent md:hover:text-red-700 md:white:hover:text-blue-500 white:text-white white:hover:bg-gray-700 white:hover:text-white md:white:hover:bg-transparent white:border-gray-700 navbar-title`}
+                  className={`block py-2 px-3 md:p-0 rounded ${isCurrentPage("/") ? "text-red-700" : "hover:text-red-700"
+                    } md:hover:bg-transparent md:hover:text-red-700 md:white:hover:text-blue-500 white:text-white white:hover:bg-gray-700 white:hover:text-white md:white:hover:bg-transparent white:border-gray-700 navbar-title`}
                 >
                   Home
                 </Link>
@@ -78,9 +98,8 @@ function NavBar() {
               <li>
                 <Link
                   to="/Shop"
-                  className={`block py-2 px-3 md:p-0 rounded ${
-                    isCurrentPage("/Shop") ? "text-red-700" : "hover:text-red-700"
-                  } md:hover:bg-transparent md:hover:text-red-700 md:white:hover:text-blue-500 white:text-white white:hover:bg-gray-700 white:hover:text-white md:white:hover:bg-transparent white:border-gray-700 navbar-title`}
+                  className={`block py-2 px-3 md:p-0 rounded ${isCurrentPage("/Shop") ? "text-red-700" : "hover:text-red-700"
+                    } md:hover:bg-transparent md:hover:text-red-700 md:white:hover:text-blue-500 white:text-white white:hover:bg-gray-700 white:hover:text-white md:white:hover:bg-transparent white:border-gray-700 navbar-title`}
                 >
                   Shop
                 </Link>
@@ -88,9 +107,8 @@ function NavBar() {
               <li>
                 <Link
                   to="/AboutUs"
-                  className={`block py-2 px-3 md:p-0 rounded ${
-                    isCurrentPage("/AboutUs") ? "text-red-700" : "hover:text-red-700"
-                  } md:hover:bg-transparent md:hover:text-red-700 d:white:hover:text-blue-500 white:text-white white:hover:bg-gray-700 white:hover:text-white md:white:hover:bg-transparent white:border-gray-700 navbar-title`}
+                  className={`block py-2 px-3 md:p-0 rounded ${isCurrentPage("/AboutUs") ? "text-red-700" : "hover:text-red-700"
+                    } md:hover:bg-transparent md:hover:text-red-700 d:white:hover:text-blue-500 white:text-white white:hover:bg-gray-700 white:hover:text-white md:white:hover:bg-transparent white:border-gray-700 navbar-title`}
                 >
                   About
                 </Link>
@@ -98,9 +116,8 @@ function NavBar() {
               <li>
                 <Link
                   to="/ContactUs"
-                  className={`block py-2 px-3 md:p-0 rounded ${
-                    isCurrentPage("/ContactUs") ? "text-red-700" : "hover:text-red-700"
-                  } md:hover:bg-transparent md:hover:text-red-700 md:white:hover:text-blue-500 white:text-white white:hover:bg-gray-700 white:hover:text-white md:white:hover:bg-transparent white:border-gray-700 navbar-title`}
+                  className={`block py-2 px-3 md:p-0 rounded ${isCurrentPage("/ContactUs") ? "text-red-700" : "hover:text-red-700"
+                    } md:hover:bg-transparent md:hover:text-red-700 md:white:hover:text-blue-500 white:text-white white:hover:bg-gray-700 white:hover:text-white md:white:hover:bg-transparent white:border-gray-700 navbar-title`}
                 >
                   Contact
                 </Link>
@@ -109,6 +126,19 @@ function NavBar() {
           </div>
         </div>
       </nav>
+
+
+      {showLogoutModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white p-6 relative z-10">
+            <button onClick={closeLogoutModal} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+            <LogoutConfirm closeLogoutModal={closeLogoutModal} />
+          </div>
+        </div>
+      )
+      }
+
     </div>
   );
 }

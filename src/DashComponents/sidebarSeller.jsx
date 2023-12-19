@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/Dashboard.css";
 
 function SidebarAdmin() {
@@ -37,7 +37,7 @@ function SidebarAdmin() {
 
   return (
     <div className="sidebar bg-gray-100 h-screen fixed left-0 top-0 w-36">
-      <img src="../Images/logo.png" alt="Collect logo" className='p-6' />
+      <Link to="/"><img src="../Images/logo.png" alt="Collect logo" className='p-6' /></Link>
 
       <ul className="list-none p-0">
         {sectionData.map((section, index) => (
