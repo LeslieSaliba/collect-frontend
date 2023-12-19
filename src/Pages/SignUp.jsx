@@ -7,6 +7,7 @@ import ConfirmationEmail from "../SignInUpComponents/ConfirmationEmail";
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
   const [showConfirmEmail, setShowConfirmEmail] = useState(false);
   const [error, setError] = useState(null);
   const [firstName, setFirstName] = useState("");
@@ -22,6 +23,18 @@ function SignUp() {
   const [floor, setFloor] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    if (!value.match(/^[0-9]*$/)) {
+      setPhoneError("Invalid number");
+    } else if (value.length < 8) {
+      setPhoneError("Invalid phone number");
+    } else {
+      setPhoneError("");
+    }
+    setPhoneNumber(value);
+  };
 
   const validateInput = () => {
     if (!firstName) {
@@ -183,17 +196,16 @@ function SignUp() {
             </div>
 
             <div className="mb-8 flex-1 signup-input-container">
-              <input
-                type="number"
-                id="phone"
-                name="phone"
-                value={phoneNumber}
-                onChange={(e) => {
-                  setPhoneNumber(e.target.value)
-                }}
-                className="w-full p-2 py-3 border border-black bg-gray-100 italic text-xl signup-input"
-                placeholder="Phone number"
-              />
+            <input
+              type="number"
+              id="phone"
+              name="phone"
+              value={phoneNumber}
+              onChange={handlePhoneChange}
+              className="w-full p-2 py-3 border border-black bg-gray-100 italic text-xl signup-input"
+              placeholder="Phone number"
+            />
+            {phoneError && <p className="error-message">{phoneError}</p>}
             </div>
           </div>
           <div className="flex signup-password">

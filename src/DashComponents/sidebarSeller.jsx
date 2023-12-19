@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import "../css/Dashboard.css";
 
 function SidebarAdmin() {
   const [selectedSection, setSelectedSection] = useState('Orders');
   const [hoveredSection, setHoveredSection] = useState(null);
+  const [initialVisit, setInitialVisit] = useState(true);
   const navigate = useNavigate();
 
   const sectionData = [
@@ -44,6 +45,14 @@ function SidebarAdmin() {
       navigate(`/AdminDashboard/${section.toLowerCase()}`);
     }
   };
+
+  useEffect(() => {
+    if (initialVisit) {
+      navigate('/AdminDashboard/Orders');
+      setInitialVisit(false);
+    }
+  }, [navigate, initialVisit]);
+
   return (
     <div className="sidebar bg-gray-100 h-screen fixed left-0 top-0 w-36">
       <img src="../Images/logo.png" alt="Collect logo" className='p-6' />

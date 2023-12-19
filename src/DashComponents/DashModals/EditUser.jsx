@@ -16,6 +16,7 @@ function EditUser({ fetchTeam, closeEditUserModal, userID }) {
   const [error, setError] = useState('');
   const token = localStorage.getItem('token');
 
+
   useEffect(() => {
     const getUserInfoByID = async (userID) => {
       console.log('User ID to be checked:', userID);
@@ -142,13 +143,14 @@ function EditUser({ fetchTeam, closeEditUserModal, userID }) {
             />
             <span className="mx-4"></span>
             <input
-              type="text"
+              type="number" 
               placeholder={userInfo.phoneNumber}
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               className="flex-1 px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
             />
           </div>
+
           <div className="flex mb-4">
             <input
               type="password"
