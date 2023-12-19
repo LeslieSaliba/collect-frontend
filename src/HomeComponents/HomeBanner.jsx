@@ -29,9 +29,9 @@ function HomeBanner() {
         <div className="HomeBanner-container flex items-center justify-center">
             <div className="HomeBanner-container-mini flex items-center justify-between my-16">
                 <div className="HomeBanner-title-btn ml-20">
-                    <h1 className="text-4xl mb-4 w-96 italic">{banner.text}</h1>
+                    <h1 className="text-4xl mb-4 w-96 italic responsive-text-banner">{banner.text}</h1>
                     <button
-                        className="bg-white text-red-700 font-bold py-2 px-10 border border-red-700 text-lg inline-block mt-5 hover:bg-red-100"
+                        className="bg-white text-red-700 font-bold py-2 px-10 border border-red-700 text-lg inline-block mt-5 hover:bg-red-100 responsive-text-button"
                         onClick={goToLink}
                     >
                         {banner.textButton}
