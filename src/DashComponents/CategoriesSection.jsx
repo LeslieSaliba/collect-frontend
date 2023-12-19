@@ -43,7 +43,7 @@ function CategoriesSection() {
         fetchCategories();
     }, []);
 
-    
+
 
     const handleProductsInfo = async (categoryName) => {
         try {
@@ -126,23 +126,22 @@ function CategoriesSection() {
     const handleCheckboxChange = async (categoryID) => {
         // Check if highlighting more than 4 categories
         const highlightedCount = Object.values(highlightedCategories).filter(value => value).length;
-    
+
         if (highlightedCount >= 4 && !highlightedCategories[categoryID]) {
             setShowCantHighlight(true);
             return;
         }
-    
+
         setHighlightedCategories((prevHighlightedCategories) => ({
             ...prevHighlightedCategories,
             [categoryID]: !prevHighlightedCategories[categoryID],
         }));
-    
+
         try {
-            // Send a request to update the highlighted status
             await axios.put(
                 `${process.env.REACT_APP_API_URL}/category/update/${categoryID}`,
                 {
-                    highlighted: !highlightedCategories[categoryID], // Toggle the highlighted status
+                    highlighted: !highlightedCategories[categoryID],
                 },
                 {
                     headers: {
@@ -151,11 +150,9 @@ function CategoriesSection() {
                     },
                 }
             );
-            // Optionally, you can fetch categories after updating to reflect the changes immediately
             await fetchCategories();
         } catch (error) {
             console.error('Error updating highlighted status: ', error);
-            // Handle the error as needed
         }
     };
     const updateDiscountSuccess = (success) => {
@@ -212,12 +209,12 @@ function CategoriesSection() {
                                 )}
                             </td>
                                 <td className="px-4 py-2">
-                                <input
-                                type="checkbox"
-                                checked={highlightedCategories[category._id]}
-                                onChange={() => handleCheckboxChange(category._id)}
-                                
-                            />
+                                    <input
+                                        type="checkbox"
+                                        checked={highlightedCategories[category._id]}
+                                        onChange={() => handleCheckboxChange(category._id)}
+
+                                    />
                                 </td>
                                 <td className="px-4 py-2 flex">
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit"
@@ -273,15 +270,15 @@ function CategoriesSection() {
                     </div>
                 )}
 
-             {discountUpdated && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center">
-                    <div className="fixed inset-0 bg-black opacity-50"></div>
-                    <div className="bg-white p-6 relative z-10">
-                        <button onClick={() => setDiscountUpdated(false)} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
-                        <CategoryDiscount closeModal={() => setDiscountUpdated(false)}/>
+                {discountUpdated && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-6 relative z-10">
+                            <button onClick={() => setDiscountUpdated(false)} className="absolute top-0 right-0 m-4 px-2 py-1">X</button>
+                            <CategoryDiscount closeModal={() => setDiscountUpdated(false)} />
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
 
             </div>
 

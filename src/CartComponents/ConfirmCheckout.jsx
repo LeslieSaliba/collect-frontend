@@ -1,6 +1,5 @@
 import React from "react";
 
-
 function ConfirmCheckout ({closeModal,confirm}) {
   return (
     <div className="  flex items-center justify-center">

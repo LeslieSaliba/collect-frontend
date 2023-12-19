@@ -10,11 +10,11 @@ import Navbar from "../FrequentlyUsed/NavBar";
 import Footer from "../FrequentlyUsed/Footer";
 
 const AllProduct = () => {
-  const [currentPage, setCurrentPage] = useState(1); 
+  const [currentPage, setCurrentPage] = useState(1);
   const [discount, setDiscount] = useState("");
   const [products, setProducts] = useState([]);
   const [activeSection, setActiveSection] = useState([]);
-  const [productPerPage, setProductPerPage] = useState(12); 
+  const [productPerPage, setProductPerPage] = useState(12);
   const [range, SetRange] = useState(50);
   const [category, SetCategory] = useState([]);
   const [isSelectedItem, SetIsSelectedItem] = useState([]);
@@ -45,7 +45,7 @@ const AllProduct = () => {
     const getData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/product/getAll`
+          `${process.env.REACT_APP_API_URL}/product/getAll`
         );
 
         console.log("Server response:", response.data);
@@ -183,7 +183,7 @@ const AllProduct = () => {
 
   useEffect(() => {
     const fetchCategory = async () => {
-      const response = await axios.get(`http://localhost:8000/category/getAll`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/category/getAll`);
       const data = response.data;
 
       SetCategory(data.data);
@@ -195,14 +195,14 @@ const AllProduct = () => {
   const filters = [
     {
       id: "category",
-      name: "Our Categories",
+      name: "Our categories",
     },
   ];
+
   return (
     <div className="bg-white">
       <Navbar />
       <div>
-        {/* Mobile filter dialog */}
 
         {mobileFiltersOpen && (
           <Transition.Root show={showHideClassName} as={Fragment}>
@@ -223,12 +223,12 @@ const AllProduct = () => {
                 >
                   <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                     <div className="flex items-center justify-between px-4">
-                      <h2 className="text-lg font-medium text-gray-900">
+                      <h2 className="text-lg font-medium text-black-900">
                         Filters
                       </h2>
                       <button
                         type="button"
-                        className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                        className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-black-400"
                         onClick={hideModal}
                       >
                         <span className="sr-only">Close menu</span>
@@ -236,7 +236,6 @@ const AllProduct = () => {
                       </button>
                     </div>
 
-                    {/* Filters 1*/}
                     <form className="mt-4 border-t border-gray-200">
                       {filters.map((section) => (
                         <Disclosure
@@ -247,8 +246,8 @@ const AllProduct = () => {
                           {({ open }) => (
                             <>
                               <h3 className="-mx-2 -my-3 flow-root">
-                                <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                  <span className="font-medium text-gray-900">
+                                <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-black-400 hover:text-black-500">
+                                  <span className="font-medium text-black-900">
                                     {section.name}
                                   </span>
                                   <span className="ml-6 flex items-center">
@@ -276,7 +275,7 @@ const AllProduct = () => {
                                       onChange={handleChangeCheckBox}
                                       className="h-4 w-4 rounded border-gray-300 text-red-700 focus:ring-red-700"
                                     />
-                                    <label className="ml-3 text-sm text-gray-600">
+                                    <label className="ml-3 text-sm text-black-600">
                                       <strong>All</strong>
                                     </label>
                                   </div>
@@ -299,13 +298,10 @@ const AllProduct = () => {
                                       />
                                       <label
                                         htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                        className="ml-3 min-w-0 flex-1 text-gray-500"
+                                        className="ml-3 min-w-0 flex-1 text-black-500"
                                       >
                                         {option.name}
                                       </label>
-                                      {/* <label className="ml-3 min-w-0 flex-9 text-gray-500">
-                                        {option.product}
-                                      </label> */}
                                     </div>
                                   ))}
                                 </div>
@@ -336,13 +332,13 @@ const AllProduct = () => {
                             onChange={handleChange}
                             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                           />
+
                           <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
                             Min (1 $)
                           </span>
-                          <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
+                          <span className="text-sm text-black-500 dark:text-black-400 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
                             {range}
                           </span>
-
                           <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6">
                             Max (100 $)
                           </span>
@@ -362,9 +358,9 @@ const AllProduct = () => {
                           />
                           <label
                             htmlFor="discount"
-                            className="ml-3 text-sm text-gray-600"
+                            className="ml-3 text-sm text-black-600"
                           >
-                            Discount
+                            Discounted 
                           </label>
                         </div>
                       </Disclosure>
@@ -375,16 +371,15 @@ const AllProduct = () => {
             </Dialog>
           </Transition.Root>
         )}
-        {/* Mobile filter dialog */}
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-end  pb-6 pt-24">
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
-                  <Menu.Button className="border border-gray-200 px-4 py-2 group inline-flex justify-between text-sm font-medium text-gray-700 hover:text-gray-900">
+                  <Menu.Button className="border border-gray-200 px-4 py-2 group inline-flex justify-between text-sm font-medium text-black-700 hover:text-black-900">
                     Sort products by
                     <ChevronDownIcon
-                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-black-400 group-hover:text-black-500"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -399,7 +394,7 @@ const AllProduct = () => {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none " style={{ zIndex: 11 }}>
                     <div className="py-1">
                       {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
@@ -407,8 +402,8 @@ const AllProduct = () => {
                             <li
                               className={classNames(
                                 option.current
-                                  ? "font-medium text-gray-900"
-                                  : "text-gray-500",
+                                  ? "font-medium text-black-900"
+                                  : "text-black-500",
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm"
                               )}
@@ -423,17 +418,9 @@ const AllProduct = () => {
                   </Menu.Items>
                 </Transition>
               </Menu>
-
-              {/* <button
-                type="button"
-                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-              >
-                <span className="sr-only">View grid</span>
-              </button> */}
-              {/* mobile */}
               <button
                 type="button"
-                className="-m-2 mr-4 ml-1 p-2 bg-red-600text-gray-400 hover:text-gray-500 sm:ml-1 lg:hidden"
+                className="-m-2 mr-4 ml-1 p-2 bg-red-600text-black-400 hover:text-black-500 sm:ml-1 lg:hidden"
                 onClick={showModal}
               >
                 <span className="sr-only">Filters</span>
@@ -444,7 +431,6 @@ const AllProduct = () => {
 
           <section aria-labelledby="products-heading" className="pb-20 pt-6">
             <div className="grid  lg:grid-cols-4  grid-cols-1">
-              {/* Filters  2*/}
 
               <form className="hidden lg:block">
                 {filters.map((section) => (
@@ -456,8 +442,8 @@ const AllProduct = () => {
                     {({ open }) => (
                       <>
                         <h3 className="-my-3 flow-root">
-                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">
+                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-black-400 hover:text-black-500">
+                            <span className="font-medium text-black-900">
                               {section.name}
                             </span>
                             <span className="ml-6 flex items-center">
@@ -485,7 +471,7 @@ const AllProduct = () => {
                                 onChange={handleChangeCheckBox}
                                 className="h-4 w-4 rounded border-gray-300 text-red-700 focus:ring-red-700"
                               />
-                              <label className="ml-3 text-sm text-gray-600">
+                              <label className="ml-3 text-sm text-black-600">
                                 <strong>All</strong>
                               </label>
                             </div>
@@ -508,7 +494,7 @@ const AllProduct = () => {
                                 />
                                 <label
                                   htmlFor={`filter-${section.id}-${optionIdx}`}
-                                  className="ml-3 text-sm text-gray-600"
+                                  className="ml-3 text-sm text-black-600"
                                 >
                                   {option.name}
                                 </label>
@@ -521,7 +507,7 @@ const AllProduct = () => {
                   </Disclosure>
                 ))}
                 <Disclosure as="div" className="border-b border-gray-200  py-6">
-                  Price Range
+                  Price range
                   <div className="relative mb-6">
                     <label htmlFor="labels-range-input" className="sr-only">
                       Labels range
@@ -559,19 +545,16 @@ const AllProduct = () => {
                     />
                     <label
                       htmlFor="discount"
-                      className="ml-3 text-sm text-gray-600"
+                      className="ml-3 text-sm text-black-600"
                     >
-                      Discount
+                      Discounted
                     </label>
                   </div>
                 </Disclosure>
               </form>
 
-              {/* Product grid */}
-
               <div className="col-span-3 px-6 ">
-               
-                
+
                 <div className="flex flex-wrap items-center justify-center md:justify-between sm:justify-between lg:justify-between">
                   {currentPosts.map((product) => (
                     <ProductItem
@@ -592,7 +575,7 @@ const AllProduct = () => {
                   >
                     <li
                       href="#"
-                      className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                      className="relative inline-flex items-center rounded-l-md px-2 py-2 text-black-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                       onClick={prePage}
                     >
                       <span className="sr-only">Previous</span>
@@ -605,12 +588,13 @@ const AllProduct = () => {
                         href="#"
                         onClick={() => onChangeCurrent(n)}
                         aria-current="page"
+
                         className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0
                         ${
                           currentPage == n
                             ? "relative z-10 inline-flex items-center bg-red-700 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700"
                             : " "
-                        }`}
+                          }`}
                       >
                         {n}
                       </li>
@@ -618,7 +602,7 @@ const AllProduct = () => {
 
                     <li
                       href="#"
-                      className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                      className="relative inline-flex items-center rounded-r-md px-2 py-2 text-black-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                       onClick={nextPage}
                     >
                       <span className="sr-only">Next</span>
@@ -633,9 +617,9 @@ const AllProduct = () => {
             </div>
           </section>
         </main>
-      </div>
+      </div >
       <Footer />
-    </div>
+    </div >
   );
 };
 

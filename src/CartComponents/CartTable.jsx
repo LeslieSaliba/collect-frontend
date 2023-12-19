@@ -3,13 +3,11 @@ import {Link} from 'react-router-dom';
 import axios from "axios";
 import ConfirmDelete from "./ConfirmDelete";
 
-
 function CartTable({ cartData, OnDelete}) {
   const token = localStorage.getItem('token');
   const cartId = localStorage.getItem('cartId');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-
 
   const openConfirmationModal = (productId) => {
     setSelectedProduct(productId);

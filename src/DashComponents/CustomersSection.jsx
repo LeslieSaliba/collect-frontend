@@ -94,7 +94,7 @@ function CustomersSection() {
                                     <td className="px-4 py-2 capitalize">{`${customer.fullName.firstName} ${customer.fullName.lastName}`}</td>
                                     <td className="px-4 py-2">{customer.email}</td>
                                     <td className="px-4 py-2" >{ordersPerUser[customer._id] || 0}</td>
-                                    <td className="px-4 py-2 italic text-red-700"
+                                    <td className="px-4 py-2 italic text-red-700 hover:underline"
                                         onClick={() => openViewCustomerModal(customer._id)}>
                                         view details</td>
                                 </tr>

@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/CartDetails.css";
 
-function CartDetails ({openModal,openAddressModal, cartData}) {
+function CartDetails({ openModal, openAddressModal, cartData }) {
   const [shippingCost, setShippingCost] = useState(3);
   const [shippingMethod, setShippingMethod] = useState("delivery");
   const [total, setTotal] = useState(cartData.cart.totalPrice + shippingCost);
   const userAddress = cartData.user.fullAddress;
- const userCity = cartData.user.city;
+  const userCity = cartData.user.city;
 
   const handleShippingMethodChange = (event) => {
     const method = event.target.value;
     setShippingMethod(method);
-
     setTotal(method === "delivery" ? cartData.cart.totalPrice + shippingCost : cartData.cart.totalPrice);
   };
 
@@ -23,7 +22,7 @@ function CartDetails ({openModal,openAddressModal, cartData}) {
           <div className="ml-12 CartDetails-input">
             <div className="mb-4">
               <label className="text-2xl">
-              <input
+                <input
                   type="radio"
                   className="mr-4"
                   name="shippingMethod"
@@ -33,14 +32,14 @@ function CartDetails ({openModal,openAddressModal, cartData}) {
                 />
                 delivery at home (under 5-7 days) - 3 ${" "}
                 <p className="text-lg ml-8 italic">
-                {userCity}, {userAddress.street},  {userAddress.building}, Floor:{userAddress.floor}
-                <a onClick={openAddressModal}  className="underline ml-4 not-italic">edit address</a>
+                  {userCity}, {userAddress.street},  {userAddress.building}, Floor: {userAddress.floor}
+                  <a onClick={openAddressModal} className="underline ml-4 not-italic">edit address</a>
                 </p>
               </label>
             </div>
             <div className="mb-4">
               <label className="text-2xl">
-              <input
+                <input
                   type="radio"
                   className="mr-4"
                   name="shippingMethod"
@@ -61,9 +60,9 @@ function CartDetails ({openModal,openAddressModal, cartData}) {
               <p className="text-xl mb-4 italic">Total</p>
             </div>
             <div>
-              <p className="text-xl mb-4 italic">${cartData.cart.totalPrice}</p>
-              <p className="text-xl mb-4 italic">{shippingMethod === "delivery" ? `$${shippingCost.toFixed(2)}` : "-"}</p>
-              <p className="text-xl mb-4 italic">${(cartData.cart.totalPrice + (shippingMethod === "delivery" ? shippingCost : 0)).toFixed(2)}</p>
+              <p className="text-xl mb-4 italic">{cartData.cart.totalPrice} $</p>
+              <p className="text-xl mb-4 italic">{shippingMethod === "delivery" ? `${shippingCost.toFixed(2)} $` : "-"}</p>
+              <p className="text-xl mb-4 italic">{(cartData.cart.totalPrice + (shippingMethod === "delivery" ? shippingCost : 0)).toFixed(2)} $</p>
             </div>
           </div>
         </div>
@@ -71,14 +70,16 @@ function CartDetails ({openModal,openAddressModal, cartData}) {
       <div className="flex justify-end">
         <button
           onClick={() => openModal(shippingMethod)}
-          className="bg-white text-red-700 font-bold py-3 px-2 border border-red-700 w-96 text-lg inline-block mt-5 flex justify-center"
+          className="bg-white text-red-700 font-bold py-3 px-2 border border-red-700 w-96 text-lg inline-block mt-5 flex justify-center hover:bg-red-100"
         >
           <p>
-            CHECKOUT <span className="ml-12">${(cartData.cart.totalPrice + (shippingMethod === "delivery" ? shippingCost : 0)).toFixed(2)} </span>{" "}
+            CHECKOUT<span className="ml-12">{(cartData.cart.totalPrice + (shippingMethod === "delivery" ? shippingCost : 0)).toFixed(2)} $ </span>{" "}
           </p>
+          <br /><p> </p>
+          <p className="font-normal italic whitespace-pre"> (cash on delivery)</p>
         </button>
       </div>
-      
+
     </div>
   );
 }

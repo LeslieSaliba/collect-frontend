@@ -87,7 +87,6 @@ function SingleProduct({ProductID}) {
     setIsModalOpen(false);
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {

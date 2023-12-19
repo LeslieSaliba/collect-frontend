@@ -15,7 +15,6 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
   const [showFailCartModal, setShowFailCartModal] = useState(false);
   const [ModalMessage, setModalMessage] = useState('');
 
-
   const openConfirmationModal = (productId) => {
     setSelectedProduct(productId);
     setShowConfirmationModal(true);
@@ -41,7 +40,6 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
         onRemoveFromWishlist(productId);
       }
 
-  
     } catch (error) {
       console.error('Error removing product from wishlist:', error);
       
@@ -139,7 +137,7 @@ function WishlistTable({ wishlistData,  onRemoveFromWishlist  }) {
               <td className="p-4 ">
                 <button 
                 onClick={() => openConfirmationModal(product._id)}
-                className="bg-white text-red-700 font-bold py-1 px-2 border border-red-700 w-64 text-lg  flex justify-center ml-auto">
+                className="bg-white text-red-700 font-bold py-1 px-2 border border-red-700 w-64 text-lg  flex justify-center ml-auto hover:bg-red-100">
                   ADD TO CART{' '}
                   <span>
                     <img src="Images/cart.png" className="w-5 h-5 ml-1 mt-1" />
