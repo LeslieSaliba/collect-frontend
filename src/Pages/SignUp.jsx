@@ -38,15 +38,15 @@ function SignUp() {
 
   const validateInput = () => {
     if (!firstName) {
-      setError("first name is required >:(");
+      setError("First name is required.");
       return false;
     }
     if (!lastName) {
-      setError("last name is required >:(");
+      setError("Last name is required.");
       return false;
     }
     if (!email || !isValidEmail(email) ) {
-      setError("Email is required >:(");
+      setError("Email is required.");
       return false;
     }
     if (password !== confirmPassword) {
@@ -54,35 +54,35 @@ function SignUp() {
       return false;
     }
     if (password.length < 6) {
-      setError("Password must be at least 6 characters long >:(");
+      setError("Password must be at least 6 characters long.");
       return false;
     }
     if (!phoneNumber) {
-      setError("PhoneNumber is required >:(");
+      setError("Phone number is required.");
       return false;
     }
 
     if (!city) {
-      setError("city is required >:(");
+      setError("City is required.");
       return false;
     }
 
     if (!street) {
-      setError("street is required >:(");
+      setError("Street is required.");
       return false;
     }
 
     if (!building) {
-      setError("building is required >:(");
+      setError("Building is required.");
       return false;
     }
 
     if (!floor) {
-      setError("floor is required >:(");
+      setError("Floor is required.");
       return false;
     }
     if (!description) {
-      setError("description is required >:(");
+      setError("Description is required.");
       return false;
     }
     return true;
