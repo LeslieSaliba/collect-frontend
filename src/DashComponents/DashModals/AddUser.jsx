@@ -129,7 +129,7 @@ function AddUser({ fetchTeam, closeAddUserModal }) {
             />
             <span className="mx-4"></span>
             <input
-              type="text"
+              type="number"
               placeholder="Phone number"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
