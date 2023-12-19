@@ -48,7 +48,7 @@ function SidebarAdmin() {
 
   useEffect(() => {
     if (initialVisit) {
-      navigate('/AdminDashboard/Orders');
+      navigate('/SellerDashboard/Orders');
       setInitialVisit(false);
     }
   }, [navigate, initialVisit]);

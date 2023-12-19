@@ -15,9 +15,11 @@ const AllProduct = () => {
   const [products, setProducts] = useState([]);
   const [activeSection, setActiveSection] = useState([]);
   const [productPerPage, setProductPerPage] = useState(12);
-  const [range, SetRange] = useState(50);
+  const [range, SetRange] = useState('');
   const [category, SetCategory] = useState([]);
   const [isSelectedItem, SetIsSelectedItem] = useState([]);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
@@ -54,6 +56,18 @@ const AllProduct = () => {
 
         console.log("data.products", data.data);
         setProducts(data.data);
+
+      const prices = data.data.map(product => product.price);
+      const sortedPrices = prices.sort((a, b) => a - b);
+      
+      setMinPrice(sortedPrices[0]);
+      setMaxPrice(sortedPrices[(sortedPrices.length)-1]);
+
+      console.log('sortedPrices',sortedPrices);
+      console.log('minprice', minPrice);
+      console.log('macprice', maxPrice);
+
+
         console.log("products", products);
         setActiveSection(data.data);
         console.log("activeSectionFirstt", activeSection);
@@ -65,7 +79,13 @@ const AllProduct = () => {
     getData();
   }, []);
 
-  //Get currentPosts
+  useEffect(() => {
+    const initialRange = maxPrice / 2;
+    SetRange(initialRange);
+  
+  }, [maxPrice, minPrice]); 
+
+
   const indexOfLastPage = currentPage * productPerPage;
   const indexOfFirstPage = indexOfLastPage - productPerPage;
   const currentPosts = activeSection.slice(indexOfFirstPage, indexOfLastPage);
@@ -326,21 +346,21 @@ const AllProduct = () => {
                             id="labels-range-input"
                             type="range"
                             defaultValue="1000"
-                            min="1"
-                            max="100"
+                            min={minPrice}
+                            max={maxPrice}
                             value={range}
                             onChange={handleChange}
                             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                           />
 
                           <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
-                            Min (1 $)
+                            Min ({minPrice}$)
                           </span>
                           <span className="text-sm text-black-500 dark:text-black-400 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
                             {range}
                           </span>
                           <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6">
-                            Max (100 $)
+                            Max ({maxPrice}$)
                           </span>
                         </div>
                       </Disclosure>
@@ -516,21 +536,21 @@ const AllProduct = () => {
                       id="labels-range-input"
                       type="range"
                       defaultValue="1000"
-                      min="1"
-                      max="100"
+                      min={minPrice}
+                      max={maxPrice}
                       value={range}
                       onChange={handleChange}
                       className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     />
                     <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
-                      Min (1 $)
+                      Min ({minPrice}$)
                     </span>
                     <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
                       {range} $
                     </span>
 
                     <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6">
-                      Max (100 $)
+                      Max ({maxPrice}$)
                     </span>
                   </div>
                 </Disclosure>

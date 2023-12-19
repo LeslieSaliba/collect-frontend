@@ -41,8 +41,8 @@ function SignIn() {
 
         if (data.data.role === "admin") {
           navigate("/AdminDashboard"); 
-        } else if (data.data.role === "sellerDashboard") {
-          navigate("/sellerDashboard"); 
+        } else if (data.data.role === "seller") {
+          navigate("/SellerDashboard"); 
         } 
 
         if (data.data.role === "client") {
@@ -133,6 +133,10 @@ function SignIn() {
     }
   };
 
+  const goToHome = () => {
+    navigate('/');
+  };
+
   return (
     <div className="flex h-screen SignIn-container scale-95">
 
@@ -190,10 +194,6 @@ function SignIn() {
             </div>
           </div>
 
-          {/* <div className="text-right mb-4">
-            <a href="" className="underline text-lg hover:text-red-700">Forgot Password?</a>
-          </div> */}
-
           <button className="bg-red-700 text-white  font-bold py-2 px-4 border border-red-700 w-full text-2xl mb-4 ">
             LOG IN
           </button>
@@ -204,11 +204,14 @@ function SignIn() {
         
       </div>
      
-      <img
+    
+        <img
         src="Images/signin.png"
         alt="Background"
         className="w-1/2 bg-cover bg-center object-cover SignIn-img"
+        onClick={goToHome}
       />
+      
 
        {showFailLogIn && (
           <div className="fixed inset-0 max-w-screen flex items-center justify-center z-40">
