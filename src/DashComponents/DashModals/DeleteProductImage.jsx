@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-function DeleteProductImage({ closeDeleteProductImageModal, ImageIndex, ProductID}) {
+function DeleteProductImage({ closeDeleteProductImageModal, ImageIndex, ProductID,setISEditingImage}) {
   const [error, setError] = useState('');
 
   const handleConfirm = async () => {
@@ -27,6 +27,7 @@ function DeleteProductImage({ closeDeleteProductImageModal, ImageIndex, ProductI
       if (response.status === 200) {
         console.log('Image removed successfully:', data);
         closeDeleteProductImageModal();
+        setISEditingImage((prev)=>!prev);
       } else {
         console.error('Error removing image:', data);
         setError("You should at least have 3 images");
@@ -55,6 +56,7 @@ function DeleteProductImage({ closeDeleteProductImageModal, ImageIndex, ProductI
           <button
             className="bg-red-700 text-white font-bold py-1 px-2 border border-red-700 w-32 text-lg inline-block"
             onClick={handleConfirm}
+            type='button'
           >
             CONFIRM
           </button>

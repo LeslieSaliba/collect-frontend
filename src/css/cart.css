@@ -1,3 +1,43 @@
 .Cart-cont{
     font-family: "Playfair Display";
 }
+@media screen and (max-width: 500px) {
+    .wishlistTable-table th,
+    .wishlistTable-table td {
+      padding: 8px;
+    }
+  
+    .wishlistTable-table thead {
+      display: none;
+    }
+  
+    .wishlistTable-table tbody {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .wishlistTable-table td {
+      flex: 1;
+      text-align: center;
+      margin: 10px;
+    }
+  
+    .wishlistTable-table td img {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .wishlistTable-table td .product-info {
+      margin-left: 30px; 
+    }
+  
+    .wishlistTable-table td button {
+      margin: 0 auto;
+    }
+  
+    .homeCategeries-link-container{
+      margin-bottom: 10%;
+    }
+  }
+  

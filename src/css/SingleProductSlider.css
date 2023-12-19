@@ -2,3 +2,33 @@
     height: 70vh;
     width: 25vw;
 }
+.SingleSlider-Wishlist, .SingleSlider-Cart{
+    display: none;
+}
+@media (max-width: 500px) {
+
+    .SingleProductSlider-cont {
+      max-width: 100%;
+    }
+  
+    .SingleProductSlider-mini {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .SingleProductSlider-mini img {
+      margin: 10px 0;
+    }
+    .SingleProductSlider-img{
+        height: initial;
+    }
+    .SingleProductSlider-next,.SingleProductSlider-prev{
+        padding: 0;
+    }
+    .SingleSlider-Wishlist, .SingleSlider-Cart{
+        display: flex;
+        width: 80%;
+        margin-left: 2px;
+        font-size: smaller;
+    }
+  }
