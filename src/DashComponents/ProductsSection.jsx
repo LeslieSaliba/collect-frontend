@@ -177,7 +177,7 @@ function ProductsSection() {
       <form onSubmit={searchUser}>
         <div className="flex items-baseline justify-end pb-6 pt-1 ">
           <div
-            className="flex items-baseline justify-end pb-6 pt-24  bg-white rounded-lg "
+            className="flex items-baseline justify-end pb-6 bg-white rounded-lg "
             x-data="{ search: '' }"
             onClick={() => {
               setShowSearch(false);
@@ -216,7 +216,7 @@ function ProductsSection() {
             </button>
           </div>
 
-          <div className="flex items-baseline justify-end  pb-6 pt-24">
+          <div className="flex items-baseline justify-end  pb-6">
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>

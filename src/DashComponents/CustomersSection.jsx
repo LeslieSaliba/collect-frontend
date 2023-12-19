@@ -112,7 +112,7 @@ function CustomersSection() {
         <form onSubmit={searchUser}>
           <div className="flex items-baseline justify-end   pb-6 pt-1 ">
             <div
-              className="flex items-baseline justify-end pb-6 pt-24  bg-white rounded-lg "
+              className="flex items-baseline justify-end pb-6 bg-white rounded-lg "
               x-data="{ search: '' }"
               onClick={() => setShowSearch(false)}
             >
