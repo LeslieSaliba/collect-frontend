@@ -83,6 +83,12 @@ function ProductItem({ProductName, ProductPrice, ProductImage, ProductID,Product
         <div className="fixed inset-0 flex items-center justify-center z-40">
           <div className="fixed inset-0 bg-black opacity-50"></div>
           <div ref={modalRef} className="absolute bg-white p-8 rounded shadow-md ProductItem-modal">
+          <button
+                onClick={closeModal}
+                className="absolute top-7 right-0 m-4 px-2 py-1"
+                        >
+                            X
+                        </button>
             <SingleProduct ProductID={ProductID} />
           </div>
         </div>

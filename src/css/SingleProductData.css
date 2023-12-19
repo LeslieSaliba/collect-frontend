@@ -1,24 +1,39 @@
 @media (max-width: 500px) {
-    .SingleProductData {
-      max-width: 100%;
-      padding: 0 10px;
-    }
-    .SingleProductData-Title {
-      font-size: 1.25rem;
-    }
-    .SingleProductData-Cost {
-      font-size: 1rem;
-    }
-    .SingleProductData-Desc {
-      font-size: 0.9rem;
-      width: 70%;
-    }
-    .SingleProductData-Wishlist,
-    .SingleProductData-Cart {
-      width: 80%;
-    }
-    .SingleProductData-Wishlist-responsive,
-    .SingleProductData-Cart-responsive{
-        display: none;
-    }
+  .SingleProductData {
+    max-width: 100%;
+    padding: 0 10px;
   }
+  .SingleProductData-Title {
+    font-size: 1.25rem;
+  }
+  .SingleProductData-Cost {
+    font-size: 1rem;
+  }
+  .SingleProductData-Desc {
+    display: contents;
+    font-size: 0.9rem;
+    width: 70%;
+   text-align: center;
+  }
+  .SingleProductData-Wishlist,
+  .SingleProductData-Cart {
+    width: 80%;
+  
+  }
+  .SingleProductData-Wishlist-responsive,
+  .SingleProductData-Cart-responsive{
+      display: none;
+  }
+  .SingleProductData-cont{
+    text-align: center;
+  }
+
+  .single-product-info{
+    margin-top: -20%;
+    
+  }
+
+  .SingleProductData-Info{
+    font-size: 25px;
+  }
+}
