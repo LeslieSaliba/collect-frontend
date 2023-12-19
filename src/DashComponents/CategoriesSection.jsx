@@ -216,7 +216,7 @@ function CategoriesSection() {
 
                                     />
                                 </td>
-                                <td className="px-4 py-2 flex">
+                                <td className="px-4 pt-11 flex">
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/edit.png" alt="edit"
                                         onClick={() => openEditCategoryModal(category._id)} />
                                     <img className='h-6 w-6' src="../Images/dashboardIcons/delete.png" alt="delete"
