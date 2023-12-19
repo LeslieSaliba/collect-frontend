@@ -134,14 +134,19 @@ function SignUp() {
     setShowPassword(!showPassword);
   };
 
+  const goToHome = () => {
+    navigate('/');
+  };
+
   return (
     <div className="flex h-screen SignUp-container scale-95">
  
-      <img
+    <img
         src="Images/12-1.JPG"
         alt="Background"
         className="w-1/2 bg-cover bg-center object-cover SignUp-img"
-      />
+        onClick={goToHome}
+      /> 
       <div className="w-1/2 flex items-center justify-center SignUp-form ">
         <form className="p-12 py-0 w-full signup-title" onSubmit={handleSubmit}>
           <h1 className="text-4xl  mb-4 text-center signup-title text-shadow">WELCOME TO COLLECT</h1>

@@ -1,7 +1,20 @@
 import "../css/footer.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Footer() {
+  const role = localStorage.getItem('role');
+  const navigate = useNavigate();
+
+  const goToDashboard = () => {
+    if(role==='admin'){
+    navigate('/AdminDashboard');
+  }
+    else if (role==='seller'){
+    navigate('/SellerDashboard');
+    }
+  };
+
+
   return (
     <div className="footer-container flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0 md:space-x-4 pt-8 md:pt-16 pb-4 px-4 md:px-10">
       <div className="Footer-Description w-full md:w-1/3 text-center md:text-left">
@@ -9,7 +22,7 @@ function Footer() {
         <p className="text-sm md:text-lg mb-4 italic pt-5">
         Collect is THE place to shop vintage items in Lebanon.
         </p>
-        <p className="text-sm md:text-lg italic footer-full-screen">© Copyright Collect 2024</p>
+        <p className="text-sm md:text-lg italic footer-full-screen" onClick={goToDashboard}>© Copyright Collect 2024</p>
       </div>
       <div className="Footer-Links w-full md:w-1/3 text-center md:text-left">
         <ul className="space-y-4">
@@ -54,7 +67,7 @@ function Footer() {
           </tr>
         </table>
       </div>
-      <p className="text-sm md:text-lg italic footer-phone-screen">© Copyright Collect 2024</p>
+       <p className="text-sm md:text-lg italic footer-phone-screen" onClick={goToDashboard}>© Copyright Collect 2024</p>
     </div>
   );
 }
