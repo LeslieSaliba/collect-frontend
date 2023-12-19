@@ -98,9 +98,9 @@ function EditCategory({ fetchCategories, closeEditCategoryModal, categoryID, cat
                             {applyDiscount && (
                                 <div className="flex flex-col">
                                     <input
-                                        type="text"
+                                        type="number"
                                         placeholder="Discount percentage %"
-                                        value={discountPercentage}
+                                        value={Math.max(0,discountPercentage)}
                                         onChange={(e) => setDiscountPercentage(e.target.value)}
                                         className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
                                     />
