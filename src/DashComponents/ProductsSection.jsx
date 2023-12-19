@@ -115,10 +115,10 @@ function ProductsSection() {
   };
 
   const sortOptions = [
+    { name: "Clear filter", href: "#", current: false },
     { name: "Available", href: "#", current: false },
-    { name: "Sold Out", href: "#", current: false },
+    { name: "Sold out", href: "#", current: false },
     { name: "Discounted", href: "#", current: false },
-    { name: "Clear Filter", href: "#", current: false },
   ];
 
   function classNames(...classes) {
@@ -132,7 +132,7 @@ function ProductsSection() {
       const AvailableProduct = products.filter((product) => product.status === "available");
       setShowFilterItem([...AvailableProduct]);
     }
-    if (value === "Sold Out") {
+    if (value === "Sold out") {
       const SoldProduct = products.filter((product) => product.status === "sold");
       setShowFilterItem([...SoldProduct]);
     }
@@ -141,7 +141,7 @@ function ProductsSection() {
       const discountedProduct = products.filter((product) => product.discountPercentage !== 0);
       setShowFilterItem([...discountedProduct]);
     }
-    if (value === "Clear Filter") {
+    if (value === "Clear filter") {
       setFilterShow(false);
     }
   };
@@ -175,9 +175,9 @@ function ProductsSection() {
   return (
     <div>
       <form onSubmit={searchUser}>
-        <div className="flex items-baseline justify-end pb-6 pt-1 ">
+        <div className="flex  justify-end pb-6 pt-1 ">
           <div
-            className="flex items-baseline justify-end pb-6 bg-white rounded-lg "
+            className="flex justify-end pb-6 bg-white rounded-lg "
             x-data="{ search: '' }"
             onClick={() => {
               setShowSearch(false);
@@ -187,8 +187,8 @@ function ProductsSection() {
             <div className="relative inline-block ">
               <input
                 type="search"
-                className="w-full px-4 py-1 text-gray-800  rounded-full focus:outline-none"
-                placeholder="search"
+                className="border border-gray-200 px-4 py-2 text-sm text-gray-700 focus:outline-none focus:border-gray-500"
+                placeholder="Search for cat./product"
                 x-model="search"
                 onChange={(e) => setSearchName(e.target.value.toLowerCase())}
               />
@@ -196,8 +196,9 @@ function ProductsSection() {
 
             <button
               type="submit"
-              className="flex mr-4  bg-gray-200 justify-center w-8 h-5 text-white rounded-r-lg"
+              className="flex bg-gray-200 h-full justify-center w-8 h-full text-white mr-4"
               disabled={!searchName}
+              style={{ padding: '0.5rem' }}
             >
               <svg
                 className="w-5 h-5 items-center"
@@ -216,7 +217,7 @@ function ProductsSection() {
             </button>
           </div>
 
-          <div className="flex items-baseline justify-end  pb-6">
+          <div className="flex justify-end  pb-6">
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>

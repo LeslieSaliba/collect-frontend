@@ -110,25 +110,26 @@ function CustomersSection() {
     return (
         <div>
         <form onSubmit={searchUser}>
-          <div className="flex items-baseline justify-end   pb-6 pt-1 ">
+          <div className="flex justify-end pb-6 pt-1">
             <div
-              className="flex items-baseline justify-end pb-6 bg-white rounded-lg "
+              className="flex justify-end pb-6 bg-white rounded-lg "
               x-data="{ search: '' }"
               onClick={() => setShowSearch(false)}
             >
               <div className="relative inline-block ">
                 <input
                   type="search"
-                  className="w-full px-4 py-1 text-gray-800  rounded-full focus:outline-none"
-                  placeholder="search"
+                  className="border border-gray-200 px-4 py-2 text-sm text-gray-700 focus:outline-none focus:border-gray-500"
+                  placeholder="Search for customer"
                   onChange={(e) => setSearchName(e.target.value.toLowerCase())}
                 />
               </div>
 
               <button
                 type="submit"
-                className="flex mr-4  bg-gray-200 justify-center w-8 h-5 text-white rounded-r-lg"
+                className="flex bg-gray-200 h-full justify-center w-8 h-full text-white"
                 disabled={!searchName}
+                style={{ padding: '0.5rem' }}
               >
                 <svg
                   className="w-5 h-5 items-center"
