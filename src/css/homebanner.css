@@ -1,41 +1,45 @@
-
-.HomeBanner-container{
-    font-family:"Playfair Display" ;
+.HomeBanner-container {
+    font-family: "Playfair Display";
 }
-.HomeBanner-img{
+
+.HomeBanner-img {
     height: 20rem;
 }
-.HomeBanner-container-mini{
-    width:75vw;
+
+.HomeBanner-container-mini {
+    width: 75vw;
     background: linear-gradient(to top, #f5f5f5 90%, transparent 10%);
 }
+
 @media (max-width: 900px) {
     .HomeBanner-container-mini {
-        width: 90vw; 
+        width: 90vw;
     }
 
     .HomeBanner-title-btn {
-        width: 100%; 
+        width: 100%;
     }
 
     .HomeBanner-img {
         height: auto;
-        max-width: 100%; 
+        max-width: 100%;
     }
 
     .HomeBanner-title-btn h1 {
-        font-size: 2rem; 
+        font-size: 2rem;
     }
 
     .HomeBanner-title-btn button {
         font-size: 1.2rem;
-        padding: 1rem 2rem; 
+        padding: 1rem 2rem;
     }
 }
+
 @media (max-width: 600px) {
-    .HomeBanner-title-btn{
-        margin: 0 0;     
+    .HomeBanner-title-btn {
+        margin: 0 0;
     }
+
     .HomeBanner-container-mini {
         width: 100vw;
         text-align: center;
@@ -45,16 +49,27 @@
         font-size: 1.5rem;
         width: 100%;
         margin-bottom: 1rem;
-        text-align: center; 
+        text-align: center;
     }
 
     .HomeBanner-title-btn button {
         font-size: 1rem;
         padding: 0.8rem 1.5rem;
-       
     }
 
     .HomeBanner-img {
         display: none;
+    }
+
+    .responsive-text-button {
+        margin: 0px;
+        margin-bottom: 25px;
+    }
+
+    .responsive-text-banner {
+        padding-top: 25px;
+        line-height: 1.2;
+        width: 60%; 
+        margin: 0 auto;
     }
 }
