@@ -193,16 +193,24 @@ function CategoriesSection() {
                                     )}
                                 </td>
                                 <td className="px-4 py-2">
-                                    {productsInfo[category.name] && productsInfo[category.name].length > 0 ? (
-                                        productsInfo[category.name].every(product => product.discountPercentage === productsInfo[category.name][0].discountPercentage) ? (
-                                            `${productsInfo[category.name][0].discountPercentage}%`
-                                        ) : (
-                                            "-"
-                                        )
-                                    ) : (
-                                        "-"
-                                    )}
-                                </td>
+                                {productsInfo[category.name] && productsInfo[category.name].length > 0 ? (
+                                    (() => {
+                                        const availableProducts = productsInfo[category.name].filter(product => product.status === "available");
+
+                                        if (
+                                            availableProducts.length > 0 &&
+                                            availableProducts.every(product => product.discountPercentage === availableProducts[0].discountPercentage) &&
+                                            availableProducts[0].discountPercentage !== 0
+                                        ) {
+                                            return `${availableProducts[0].discountPercentage}%`;
+                                        } else {
+                                            return "-";
+                                        }
+                                    })()
+                                ) : (
+                                    "-"
+                                )}
+                            </td>
                                 <td className="px-4 py-2">
                                 <input
                                 type="checkbox"

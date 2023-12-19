@@ -15,6 +15,7 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
         applyDiscount: false,
         discountPercentage: ''
     });
+    const [imageAdded, setImageAdded] = useState(false);
     const [allCategories, setAllCategories] = useState([]);
     const [imageFile, setImageFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
@@ -24,6 +25,31 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
         imageIndex: null,
         productId: null,
     });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+
+            const response = await axios.put(
+                `${process.env.REACT_APP_API_URL}/product/update/${productID}`,
+                productData,
+                config
+            );
+
+            fetchProducts();
+            closeEditProductModal();
+        } catch (error) {
+            console.error('Error updating product:', error.response.data);
+            setErrorMessage('Failed to update product. Please try again.');
+        }
+    };
 
     const handleAddImage = async () => {
         try {
@@ -51,37 +77,13 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
             }));
     
             setImageFile(null);
-           
+            setImageAdded((prev) => !prev);
         } catch (error) {
             console.error('Error adding image:', error.response.data);
             setErrorMessage('Failed to add image. Please try again.');
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const token = localStorage.getItem('token');
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            };
-
-            const response = await axios.put(
-                `${process.env.REACT_APP_API_URL}/product/update/${productID}`,
-                productData,
-                config
-            );
-
-            fetchProducts();
-            // closeEditProductModal();
-        } catch (error) {
-            console.error('Error updating product:', error.response.data);
-            setErrorMessage('Failed to update product. Please try again.');
-        }
-    };
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/product/getByID/${productID}`)
@@ -110,8 +112,9 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
             .catch((error) => {
                 console.error(`Error fetching categories' data: `, error);
             });
-    }, [productID]);
+    }, [productID,handleAddImage ]);
 
+    console.log('showDeleteProductImageModal:', showDeleteProductImageModal);
 
     const handleDeleteImageModalClose = () => {
         setShowDeleteProductImageModal({ isOpen: false });
@@ -125,6 +128,7 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
         }));
     };
 
+    
     return (
         <div>
             <p className="text-red-700 text-3xl text-center underline my-5">EDIT PRODUCT</p>
@@ -180,11 +184,10 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                         />
                         <span className="mx-4"></span>
                         <div className="flex flex-wrap justify-between w-96">
-                            {productData.images.map((image, index) => (
-                                <div className='relative w-fit'
+                        {productData.images.map((image, index) => (
+                                <div className='relative w-fit' key={index}
                                     style={{ maxWidth: '100px', minWidth: '100px', maxHeight: '100px', minHeight: '100px' }}>
                                     <img
-                                        key={index}
                                         src={image}
                                         alt={`Product Image ${index + 1}`}
                                         style={{ maxWidth: '100px', minWidth: '100px', maxHeight: '100px', minHeight: '100px', objectFit: 'cover' }}
@@ -202,14 +205,17 @@ function EditProduct({ fetchProducts, closeEditProductModal, productID }) {
                                 </div>
                             ))}
                         </div>
+                       
                     </div>
                     <div className="flex mb-4">
                             <input
                                 type="file"
                                 onChange={(e) => setImageFile(e.target.files[0])}
+                                // className="px-4 py-2 bg-gray-100 focus:outline-none text-lg text-black"
                             />
                             <button
                                 onClick={handleAddImage}
+                                // className="ml-4 px-4 py-2 bg-green-500 text-white hover:bg-green-600 focus:outline-none text-lg"
                             >
                                 Add
                             </button>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-function DeleteProductImage({ closeDeleteProductImageModal, ImageIndex, ProductID }) {
+function DeleteProductImage({ closeDeleteProductImageModal, ImageIndex, ProductID}) {
   const [error, setError] = useState('');
 
   const handleConfirm = async () => {
