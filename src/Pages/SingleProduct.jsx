@@ -113,10 +113,10 @@ function SingleProduct({ProductID}) {
 
   
   return (
-    <div className="max-w-screen-xl flex flex-wrap mx-auto p-4 SingleProduct-cont gap-24 bg-white SingleProduct-cont">
+    <div className="max-w-screen-xl flex flex-wrap mx-auto p-4  gap-24 bg-white overflow-y-auto SingleProduct-cont">
       <div>
         <div className="mr-11 italic mb-16 text-center">
-          <p className="text-3xl">{categoryData ? `All products / ${categoryData.name}` : "Loading..."}</p>
+          <p className="text-3xl category-name-responsive">{categoryData ? `All products / ${categoryData.name}` : "Loading..."}</p>
         </div>
 
         <SingleProductSlider images={images} />

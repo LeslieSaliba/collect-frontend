@@ -45,17 +45,19 @@ function SingleProductData({ openModal, productData }) {
   };
 
   return (
-    <div className="">
+    <div className="SingleProductData-cont">
       {productData ? (
         <>
+        <div className='single-product-info'>
           <div className="mb-5">
 
-            <p className="text-4xl font-bold capitalize SingleProductData-Title">{productData.name}</p>
+            <p className="text-4xl font-bold capitalize SingleProductData-Title SingleProductData-Info">{productData.name}</p>
 
           </div>
 
-          <div className="italic text-3xl SingleProductData-Cost">{productData.price} $</div>
-          <div className="mb-4 w-96 text-2xl SingleProductData-Desc">{productData.description}</div>
+          <p className="italic text-3xl SingleProductData-Cost SingleProductData-Info">{productData.price} $</p>
+          <p className="mb-4 w-96 text-2xl SingleProductData-Desc SingleProductData-Info">{productData.description}</p>
+          </div>
           <div className="mt-32">
             <button
              onClick={addToWishlist}

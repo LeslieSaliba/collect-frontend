@@ -15,8 +15,8 @@ function SingleProductSlider({ images }) {
   };
 
   return (
-    <div className="relative">
-      <div className="flex items-center">
+    <div className="relative SingleProductSlider-cont">
+      <div className="flex items-center SingleProductSlider-mini">
  
         <img className="p-7 SingleProductSlider-prev" onClick={prevImage} src="Images/left.png" />
 
