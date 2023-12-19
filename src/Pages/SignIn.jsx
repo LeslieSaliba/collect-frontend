@@ -205,7 +205,7 @@ function SignIn() {
       </div>
      
       <img
-        src="Images/12-1.JPG"
+        src="Images/signin.png"
         alt="Background"
         className="w-1/2 bg-cover bg-center SignIn-img"
       />
