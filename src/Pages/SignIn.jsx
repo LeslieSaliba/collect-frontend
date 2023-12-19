@@ -207,7 +207,7 @@ function SignIn() {
       <img
         src="Images/signin.png"
         alt="Background"
-        className="w-1/2 bg-cover bg-center SignIn-img"
+        className="w-1/2 bg-cover bg-center object-cover SignIn-img"
       />
 
        {showFailLogIn && (

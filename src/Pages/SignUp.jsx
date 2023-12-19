@@ -140,7 +140,7 @@ function SignUp() {
       <img
         src="Images/12-1.JPG"
         alt="Background"
-        className="w-1/2 bg-cover bg-center SignUp-img"
+        className="w-1/2 bg-cover bg-center object-cover SignUp-img"
       />
       <div className="w-1/2 flex items-center justify-center SignUp-form ">
         <form className="p-12 py-0 w-full signup-title" onSubmit={handleSubmit}>
