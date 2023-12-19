@@ -190,10 +190,9 @@ function SignIn() {
             </div>
           </div>
 
-    
-          <div className="text-right mb-4">
+          {/* <div className="text-right mb-4">
             <a href="" className="underline text-lg hover:text-red-700">Forgot Password?</a>
-          </div>
+          </div> */}
           <button className="bg-red-700 text-white  font-bold py-2 px-4 border border-red-700 w-full text-2xl mb-4 ">
             LOG IN
           </button>
