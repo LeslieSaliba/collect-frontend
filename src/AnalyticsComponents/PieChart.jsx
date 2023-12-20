@@ -11,22 +11,22 @@ const PieChart = () => {
       },
       labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
       colors:   [
-        "#B7312D",
-        "#B7452E",
-        "#B75E2F",
-        "#F6F6F6",
-        "#EAEAEA",
-        "#DDDDDD"
+        "#7A161B",
+        "#B6322C",
+        "#E98489",
+        "#F3BEC1",
+        "#D9D9D9",
+       
       ],
       fill: {
        
           colors:   [
-    "#B7312D",
-    "#B7452E",
-    "#B75E2F",
-    "#F6F6F6",
-    "#EAEAEA",
-    "#DDDDDD"
+    "#7A161B",
+    "#B6322C",
+    "#E98489",
+    "#F3BEC1",
+    "#D9D9D9",
+   
   ],
        
       },
