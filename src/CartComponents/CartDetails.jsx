@@ -70,9 +70,9 @@ function CartDetails({ openModal, openAddressModal, cartData }) {
       <div className="flex justify-end">
         <button
           onClick={() => openModal(shippingMethod)}
-          className="bg-white text-red-700 font-bold py-3 px-2 border border-red-700 w-96 text-lg inline-block mt-5 flex justify-center hover:bg-red-100"
+          className="bg-white text-red-700 font-bold py-3 px-2 border border-red-700 w-96 text-lg inline-block mt-5 flex justify-center hover:bg-red-100 checkout-button"
         >
-          <p>
+          <p className="cartDetails-checkout">
             CHECKOUT<span className="ml-12">{(cartData.cart.totalPrice + (shippingMethod === "delivery" ? shippingCost : 0)).toFixed(2)} $ </span>{" "}
           </p>
           <br /><p> </p>
