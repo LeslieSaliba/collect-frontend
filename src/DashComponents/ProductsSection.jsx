@@ -55,12 +55,24 @@ function ProductsSection() {
   console.log("categories", categories);
 
   const [sortOrder, setSortOrder] = useState(true);
+  
   const toggleSort = (field) => {
     const sortedData = [...products].sort((a, b) => {
-      if (a[field] < b[field]) return sortOrder ? -1 : 1;
-      if (a[field] > b[field]) return sortOrder ? 1 : -1;
+      if (field === "name" || field === "price" || field === "discountPercentage") {
+        if (a[field] < b[field]) return sortOrder ? -1 : 1;
+        if (a[field] > b[field]) return sortOrder ? 1 : -1;
+        return 0;
+      }
+  
+      if (field === "category") {
+        const categoryA = categories[a.categoryID]?.toLowerCase() || "";
+        const categoryB = categories[b.categoryID]?.toLowerCase() || "";
+        return sortOrder ? categoryA.localeCompare(categoryB) : categoryB.localeCompare(categoryA);
+      }
+  
       return 0;
     });
+  
     setProducts(sortedData);
     setSortOrder(!sortOrder);
   };
@@ -271,7 +283,7 @@ function ProductsSection() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
                 <tr>
-                  <th className="px-4 py-2 text-left">Category</th>
+                  <th className="px-4 py-2 text-left" onClick={() => toggleSort("category")}>Category &#8597;</th>
                   <th
                     className="px-4 py-2 text-left"
                     onClick={() => toggleSort("name")}
@@ -400,7 +412,7 @@ function ProductsSection() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
-                    <th className="px-4 py-2 text-left">Category</th>
+                    <th className="px-4 py-2 text-left" onClick={() => toggleSort("category")}>Category &#8597;</th>
                     <th
                       className="px-4 py-2 text-left"
                       onClick={() => toggleSort("name")}
