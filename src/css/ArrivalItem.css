@@ -1,6 +1,8 @@
 
 .ArrivalItem-cont{
     font-family: "Playfair Display";
+    width: 16rem;
+    height: 30rem;
 }
 .ArrivalItem-img{
     width: 16rem;
@@ -10,3 +12,4 @@
     width: 25px;
     margin-bottom: 2px;
 }
+
