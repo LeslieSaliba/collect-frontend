@@ -38,26 +38,26 @@ function CustomersSection() {
       if (field === 'name') {
         const nameA = `${a.fullName.firstName} ${a.fullName.lastName}`.toLowerCase();
         const nameB = `${b.fullName.firstName} ${b.fullName.lastName}`.toLowerCase();
-
+  
         if (nameA < nameB) return sortOrder ? -1 : 1;
         if (nameA > nameB) return sortOrder ? 1 : -1;
         return 0;
       } else if (field === 'orders') {
         const ordersA = ordersPerUser[a._id] || 0;
         const ordersB = ordersPerUser[b._id] || 0;
-
+  
         return sortOrder ? ordersA - ordersB : ordersB - ordersA;
       } else if (field === 'email') {
         const emailA = a.email.toLowerCase();
         const emailB = b.email.toLowerCase();
-
+  
         if (emailA < emailB) return sortOrder ? -1 : 1;
         if (emailA > emailB) return sortOrder ? 1 : -1;
         return 0;
       }
       return 0;
     });
-
+  
     setCustomers(sortedData);
     setSortOrder(!sortOrder);
   };
