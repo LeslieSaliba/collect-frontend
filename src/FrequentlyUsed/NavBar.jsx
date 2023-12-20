@@ -10,7 +10,10 @@ function NavBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const loggedIn = Object.keys(localStorage).length > 0;
+    const userId = localStorage.getItem('userId');
+    const cartId = localStorage.getItem('cartId');
+    const wishlistId = localStorage.getItem('wishlistId');
+    const loggedIn = userId && cartId && wishlistId;
     setIsLoggedIn(loggedIn);
   }, []);
 
