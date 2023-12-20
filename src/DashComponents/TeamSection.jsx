@@ -28,12 +28,25 @@ function TeamSection() {
     }, []);
 
     const [sortOrder, setSortOrder] = useState(true);
+    
     const toggleSort = (field) => {
         const sortedData = [...team].sort((a, b) => {
-            if (a[field] < b[field]) return sortOrder ? -1 : 1;
-            if (a[field] > b[field]) return sortOrder ? 1 : -1;
+            if (field === 'fullName') {
+                const nameA = `${a.fullName.firstName} ${a.fullName.lastName}`.toLowerCase();
+                const nameB = `${b.fullName.firstName} ${b.fullName.lastName}`.toLowerCase();
+                return sortOrder ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+            } else if (field === 'email') {
+                const emailA = a.email.toLowerCase();
+                const emailB = b.email.toLowerCase();
+                return sortOrder ? emailA.localeCompare(emailB) : emailB.localeCompare(emailA);
+            } else if (field === 'role') {
+                const roleA = a.role.toLowerCase();
+                const roleB = b.role.toLowerCase();
+                return sortOrder ? roleA.localeCompare(roleB) : roleB.localeCompare(roleA);
+            }
             return 0;
         });
+    
         setTeam(sortedData);
         setSortOrder(!sortOrder);
     };

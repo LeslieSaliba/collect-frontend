@@ -61,15 +61,36 @@ function CategoriesSection() {
 
 
     const [sortOrder, setSortOrder] = useState(true);
+
     const toggleSort = (field) => {
         const sortedData = [...categories].sort((a, b) => {
-            if (a[field] < b[field]) return sortOrder ? -1 : 1;
-            if (a[field] > b[field]) return sortOrder ? 1 : -1;
-            return 0;
+            if (field === 'productIds') {
+                const qtyA = productsInfo[a.name] ? productsInfo[a.name].length : 0;
+                const qtyB = productsInfo[b.name] ? productsInfo[b.name].length : 0;
+    
+                if (qtyA < qtyB) return sortOrder ? -1 : 1;
+                if (qtyA > qtyB) return sortOrder ? 1 : -1;
+                return 0;
+            } else if (field === 'discountPercentage') {
+                const discountA = productsInfo[a.name] && productsInfo[a.name].length > 0 ?
+                    Math.max(...productsInfo[a.name].map(product => product.discountPercentage)) : 0;
+                const discountB = productsInfo[b.name] && productsInfo[b.name].length > 0 ?
+                    Math.max(...productsInfo[b.name].map(product => product.discountPercentage)) : 0;
+    
+                if (discountA < discountB) return sortOrder ? -1 : 1;
+                if (discountA > discountB) return sortOrder ? 1 : -1;
+                return 0;
+            } else {
+                if (a[field] < b[field]) return sortOrder ? -1 : 1;
+                if (a[field] > b[field]) return sortOrder ? 1 : -1;
+                return 0;
+            }
         });
+    
         setCategories(sortedData);
         setSortOrder(!sortOrder);
     };
+    
 
     const openAddCategoryModal = () => {
         setShowAddCategoryModal(true);
@@ -88,8 +109,8 @@ function CategoriesSection() {
                     'Authorization': `Bearer ${token}`,
                 },
             });
-            console.log('Response after delete request:', response);
-            console.log('token: ', `${process.env.TOKEN}`);
+            // console.log('Response after delete request:', response);
+            // console.log('token: ', `${process.env.TOKEN}`);
             console.log('Category deleted successfully');
             await fetchCategories();
             closeDeleteCategoryModal();
@@ -124,7 +145,6 @@ function CategoriesSection() {
     };
 
     const handleCheckboxChange = async (categoryID) => {
-        // Check if highlighting more than 4 categories
         const highlightedCount = Object.values(highlightedCategories).filter(value => value).length;
 
         if (highlightedCount >= 4 && !highlightedCategories[categoryID]) {
@@ -168,9 +188,9 @@ function CategoriesSection() {
                         <tr>
                             <th className="px-4 py-2 text-left" onClick={() => toggleSort("name")}>Category &#8597;</th>
                             <th className="px-4 py-2 text-left">Thumbnail</th>
-                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("category")}>Qty &#8597;</th>
+                            <th className="px-4 py-2 text-left" onClick={() => toggleSort("productIds")}>Qty &#8597;</th>
                             <th className="px-4 py-2 text-left" onClick={() => toggleSort("discountPercentage")}>Discounted &#8597;</th>
-                            <th className="px-4 py-2 text-left">Highlighted &#8597;</th>
+                            <th className="px-4 py-2 text-left">Highlighted</th>
                             <th className="px-4 py-2 text-left"></th>
                         </tr>
                     </thead>
@@ -190,24 +210,24 @@ function CategoriesSection() {
                                     )}
                                 </td>
                                 <td className="px-4 py-2">
-                                {productsInfo[category.name] && productsInfo[category.name].length > 0 ? (
-                                    (() => {
-                                        const availableProducts = productsInfo[category.name].filter(product => product.status === "available");
+                                    {productsInfo[category.name] && productsInfo[category.name].length > 0 ? (
+                                        (() => {
+                                            const availableProducts = productsInfo[category.name].filter(product => product.status === "available");
 
-                                        if (
-                                            availableProducts.length > 0 &&
-                                            availableProducts.every(product => product.discountPercentage === availableProducts[0].discountPercentage) &&
-                                            availableProducts[0].discountPercentage !== 0
-                                        ) {
-                                            return `${availableProducts[0].discountPercentage}%`;
-                                        } else {
-                                            return "-";
-                                        }
-                                    })()
-                                ) : (
-                                    "-"
-                                )}
-                            </td>
+                                            if (
+                                                availableProducts.length > 0 &&
+                                                availableProducts.every(product => product.discountPercentage === availableProducts[0].discountPercentage) &&
+                                                availableProducts[0].discountPercentage !== 0
+                                            ) {
+                                                return `${availableProducts[0].discountPercentage}%`;
+                                            } else {
+                                                return "-";
+                                            }
+                                        })()
+                                    ) : (
+                                        "-"
+                                    )}
+                                </td>
                                 <td className="px-4 py-2">
                                     <input
                                         type="checkbox"
