@@ -34,7 +34,7 @@ function ProductItem({ProductName, ProductPrice, ProductImage, ProductID,Product
   };
 
   return (
-    <div className="ArrivalItem-cont mb-12 relative">
+    <div className="ArrivalItem-cont mb-12 relative ">
       <div className="ArrivalItem-img-container relative">
         {ProductStatus === "sold" && (
           <div className="absolute top-0 right-0 bg-white text-red-700 my-4 font-sans py-1 px-4 z-10 shadow-xl font-bold">
