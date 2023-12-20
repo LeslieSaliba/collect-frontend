@@ -18,4 +18,11 @@
 justify-content: space-between;
     gap: 0;
 }
+.checkout-button{
+    margin-right: -40px;
+    scale : 0.9 
+}
+.cartDetails-checkout{
+    width:220px
+}
 }

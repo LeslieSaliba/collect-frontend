@@ -23,10 +23,14 @@ function App() {
     <Routes>
 
       <Route path="/" element={<HomePage/>} />
-      <Route path="/Wishlist" element={<Wishlist/>} />
+      <Route path="/Wishlist" 
+      element={<PrivateRoute element={<Wishlist/>} allowedRoles={'client'} fallbackPath="/NoAccess" />}
+      />
       <Route path="/ContactUs" element={<ContactUs/>} />
       <Route path= '/Shop' element={<AllProduct/>}/>
-      <Route path='/Cart' element={<Cart/>}/>
+      <Route path='/Cart' 
+      element={<PrivateRoute element={<Cart/>} allowedRoles={'client'} fallbackPath="/NoAccess" />}
+      />
       <Route path='/AboutUs' element={<AboutUs/>}/>
       <Route path= '/NoAccess' element={<NoAccess/>}/>
       <Route path='/AdminDashboard/*' 
